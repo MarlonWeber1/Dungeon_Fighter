@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package dungeon_fighter;
 
 /**
@@ -14,7 +10,11 @@ public class Dungeon_Fighter {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Paladino pedro = new Paladino(10,10,10,"pedro");
+        System.out.println(pedro.getSaude());
+        pedro.setSaude(1);
+        pedro.ataqueEspecial();
+        System.out.println(pedro.getSaude());
     }
-    
+
 }
