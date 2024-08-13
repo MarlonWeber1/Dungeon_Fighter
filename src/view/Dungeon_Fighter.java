@@ -96,15 +96,10 @@ public final class Dungeon_Fighter extends JFrame {
         setVisible(true);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        Paladino pedro = new Paladino(10, 10, 10, "pedro");
-        System.out.println(pedro.getSaude());
-        pedro.setSaude(1);
-        pedro.ataqueEspecial();
-        System.out.println(pedro.getSaude());
+
+        Chefao ahaha = new Chefao();
+        ahaha.imprimeMonstro();
 
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();

@@ -1,0 +1,19 @@
+package modelDominio;
+import java.util.Random;
+
+public class ArmadilhaRandom extends Armadilha{
+
+    // Armadilha com perda 'aleatoria'
+    private static final double[] valoresDeDano = {10, 15, 20, 25, 30, 35, 40, 50};
+
+    public ArmadilhaRandom () {
+        this.dano = gerarDanoAleatorio();
+    }
+
+    private static double gerarDanoAleatorio() {
+        // Seleciona valor aleatorio do array
+        Random random = new Random();
+        int indice = random.nextInt(valoresDeDano.length);
+        return valoresDeDano[indice];
+    }
+}

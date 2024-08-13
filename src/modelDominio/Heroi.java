@@ -26,4 +26,8 @@ public abstract class Heroi extends Entidade{
     }
 
     public abstract void ataqueEspecial ();
+
+    public void danoArmadilha (Armadilha dano) { // saude diminui 10
+        this.setSaude(this.getSaude() - dano.getDano());
+    }
 }
