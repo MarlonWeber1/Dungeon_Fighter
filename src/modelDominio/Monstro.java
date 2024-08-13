@@ -1,4 +1,4 @@
-package dungeon_fighter;
+package modelDominio;
 
 public abstract class Monstro extends Entidade{
     // classe abstrata que ira ser pai das classes "monstro comum" e "chefão"

@@ -1,4 +1,4 @@
-package dungeon_fighter;
+package modelDominio;
 
 
 public class Paladino extends Heroi {

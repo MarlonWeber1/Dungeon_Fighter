@@ -1,4 +1,4 @@
-package dungeon_fighter;
+package modelDominio;
 
 public abstract class Heroi extends Entidade{
     private String nome;

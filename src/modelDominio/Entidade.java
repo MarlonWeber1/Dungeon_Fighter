@@ -1,4 +1,4 @@
-package dungeon_fighter;
+package modelDominio;
 
 public abstract class Entidade {
     private double ataque;

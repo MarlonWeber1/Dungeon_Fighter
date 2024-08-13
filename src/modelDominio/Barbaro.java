@@ -1,4 +1,4 @@
-package dungeon_fighter;
+package modelDominio;
 
 public class Barbaro extends Heroi {
     private double danoDoAtaqueEspecial = this.getAtaque()*1.5; // 50% maior que o ataque base

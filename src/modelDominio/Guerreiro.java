@@ -1,4 +1,4 @@
-package dungeon_fighter;
+package modelDominio;
 
 public class Guerreiro extends Heroi{
     private double defesaAumentada = this.getDefesa()*1.5;
