@@ -1,8 +1,10 @@
 package view;
 
-// import java.awt.GridLayout;
-// import java.util.List;
+import java.awt.GridLayout;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -10,11 +12,20 @@ import javax.swing.JPanel;
  */
 
 public class Tabuleiro extends JPanel {
-
     private final char[][] tabuleiro = new char[5][10];
+    private final JButton[][] botoes = new JButton[5][10];
+    private boolean debugging;
 
-    public Tabuleiro () {
+    public Tabuleiro (boolean debug) {
+        this.debugging = debug;
+        setLayout(new GridLayout(5, 10));
         criarTabuleiro();
+        criarBotoes();
+        atualizarBotoes();
+
+        // força a revalidação e repintura do painel
+        revalidate();
+        repaint();
     }
 
     /*  ALFABETO PARA IDENTIFICAÇÃO DAS CELULAS:
@@ -29,14 +40,21 @@ public class Tabuleiro extends JPanel {
      */
 
     private void criarTabuleiro() {
+
+        // preeche a matriz do tabuleiro com espaços "vazios"
         for (int i = 0; i<5; i++) {
             for (int x = 0; x<10; x++)
             {
                 tabuleiro[i][x] = '*';
             }
         }
-        tabuleiro[4][colunaRandom()] = 'C'; // posiciona o Chefão em uma coluna aleatoria da ultima linha
-        tabuleiro[0][colunaRandom()] = 'I'; // posiciona o jogador em uma coluna aleatoria da primeira linha
+
+        // determina posicao inicial do Heroi em uma coluna aleatoria da primeira linha
+        tabuleiro[0][colunaRandom()] = 'I';
+
+        // posiciona o Chefão em uma coluna aleatoria da ultima linha
+        tabuleiro[4][colunaRandom()] = 'C';
+
         posicionaMonstro();
 
         // 3 armadilhas com dano fixo em posicoes aleatorias
@@ -69,10 +87,10 @@ public class Tabuleiro extends JPanel {
         for (int i = 0; i<5; i++) {
             int col = colunaRandom();
             // garante que o monstro nao ira sobrepor o spawn do jogador ou do chefao
-            while (tabuleiro[i][col] != '*') {
+            while (tabuleiro[i][col] == 'C' || tabuleiro[i][col] == 'I') {
                 col = colunaRandom();
             }
-            tabuleiro[i][colunaRandom()] = 'M';
+            tabuleiro[i][col] = 'M';
         }
     }
 
@@ -116,4 +134,24 @@ public class Tabuleiro extends JPanel {
             System.out.println();
         }
     }
+
+
+    private void criarBotoes() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                botoes[i][j] = new JButton(); // cria um novo botão
+                add(botoes[i][j]); // adiciona o botão ao painel
+            }
+        }
+    }
+
+    private void atualizarBotoes() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                // define o texto do botão como o caractere correspondente no tabuleiro
+                botoes[i][j].setText(String.valueOf(tabuleiro[i][j]));
+            }
+        }
+    }
+
 }
