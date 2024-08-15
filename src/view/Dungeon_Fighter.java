@@ -97,6 +97,12 @@ public final class Dungeon_Fighter extends JFrame {
     }
 
     public static void main(String[] args) {
+        Tabuleiro tabuleiro = new Tabuleiro(true);
+        tabuleiro.imprimirTabuleiro();
+        int spawnHeroi = tabuleiro.getColunaInicial();
+
+        System.out.println(spawnHeroi);
+
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();
     }

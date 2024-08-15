@@ -4,8 +4,8 @@ package modelDominio;
 public class Paladino extends Heroi {
     private double saudeTotal; // guarda a vida total do paladino para seu ataque especial
 
-    public Paladino(double defesa, double ataque, double saude, String nome) {
-        super(defesa, ataque, saude, nome);
+    public Paladino(double defesa, double ataque, double saude, double saudeTotal, String nome, int posLinha, int posCol) {
+        super(defesa, ataque, saude, nome, posLinha, posCol);
         this.saudeTotal = saude;
     }
 

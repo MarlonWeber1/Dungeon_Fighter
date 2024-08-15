@@ -3,8 +3,8 @@ package modelDominio;
 public class Guerreiro extends Heroi{
     private double defesaAumentada = this.getDefesa()*1.5;
 
-    public Guerreiro(double defesa, double ataque, double saude, String nome) {
-        super(defesa, ataque, saude, nome);
+    public Guerreiro(double defesa, double ataque, double saude, String nome, int posLinha, int posCol) {
+        super(defesa, ataque, saude, nome, posLinha, posCol);
     }
 
     @Override

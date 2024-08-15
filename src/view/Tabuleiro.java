@@ -1,10 +1,7 @@
 package view;
 
 import java.awt.GridLayout;
-import java.util.List;
-import javax.swing.JPanel;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  *
@@ -125,7 +122,7 @@ public class Tabuleiro extends JPanel {
     }
 
 
-    // funcao para exibir o tabuleiro no console (debug)
+    // funcao para exibir o tabuleiro no console (debugar)
     public void imprimirTabuleiro() {
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
@@ -135,6 +132,14 @@ public class Tabuleiro extends JPanel {
         }
     }
 
+    public int getColunaInicial() {
+        for (int i = 0; i < 10; i++) {
+            if (tabuleiro[0][i] == 'I') {
+                return i;
+            }
+        }
+        return 777;
+    }
 
     private void criarBotoes() {
         for (int i = 0; i < 5; i++) {
