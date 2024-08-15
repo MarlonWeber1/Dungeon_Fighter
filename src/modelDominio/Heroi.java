@@ -30,4 +30,10 @@ public abstract class Heroi extends Entidade{
     public void danoArmadilha (Armadilha dano) { // saude diminui 10
         this.setSaude(this.getSaude() - dano.getDano());
     }
+
+    public void morreu () {
+        if (this.getSaude() <= 0) {
+            // fimDeJogo();
+        }
+    }
 }

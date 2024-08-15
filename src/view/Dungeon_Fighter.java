@@ -97,9 +97,10 @@ public final class Dungeon_Fighter extends JFrame {
     }
 
     public static void main(String[] args) {
-
-        Chefao ahaha = new Chefao();
-        ahaha.imprimeMonstro();
+        // Cria uma instância do Tabuleiro
+        Tabuleiro tabuleiro = new Tabuleiro();
+        // Imprime o tabuleiro no console
+        tabuleiro.imprimirTabuleiro();
 
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();
