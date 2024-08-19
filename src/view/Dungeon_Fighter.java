@@ -107,9 +107,11 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+        Tabuleiro tabuleiro = new Tabuleiro(true);
+        tabuleiro.imprimirTabuleiro();
+        int spawnHeroi = tabuleiro.getColunaInicial();
 
-        Chefao ahaha = new Chefao();
-        ahaha.imprimeMonstro();
+        System.out.println(spawnHeroi);
 
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();
