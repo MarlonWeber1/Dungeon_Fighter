@@ -6,34 +6,24 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import modelDominio.Chefao;
 
-/**
- * @author marlon
- **/
-
 public final class Dungeon_Fighter extends JFrame implements ActionListener {
 
     private JButton btnLogin;
     private JTextField textoNomeUsuario;
-    private ImageIcon logoJogo; 
         
     public void mostrarJanela() {
 
         // Características da Janela Principal
-        setTitle("Dungeon Fighter");
+        setTitle("Minha primeira aplicação");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-        getContentPane().setBackground(Color.WHITE);
 
         // Definição das restrições do GridBagLayout
         GridBagConstraints c = new GridBagConstraints();
-        
-        // Carrega as imagens e cria JLabels para exibi-las
-        logoJogo = new ImageIcon(getClass().getResource("/view/img/logo.png"));
-        JLabel lbllogoJogo = new JLabel(logoJogo);
-     
+
         // Painéis
         JPanel pLogin = new JPanel();
         JPanel pJogo = new JPanel();
@@ -47,17 +37,11 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
         JLabel nomeUsuario = new JLabel("Nome");
         textoNomeUsuario = new JTextField(15);  // Usa a variável de instância
         btnLogin = new JButton("Login");        // Usa a variável de instância
-        
-        pJogo.setPreferredSize(new Dimension(280, 150)); 
-
-        // Adiciona as imagens aos painéis correspondentes
-        pJogo.add(lbllogoJogo);
 
         // Configurações visuais dos painéis
-        pBotao.setBackground(Color.white);  
-        pLogin.setBackground(Color.white);  
-        pJogo.setBackground(Color.white);  
-        
+        /*pJogo.setBackground(Color.green);  
+        pLogin.setBackground(Color.red);  
+        pBotao.setBackground(Color.blue);*/
 
         // Configurações do nome do jogo (topo direito)
         c.gridx = 1;  
@@ -114,13 +98,10 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
         if (e.getSource() == btnLogin) {
             if(textoNomeUsuario.getText() != null &&
                     !textoNomeUsuario.getText().isEmpty()){
-                this.dispose();  
-                String nomeUsuario = textoNomeUsuario.getText();
-                EscolherHeroi escolherHeroi = new EscolherHeroi(nomeUsuario);
-                escolherHeroi.mostrarJanela();
+                this.dispose();  // Fecha a janela
             }else{
-           
-                JOptionPane.showMessageDialog(this, "Verifique se as informações estão preenchidas corretamente.");
+                JOptionPane.showMessageDialog(btnLogin, "Verifique se as informações estão preenchidas corretamente", 
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
             } 
         } 
     }
