@@ -1,22 +1,16 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import modelDominio.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import modelDominio.Chefao;
 
-/**
- * @author marlo
- **/
-public final class Dungeon_Fighter extends JFrame {
+public final class Dungeon_Fighter extends JFrame implements ActionListener {
 
+    private JButton btnLogin;
+    private JTextField textoNomeUsuario;
+        
     public void mostrarJanela() {
 
         // Características da Janela Principal
@@ -41,8 +35,8 @@ public final class Dungeon_Fighter extends JFrame {
         // Declaração de componentes
         JLabel nomeJogo = new JLabel("Dungeon Fighter");
         JLabel nomeUsuario = new JLabel("Nome");
-        JTextField textoNomeUsuario = new JTextField(15); 
-        JButton btn = new JButton("Login");
+        textoNomeUsuario = new JTextField(15);  // Usa a variável de instância
+        btnLogin = new JButton("Login");        // Usa a variável de instância
 
         // Configurações visuais dos painéis
         /*pJogo.setBackground(Color.green);  
@@ -73,8 +67,8 @@ public final class Dungeon_Fighter extends JFrame {
 
         c.gridy = 2;
         c.fill = GridBagConstraints.NONE; // Sem preenchimento
-        pBotao.add(btn, c);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        pBotao.add(btnLogin, c);
+        btnLogin.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
         // Adiciona os painéis ao JFrame
         c.gridx = 0;
@@ -93,7 +87,23 @@ public final class Dungeon_Fighter extends JFrame {
         c.anchor = GridBagConstraints.CENTER;  // Centralizar o painel de login
         add(pBotao, c);
 
+        // Adiciona o ActionListener ao botão
+        btnLogin.addActionListener(this);
+
         setVisible(true);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnLogin) {
+            if(textoNomeUsuario.getText() != null &&
+                    !textoNomeUsuario.getText().isEmpty()){
+                this.dispose();  // Fecha a janela
+            }else{
+                JOptionPane.showMessageDialog(btnLogin, "Verifique se as informações estão preenchidas corretamente", 
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+            } 
+        } 
     }
 
     public static void main(String[] args) {
