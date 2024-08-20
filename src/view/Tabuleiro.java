@@ -8,7 +8,7 @@ import javax.swing.*;
  */
 
 public class Tabuleiro extends JPanel {
-    private final char[][] tabuleiro = new char[5][10];
+    public final char[][] tabuleiro = new char[5][10];
     private final JButton[][] botoes = new JButton[5][10];
     private boolean debugging;
 
@@ -129,6 +129,7 @@ public class Tabuleiro extends JPanel {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public int getColunaInicial() {

@@ -1,10 +1,12 @@
 package modelDominio;
 
-public class Paladino extends Heroi {
-    private double saudeTotal; // guarda a vida total do paladino para seu ataque especial
+import view.Tabuleiro;
 
-    public Paladino(double defesa, double ataque, double saude, double saudeTotal, String nome, int colInicial) {
-        super(defesa, ataque, saude, nome, colInicial);
+public class Paladino extends Heroi {
+    private final double saudeTotal; // guarda a vida total do paladino para seu ataque especial
+
+    public Paladino(double defesa, double ataque, double saude, double saudeTotal, String nome) {
+        super(defesa, ataque, saude, nome);
         this.saudeTotal = saude;
     }
 

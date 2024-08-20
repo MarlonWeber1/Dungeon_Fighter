@@ -1,15 +1,16 @@
 package modelDominio;
 
+import view.Tabuleiro;
+
 public abstract class Heroi extends Entidade{
     private String nome;
     private int bolsaDeElixir = 0;
     private int posLinha;
     private int posColuna;
 
-    public Heroi(double defesa, double ataque, double saude, String nome, int colInicial) {
+    public Heroi(double defesa, double ataque, double saude, String nome) {
         super(defesa,ataque,saude);
         this.nome = nome;
-        posicaoInicial(colInicial);
     }
 
     public String getNome() {
@@ -29,10 +30,6 @@ public abstract class Heroi extends Entidade{
     }
 
     public abstract void ataqueEspecial ();
-
-    public void danoArmadilha (Armadilha dano) { // saude diminui 10
-        this.setSaude(this.getSaude() - dano.getDano());
-    }
 
     public void incrementaSaude() {
         this.setSaude(this.getSaude()+10);
@@ -55,7 +52,6 @@ public abstract class Heroi extends Entidade{
         this.setAtaque(this.getAtaque()-10);
     }
 
-
     public int getPosLinha() {
         return posLinha;
     }
@@ -71,29 +67,6 @@ public abstract class Heroi extends Entidade{
     public void setPosColuna(int posColuna) {
         this.posColuna = posColuna;
     }
-
-    // funcoes para atualizar a posicao do heroi
-    public void moveCima () {
-        this.setPosLinha(this.getPosLinha() + 1);
-    }
-
-    public void moveBaixo () {
-        this.setPosLinha(this.getPosLinha() - 1);
-    }
-
-    public void moveDir () {
-        this.setPosColuna(this.getPosColuna() + 1);
-    }
-
-    public void moveEsq () {
-        this.setPosColuna(this.getPosColuna() - 1);
-    }
-
-    public void posicaoInicial (int colunaInicial) {
-        setPosColuna(colunaInicial);
-        setPosLinha(0);
-    }
-
 
     public void achouElixir () {
         setBolsaDeElixir(getBolsaDeElixir()+1);

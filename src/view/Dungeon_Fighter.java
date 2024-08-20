@@ -1,11 +1,13 @@
 package view;
 
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import modelDominio.Chefao;
-import modelDominio.Guerreiro;
+
+import modelDominio.*;
+import view.Tabuleiro;
 
 /**
  * @author marlon
@@ -126,13 +128,23 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-
+        ArmadilhaRandom armaR = new ArmadilhaRandom();
+        Armadilha armaN = new Armadilha();
+        MonstroComum monstroComum = new MonstroComum();
+        Chefao chefao = new Chefao();
+        Guerreiro heroi = new Guerreiro(100,100,100,"dode");
         Tabuleiro tabuleiro = new Tabuleiro(true);
-        tabuleiro.imprimirTabuleiro();
-        int spawnHeroi = tabuleiro.getColunaInicial();
-        Guerreiro akak = new Guerreiro(100,100,100,"dode", tabuleiro.getColunaInicial());
 
-        System.out.println(akak.getPosColuna());
+        ComecarJogo jogo = new ComecarJogo(armaN,chefao,heroi,tabuleiro,monstroComum,armaR);
+
+        tabuleiro.imprimirTabuleiro();
+
+        jogo.moveBaixo();
+        jogo.moveBaixo();
+        jogo.moveBaixo();
+        jogo.moveBaixo();
+
+        tabuleiro.imprimirTabuleiro();
 
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();

@@ -1,10 +1,12 @@
 package modelDominio;
 
-public class Guerreiro extends Heroi{
-    private double defesaAumentada = this.getDefesa()*1.5;
+import view.Tabuleiro;
 
-    public Guerreiro(double defesa, double ataque, double saude, String nome, int colInicial) {
-        super(defesa, ataque, saude, nome, colInicial);
+public class Guerreiro extends Heroi{
+    private final double defesaAumentada = this.getDefesa()*1.5;
+
+    public Guerreiro(double defesa, double ataque, double saude, String nome) {
+        super(defesa, ataque, saude, nome);
     }
 
     @Override

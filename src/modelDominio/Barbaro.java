@@ -1,10 +1,12 @@
 package modelDominio;
 
-public class Barbaro extends Heroi {
-    private double danoDoAtaqueEspecial = this.getAtaque()*1.5; // 50% maior que o ataque base
+import view.Tabuleiro;
 
-    public Barbaro(double defesa, double ataque, double saude, String nome, int colInicial) {
-        super(defesa, ataque, saude, nome, colInicial);
+public class Barbaro extends Heroi {
+    private final double danoDoAtaqueEspecial = this.getAtaque()*1.5; // dano para habilidade especial: um ataque com 50% de dano a mais
+
+    public Barbaro(double defesa, double ataque, double saude, String nome) {
+        super(defesa, ataque, saude, nome);
     }
 
 

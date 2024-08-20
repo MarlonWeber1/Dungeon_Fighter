@@ -37,7 +37,10 @@ public abstract class Entidade {
     }
 
     public void atacar(Entidade adversario, int W) {
+
+        // W deve ser o valor de ataque do atacante
         // número aleatório de 0 a W para ataque e defesa
+
         double ataqueFinal = this.ataque + (Math.random() * (W + 1));
         double defesaAdversario = adversario.getDefesa() + (Math.random() * (W + 1));
 
@@ -53,6 +56,6 @@ public abstract class Entidade {
     }
 
     public boolean estaVivo() {
-        return this.saude > 0;
+        return this.saude >= 0;
     }
 }

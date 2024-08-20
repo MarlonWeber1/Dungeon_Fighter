@@ -10,7 +10,7 @@ public class ArmadilhaRandom extends Armadilha{
         this.dano = gerarDanoAleatorio();
     }
 
-    private static double gerarDanoAleatorio() {
+    public double gerarDanoAleatorio() {
         // Seleciona valor aleatorio do array
         Random random = new Random();
         int indice = random.nextInt(valoresDeDano.length);
