@@ -135,14 +135,7 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
         Guerreiro heroi = new Guerreiro(100,100,100,"dode");
         Tabuleiro tabuleiro = new Tabuleiro(true);
 
-        ComecarJogo jogo = new ComecarJogo(armaN,chefao,heroi,tabuleiro,monstroComum,armaR);
-
-        tabuleiro.imprimirTabuleiro();
-
-        jogo.moveBaixo();
-        jogo.moveBaixo();
-        jogo.moveBaixo();
-        jogo.moveBaixo();
+        ComecarJogo jogo = new ComecarJogo(heroi,tabuleiro,monstroComum, chefao, armaN, armaR);
 
         tabuleiro.imprimirTabuleiro();
 

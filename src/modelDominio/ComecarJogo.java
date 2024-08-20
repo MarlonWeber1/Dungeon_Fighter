@@ -8,13 +8,14 @@ public class ComecarJogo {
     private Chefao chefao;
     private Armadilha arma;
     private ArmadilhaRandom armaR;
+    private int dicas = 3;
 
-    public ComecarJogo(Armadilha arma, Chefao chefao, Heroi heroi, Tabuleiro tabuleiro, MonstroComum monstro, ArmadilhaRandom armaR) {
-        this.arma = arma;
-        this.chefao = chefao;
+    public ComecarJogo(Heroi heroi, Tabuleiro tabuleiro, MonstroComum monstro, Chefao chefao, Armadilha armaN, ArmadilhaRandom armaR) {
         this.heroi = heroi;
         this.tabuleiro = tabuleiro;
         this.monstro = monstro;
+        this.chefao = chefao;
+        this.arma = armaN;
         this.armaR = armaR;
         posicaoInicial();
     }
@@ -30,6 +31,14 @@ public class ComecarJogo {
     public void danoArmadilha (double dano) { // saude diminui 10
         heroi.setSaude(heroi.getSaude() - dano);
     }
+
+
+
+    // verifica se o movimento é possivel
+    // se sim, ira verificar oque a celula contem
+    // se nao, deve mostrar uma mensagem para o usuario
+
+    // retorna a proxima prosicao para que a funcao de movimento do heroi funcione corretamente
 
     public int verificaCol(int proxPosicao) {
         if (proxPosicao > 9 || proxPosicao < 0) {
@@ -53,9 +62,9 @@ public class ComecarJogo {
             System.out.println("armadilha random");
             System.out.println(heroi.getSaude());
         }
-
         return proxPosicao;
     }
+
     public int verificaLin(int proxPosicao) {
         if (proxPosicao > 4 || proxPosicao < 0) {
             proxPosicao -= 1;
@@ -82,7 +91,7 @@ public class ComecarJogo {
         return proxPosicao;
     }
 
-    // movimentacao para cima
+    // movimentacao para do heroi
     public void moveCima () {
         int prox = (heroi.getPosLinha() + 1);
         prox = verificaLin(prox);
@@ -109,5 +118,21 @@ public class ComecarJogo {
         prox = verificaCol(prox);
         heroi.setPosColuna(prox);
         tabuleiro.tabuleiro[heroi.getPosLinha()][heroi.getPosColuna()] = 'H';
+    }
+
+
+    // metodo de usar dica
+    // retorna numero de armadilhas
+    public void usaDica(int coluna) {
+        if (this.dicas >= 1) {
+            this.dicas--;
+            int arms = tabuleiro.dica(coluna);
+            // devera aparecer uma mensagem para o usuario com o numero de armadilhas
+            System.out.println("Armadilhas na coluna " + coluna + ": " + arms);
+        } else
+        {
+            // devera aparecer uma mensagem que o usuario usou todas as dicas
+            System.out.println("você usou todas as dicas!");
+        }
     }
 }

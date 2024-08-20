@@ -90,6 +90,15 @@ public class Tabuleiro extends JPanel {
         }
     }
 
+    public int dica(int coluna) {
+        int armadilhasDaColuna = 0;
+        for (int i  = 0; i < 5; i++) {
+            if (tabuleiro[i][coluna] == 'A' || tabuleiro[i][coluna] == 'R')
+                armadilhasDaColuna++;
+        }
+        return armadilhasDaColuna;
+    }
+
     // posiciona armadilhas em local aleatorio, sem sobrepor outras entidades
     private void posicionaArmadilhaN() {
         int col = colunaRandom();
