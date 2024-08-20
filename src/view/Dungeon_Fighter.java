@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import modelDominio.Chefao;
+import modelDominio.Guerreiro;
 
 /**
  * @author marlon
@@ -125,11 +126,13 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+
         Tabuleiro tabuleiro = new Tabuleiro(true);
         tabuleiro.imprimirTabuleiro();
         int spawnHeroi = tabuleiro.getColunaInicial();
+        Guerreiro akak = new Guerreiro(100,100,100,"dode", tabuleiro.getColunaInicial());
 
-        System.out.println(spawnHeroi);
+        System.out.println(akak.getPosColuna());
 
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();

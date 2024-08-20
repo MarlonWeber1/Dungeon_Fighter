@@ -6,11 +6,10 @@ public abstract class Heroi extends Entidade{
     private int posLinha;
     private int posColuna;
 
-    public Heroi(double defesa, double ataque, double saude, String nome, int inicioLin, int inicioCol) {
+    public Heroi(double defesa, double ataque, double saude, String nome, int colInicial) {
         super(defesa,ataque,saude);
         this.nome = nome;
-        this.posLinha = inicioLin;
-        this.posColuna =  inicioCol;
+        posicaoInicial(colInicial);
     }
 
     public String getNome() {
@@ -35,6 +34,28 @@ public abstract class Heroi extends Entidade{
         this.setSaude(this.getSaude() - dano.getDano());
     }
 
+    public void incrementaSaude() {
+        this.setSaude(this.getSaude()+10);
+    }
+    public void decrementaSaude() {
+        this.setSaude(this.getSaude()-10);
+    }
+
+    public void incrementaDefesa() {
+        this.setDefesa(this.getDefesa()+10);
+    }
+    public void decrementaDefesa() {
+        this.setDefesa(this.getDefesa()-10);
+    }
+
+    public void incrementaAtaque() {
+        this.setAtaque(this.getAtaque()+10);
+    }
+    public void decrementaAtaque() {
+        this.setAtaque(this.getAtaque()-10);
+    }
+
+
     public int getPosLinha() {
         return posLinha;
     }
@@ -51,10 +72,28 @@ public abstract class Heroi extends Entidade{
         this.posColuna = posColuna;
     }
 
+    // funcoes para atualizar a posicao do heroi
+    public void moveCima () {
+        this.setPosLinha(this.getPosLinha() + 1);
+    }
+
+    public void moveBaixo () {
+        this.setPosLinha(this.getPosLinha() - 1);
+    }
+
+    public void moveDir () {
+        this.setPosColuna(this.getPosColuna() + 1);
+    }
+
+    public void moveEsq () {
+        this.setPosColuna(this.getPosColuna() - 1);
+    }
+
     public void posicaoInicial (int colunaInicial) {
         setPosColuna(colunaInicial);
         setPosLinha(0);
     }
+
 
     public void achouElixir () {
         setBolsaDeElixir(getBolsaDeElixir()+1);
