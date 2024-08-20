@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * @author marlon
+ **/
+
 public class Iniciar extends JFrame implements ActionListener {
     
     private JButton btnJogar;
@@ -73,13 +77,20 @@ public class Iniciar extends JFrame implements ActionListener {
             this.dispose(); 
             Dungeon_Fighter dungeonFighter = new Dungeon_Fighter();
             dungeonFighter.mostrarJanela(); // Abre a nova tela
-        } /*else if(e.getSource() == btnDebug){
-        
-        }*/ //em desenvolvimento
+        } else if(e.getSource() == btnDebug){
+            JFrame frame = new JFrame("Tabuleiro");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(800, 400);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new Tabuleiro(true));
+            frame.setVisible(true);
+        }
     }
     
     public static void main(String[] args) {
-        Iniciar firstFrameApp = new Iniciar();
-        firstFrameApp.mostrarJanela();
+        Iniciar iniciar = new Iniciar();
+        iniciar.mostrarJanela();
     }
 }
