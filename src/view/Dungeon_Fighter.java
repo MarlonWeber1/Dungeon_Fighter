@@ -122,9 +122,8 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
                 new EscolherHeroi(nomeUsuario); // Chamada simplificada
             } else {
                 JOptionPane.showMessageDialog(this, "Verifique se as informações estão preenchidas corretamente.");
-    }
-}
-
+            }
+        }
     }
 
     public static void main(String[] args) {

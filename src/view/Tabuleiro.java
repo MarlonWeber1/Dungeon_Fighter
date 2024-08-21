@@ -36,6 +36,10 @@ public class Tabuleiro extends JPanel {
     *   C = chefao
      */
 
+    public boolean isDebugging() {
+        return debugging;
+    }
+
     private void criarTabuleiro() {
 
         // preeche a matriz do tabuleiro com espaços "vazios"

@@ -2,6 +2,7 @@ package modelDominio;
 import view.Tabuleiro;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -79,10 +80,14 @@ public class ComecarJogo {
         int linhaAtual = heroi.getPosLinha();
         int colunaAtual = heroi.getPosColuna();
 
-        if (novaColuna == colunaAtual + 1 && novaLinha == linhaAtual ||  // movimento para direita
-            novaColuna == colunaAtual - 1 && novaLinha == linhaAtual ||  // movimento pra esquerda
-            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual ||  // movimento para cima
-            novaLinha== linhaAtual - 1 && novaColuna == colunaAtual) {   // movimento para baixo
+        if (novaColuna == colunaAtual + 1 && novaLinha == linhaAtual ||
+            novaColuna == colunaAtual - 1 && novaLinha == linhaAtual ||
+            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual ||
+            novaLinha == linhaAtual - 1 && novaColuna == colunaAtual ||
+            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual + 1 ||
+            novaLinha == linhaAtual - 1 && novaColuna == colunaAtual -1  ||
+            novaLinha == linhaAtual - 1 && novaColuna == colunaAtual + 1 ||
+            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual - 1  ){
 
             // so vai verificar oque tem na nova posicao se o movimento e valido
             verificaMov(novaLinha,novaColuna,linhaAtual,colunaAtual);
@@ -115,7 +120,55 @@ public class ComecarJogo {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
                 // define o texto do botão como o caractere correspondente no tabuleiro
-                tabuleiro.botoes[i][j].setText(String.valueOf(tabuleiro.tabuleiro[i][j]));
+                if (tabuleiro.isDebugging())
+                {
+                    // mostra oque tem em cada celula
+                    if (tabuleiro.tabuleiro[i][j] == 'M') {
+                        tabuleiro.botoes[i][j].setBackground(Color.red);
+                        tabuleiro.botoes[i][j].setText("Monstro");
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == '*') {
+                        tabuleiro.botoes[i][j].setBackground(Color.white);
+                        tabuleiro.botoes[i][j].setText(String.valueOf(tabuleiro.tabuleiro[i][j]));
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == 'A' || tabuleiro.tabuleiro[i][j] == 'R') {
+                        tabuleiro.botoes[i][j].setBackground(Color.gray);
+                        tabuleiro.botoes[i][j].setText("Armadilha");
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == 'e') {
+                        tabuleiro.botoes[i][j].setBackground(Color.cyan);
+                        tabuleiro.botoes[i][j].setText("Elixir");
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == 'I') {
+                        tabuleiro.botoes[i][j].setBackground(Color.magenta);
+                        tabuleiro.botoes[i][j].setText("Heroi");
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == 'C') {
+                        tabuleiro.botoes[i][j].setBackground(Color.black);
+                        tabuleiro.botoes[i][j].setText("Chefão");
+                        tabuleiro.botoes[i][j].setForeground(Color.white);
+                    }
+                }
+                else {
+                    // esconde todos os elementos fora a posicao do heroi e do chefão
+                    if (tabuleiro.tabuleiro[i][j] == '*' ||
+                        tabuleiro.tabuleiro[i][j] == 'M' ||
+                        tabuleiro.tabuleiro[i][j] == 'A' ||
+                        tabuleiro.tabuleiro[i][j] == 'R' ||
+                        tabuleiro.tabuleiro[i][j] == 'e' ) {
+                        tabuleiro.botoes[i][j].setBackground(Color.gray);
+                        tabuleiro.botoes[i][j].setText("*");
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == 'I') {
+                        tabuleiro.botoes[i][j].setBackground(Color.white);
+                        tabuleiro.botoes[i][j].setText("Você");
+                    }
+                    else if (tabuleiro.tabuleiro[i][j] == 'C') {
+                        tabuleiro.botoes[i][j].setBackground(Color.black);
+                        tabuleiro.botoes[i][j].setText("Chefão");
+                        tabuleiro.botoes[i][j].setForeground(Color.white);
+                    }
+                }
             }
         }
     }
@@ -131,7 +184,7 @@ public class ComecarJogo {
         } else
         {
             // devera aparecer uma mensagem que o usuario usou todas as dicas
-            System.out.println("você usou todas as dicas!");
+            System.out.println("Você usou todas as dicas!");
         }
     }
 }
