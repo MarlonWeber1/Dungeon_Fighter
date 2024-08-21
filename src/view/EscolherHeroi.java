@@ -4,8 +4,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import modelDominio.Barbaro;
 import modelDominio.Guerreiro;
 import modelDominio.Heroi;
+import modelDominio.Paladino;
+
+/**
+ * @author marlon
+ **/
 
 public class EscolherHeroi extends JFrame implements ActionListener {
 
@@ -14,12 +20,14 @@ public class EscolherHeroi extends JFrame implements ActionListener {
     private JRadioButton rbHeroi3;
     private JButton btnContinuar;
     private JLabel lblNomeUsuario;
+    private Heroi heroiSelecionado;
 
     public EscolherHeroi(String nomeUsuario) {
         // Construtor que recebe o nome do usuário
         lblNomeUsuario = new JLabel("Bem-vindo, " + nomeUsuario);
         lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNomeUsuario.setBorder(BorderFactory.createEmptyBorder(25, 40, 0, 0));
 
         // Configuração da janela
         setTitle("Escolher Herói");
@@ -32,7 +40,7 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         // Carrega as imagens e cria JLabels para exibi-las
         ImageIcon imagemPaladino = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
         ImageIcon imagemGuerreiro = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
-        ImageIcon imagemBarbaro = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
+        ImageIcon imagemBarbaro = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
 
         JLabel lblPaladino = new JLabel(imagemPaladino);
         JLabel lblGuerreiro = new JLabel(imagemGuerreiro);
@@ -80,6 +88,21 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         c.gridx = 2;
         pEscolherHeroi.add(rbHeroi3, c);
+        
+        rbHeroi1.addActionListener(e -> {
+            // Se "Guerreiro" for selecionado
+            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario, 0, 0); // Exemplo de instância
+        });
+        
+        rbHeroi2.addActionListener(e ->{
+            // Se "Paladino" for selecionado
+            heroiSelecionado = new Paladino(120, 60, 180, 200, nomeUsuario, 0, 0); // Exemplo de instância
+        });
+        
+        rbHeroi3.addActionListener(e ->{
+            // Se "Barbaro" for selecionado
+            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario, 0, 0); // Exemplo de instância
+        });   
 
         // Painéis principais para imagem e botões
         JPanel pPrincipal = new JPanel();
@@ -134,11 +157,13 @@ public class EscolherHeroi extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnContinuar) {
-            System.out.println("botao clicado");
             if (rbHeroi1.isSelected() || rbHeroi2.isSelected() || rbHeroi3.isSelected()) {
                 // Se algum radio button estiver selecionado, abre a nova tela
-                System.out.println("Herói selecionado");
-                // Implementar a lógica para abrir a nova tela
+                DetalhesHeroi detalhesHeroi = new DetalhesHeroi(heroiSelecionado);
+                detalhesHeroi.setVisible(true);
+                
+                System.out.println("" + heroiSelecionado/*.imprimir()*/);
+                this.dispose(); // Fecha a janela atual
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um herói.");
             }
