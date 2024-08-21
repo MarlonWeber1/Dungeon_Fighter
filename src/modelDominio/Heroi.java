@@ -1,16 +1,16 @@
 package modelDominio;
 
+import view.Tabuleiro;
+
 public abstract class Heroi extends Entidade{
     private String nome;
     private int bolsaDeElixir = 0;
     private int posLinha;
     private int posColuna;
 
-    public Heroi(double defesa, double ataque, double saude, String nome, int inicioLin, int inicioCol) {
+    public Heroi(double defesa, double ataque, double saude, String nome) {
         super(defesa,ataque,saude);
         this.nome = nome;
-        this.posLinha = inicioLin;
-        this.posColuna =  inicioCol;
     }
 
     public String getNome() {
@@ -31,8 +31,25 @@ public abstract class Heroi extends Entidade{
 
     public abstract void ataqueEspecial ();
 
-    public void danoArmadilha (Armadilha dano) { // saude diminui 10
-        this.setSaude(this.getSaude() - dano.getDano());
+    public void incrementaSaude() {
+        this.setSaude(this.getSaude()+10);
+    }
+    public void decrementaSaude() {
+        this.setSaude(this.getSaude()-10);
+    }
+
+    public void incrementaDefesa() {
+        this.setDefesa(this.getDefesa()+10);
+    }
+    public void decrementaDefesa() {
+        this.setDefesa(this.getDefesa()-10);
+    }
+
+    public void incrementaAtaque() {
+        this.setAtaque(this.getAtaque()+10);
+    }
+    public void decrementaAtaque() {
+        this.setAtaque(this.getAtaque()-10);
     }
 
     public int getPosLinha() {
@@ -49,11 +66,6 @@ public abstract class Heroi extends Entidade{
 
     public void setPosColuna(int posColuna) {
         this.posColuna = posColuna;
-    }
-
-    public void posicaoInicial (int colunaInicial) {
-        setPosColuna(colunaInicial);
-        setPosLinha(0);
     }
 
     public void achouElixir () {
