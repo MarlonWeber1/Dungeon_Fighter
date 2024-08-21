@@ -1,6 +1,10 @@
 package modelDominio;
 import view.Tabuleiro;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class ComecarJogo {
     private Heroi heroi;
     private Tabuleiro tabuleiro;
@@ -18,6 +22,8 @@ public class ComecarJogo {
         this.arma = armaN;
         this.armaR = armaR;
         posicaoInicial();
+        criarBotoes();
+        atualizarBotoes();
     }
 
     // metodos para o inicio do jogo
@@ -40,86 +46,79 @@ public class ComecarJogo {
 
     // retorna a proxima prosicao para que a funcao de movimento do heroi funcione corretamente
 
-    public int verificaCol(int proxPosicao) {
-        if (proxPosicao > 9 || proxPosicao < 0) {
-            proxPosicao -= 1;
-            System.out.println("movimento nao permitido");
-            return proxPosicao;
-        }
-        else if (tabuleiro.tabuleiro[heroi.getPosLinha()][proxPosicao] == 'e') {
+    public void verificaMov(int novaLinha, int novaColuna, int linhaAtual, int colunaAtual) {
+        if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'e') {
             heroi.achouElixir();
             System.out.println("elixir adicionado a bolsa");
         }
-        else if (tabuleiro.tabuleiro[heroi.getPosLinha()][proxPosicao] == 'M') {
+        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'M') {
             System.out.println("monstro!!!");
         }
-        else if (tabuleiro.tabuleiro[heroi.getPosLinha()][proxPosicao] == 'A') {
+        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
             this.danoArmadilha(arma.getDano());
             System.out.println("armadilha normal");
         }
-        else if (tabuleiro.tabuleiro[heroi.getPosLinha()][proxPosicao] == 'R') {
+        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'R') {
             this.danoArmadilha(armaR.gerarDanoAleatorio());
             System.out.println("armadilha random");
             System.out.println(heroi.getSaude());
         }
-        return proxPosicao;
-    }
+        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'C') {
+            System.out.println("Boss battle!!@!");
+        }
 
-    public int verificaLin(int proxPosicao) {
-        if (proxPosicao > 4 || proxPosicao < 0) {
-            proxPosicao -= 1;
-            System.out.println("movimento nao permitido");
-            return proxPosicao;
-        }
-        else if (tabuleiro.tabuleiro[proxPosicao][heroi.getPosColuna()] == 'e') {
-            heroi.achouElixir();
-            System.out.println("elixir adicionado a bolsa");
-        }
-        else if (tabuleiro.tabuleiro[proxPosicao][heroi.getPosColuna()] == 'M') {
-            System.out.println("monstro!!!!");
-        }
-        else if (tabuleiro.tabuleiro[proxPosicao][heroi.getPosColuna()] == 'A') {
-            this.danoArmadilha(arma.getDano());
-            System.out.println("armadilha normal");
-            System.out.println(heroi.getSaude());
-        }
-        else if (tabuleiro.tabuleiro[proxPosicao][heroi.getPosColuna()] == 'R') {
-            this.danoArmadilha(armaR.gerarDanoAleatorio());
-            System.out.println("armadilha random");
-            System.out.println(heroi.getSaude());
-        }
-        return proxPosicao;
+        // limpa a posição atual do herói
+        tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
+        // move o herói para a nova posição
+        tabuleiro.tabuleiro[novaLinha][novaColuna] = 'I';
     }
 
     // movimentacao para do heroi
-    public void moveCima () {
-        int prox = (heroi.getPosLinha() + 1);
-        prox = verificaLin(prox);
-        heroi.setPosLinha(prox);
-        tabuleiro.tabuleiro[heroi.getPosLinha()][heroi.getPosColuna()] = 'H';
+    public void moverHeroi(int novaLinha, int novaColuna) {
+
+        int linhaAtual = heroi.getPosLinha();
+        int colunaAtual = heroi.getPosColuna();
+
+        if (novaColuna == colunaAtual + 1 && novaLinha == linhaAtual ||  // movimento para direita
+            novaColuna == colunaAtual - 1 && novaLinha == linhaAtual ||  // movimento pra esquerda
+            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual ||  // movimento para cima
+            novaLinha== linhaAtual - 1 && novaColuna == colunaAtual) {   // movimento para baixo
+
+            // so vai verificar oque tem na nova posicao se o movimento e valido
+            verificaMov(novaLinha,novaColuna,linhaAtual,colunaAtual);
+
+            heroi.setPosLinha(novaLinha);
+            heroi.setPosColuna(novaColuna);
+        }
+        atualizarBotoes();
     }
 
-    public void moveBaixo () {
-        int prox = (heroi.getPosLinha() + 1);
-        prox = verificaLin(prox);
-        heroi.setPosLinha(prox);
-        tabuleiro.tabuleiro[heroi.getPosLinha()][heroi.getPosColuna()] = 'H';
+
+
+    private void criarBotoes() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                tabuleiro.botoes[i][j] = new JButton(); // cria um novo botão
+                final int lin = i;
+                final int col = j;
+                tabuleiro.botoes[i][j].addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moverHeroi(lin, col); // mover o herói para a posição clicada
+                    }
+                });
+                tabuleiro.add(tabuleiro.botoes[i][j]); // adiciona o botão ao painel
+            }
+        }
     }
 
-    public void moveDir () {
-        int prox = (heroi.getPosColuna() + 1);
-        prox = verificaCol(prox);
-        heroi.setPosColuna(prox);
-        tabuleiro.tabuleiro[heroi.getPosLinha()][heroi.getPosColuna()] = 'H';
+    public void atualizarBotoes() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                // define o texto do botão como o caractere correspondente no tabuleiro
+                tabuleiro.botoes[i][j].setText(String.valueOf(tabuleiro.tabuleiro[i][j]));
+            }
+        }
     }
-
-    public void moveEsq () {
-        int prox = (heroi.getPosColuna() + 1);
-        prox = verificaCol(prox);
-        heroi.setPosColuna(prox);
-        tabuleiro.tabuleiro[heroi.getPosLinha()][heroi.getPosColuna()] = 'H';
-    }
-
 
     // metodo de usar dica
     // retorna numero de armadilhas

@@ -1,5 +1,8 @@
 package view;
 
+import modelDominio.ComecarJogo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import javax.swing.*;
 
@@ -8,16 +11,14 @@ import javax.swing.*;
  */
 
 public class Tabuleiro extends JPanel {
-    public final char[][] tabuleiro = new char[5][10];
-    private final JButton[][] botoes = new JButton[5][10];
+    public char[][] tabuleiro = new char[5][10];
+    public JButton[][] botoes = new JButton[5][10];
     private boolean debugging;
 
     public Tabuleiro (boolean debug) {
         this.debugging = debug;
         setLayout(new GridLayout(5, 10));
         criarTabuleiro();
-        criarBotoes();
-        atualizarBotoes();
 
         // força a revalidação e repintura do painel
         revalidate();
@@ -149,23 +150,4 @@ public class Tabuleiro extends JPanel {
         }
         return 777;
     }
-
-    private void criarBotoes() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 10; j++) {
-                botoes[i][j] = new JButton(); // cria um novo botão
-                add(botoes[i][j]); // adiciona o botão ao painel
-            }
-        }
-    }
-
-    private void atualizarBotoes() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 10; j++) {
-                // define o texto do botão como o caractere correspondente no tabuleiro
-                botoes[i][j].setText(String.valueOf(tabuleiro[i][j]));
-            }
-        }
-    }
-
 }
