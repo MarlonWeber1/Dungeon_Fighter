@@ -25,9 +25,12 @@ public class EscolherHeroi extends JFrame implements ActionListener {
     public EscolherHeroi(String nomeUsuario) {
         // Construtor que recebe o nome do usuário
         lblNomeUsuario = new JLabel("Bem-vindo, " + nomeUsuario);
-        lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 32));
         lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNomeUsuario.setBorder(BorderFactory.createEmptyBorder(25, 40, 0, 0));
+        lblNomeUsuario.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
+        lblNomeUsuario.setForeground(Color.WHITE); // Configura a cor do texto do JLabel
+        lblNomeUsuario.setOpaque(true); // Necessário para que a cor de fundo funcione
+        lblNomeUsuario.setBackground(Color.DARK_GRAY);
 
         // Configuração da janela
         setTitle("Escolher Herói");
@@ -39,7 +42,7 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         // Carrega as imagens e cria JLabels para exibi-las
         ImageIcon imagemPaladino = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
-        ImageIcon imagemGuerreiro = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
+        ImageIcon imagemGuerreiro = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
         ImageIcon imagemBarbaro = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
 
         JLabel lblPaladino = new JLabel(imagemPaladino);
@@ -65,12 +68,21 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         JPanel pEscolherHeroi = new JPanel();
         pEscolherHeroi.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(110, 110, 110, 110); 
+        c.insets = new Insets(110, 110, 110, 110);         
+        pEscolherHeroi.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel
 
         // Declaração dos componentes
         rbHeroi1 = new JRadioButton("Guerreiro");
         rbHeroi2 = new JRadioButton("Paladino");
         rbHeroi3 = new JRadioButton("Barbaro");
+
+        // Configura a cor dos textos e do fundo dos JRadioButtons
+        rbHeroi1.setForeground(Color.WHITE);
+        rbHeroi2.setForeground(Color.WHITE);
+        rbHeroi3.setForeground(Color.WHITE);
+        rbHeroi1.setBackground(Color.DARK_GRAY);
+        rbHeroi2.setBackground(Color.DARK_GRAY);
+        rbHeroi3.setBackground(Color.DARK_GRAY);
 
         // Agrupamento dos radio buttons em um ButtonGroup
         ButtonGroup grupo = new ButtonGroup();
@@ -88,20 +100,21 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         c.gridx = 2;
         pEscolherHeroi.add(rbHeroi3, c);
-        
+
+        // Configuração das ações dos radio buttons
         rbHeroi1.addActionListener(e -> {
             // Se "Guerreiro" for selecionado
-            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario, 0, 0); // Exemplo de instância
+            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario); 
         });
-        
-        rbHeroi2.addActionListener(e ->{
+
+        rbHeroi2.addActionListener(e -> {
             // Se "Paladino" for selecionado
-            heroiSelecionado = new Paladino(120, 60, 180, 200, nomeUsuario, 0, 0); // Exemplo de instância
+            heroiSelecionado = new Paladino(120, 60, 180, 200, nomeUsuario); 
         });
-        
-        rbHeroi3.addActionListener(e ->{
+
+        rbHeroi3.addActionListener(e -> {
             // Se "Barbaro" for selecionado
-            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario, 0, 0); // Exemplo de instância
+            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario); 
         });   
 
         // Painéis principais para imagem e botões
@@ -109,7 +122,8 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         pPrincipal.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(30, 30, 30, 30); 
-
+        pPrincipal.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel principal
+    
         // Adiciona as imagens e os botões ao painel principal
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -137,12 +151,15 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         // Botão Continuar
         btnContinuar = new JButton("Continuar");
+        btnContinuar.setForeground(Color.black); // Configura a cor do texto do botão
+        btnContinuar.setBackground(Color.white); // Configura a cor de fundo do botão
         btnContinuar.addActionListener(this);
 
         // Painel para o botão Continuar
         JPanel pBotao = new JPanel();
         pBotao.setLayout(new FlowLayout(FlowLayout.RIGHT)); 
-        pBotao.add(btnContinuar);
+        pBotao.add(btnContinuar);        
+        pBotao.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel do botão
 
         // Adiciona o painel com o botão ao frame
         add(pBotao, BorderLayout.SOUTH);
@@ -150,7 +167,6 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         // Adiciona ao painel o Bem-vindo, lblNomeUsuario
         add(lblNomeUsuario, BorderLayout.NORTH);
 
-        // Torna a janela visível
         setVisible(true);
     }
 

@@ -4,6 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import modelDominio.Armadilha;
+import modelDominio.ArmadilhaRandom;
+import modelDominio.Chefao;
+import modelDominio.ComecarJogo;
+import modelDominio.Guerreiro;
+import modelDominio.MonstroComum;
 
 /**
  * @author marlon
@@ -78,13 +84,19 @@ public class Iniciar extends JFrame implements ActionListener {
             Dungeon_Fighter dungeonFighter = new Dungeon_Fighter();
             dungeonFighter.mostrarJanela(); // Abre a nova tela
         } else if(e.getSource() == btnDebug){
+            ArmadilhaRandom armaR = new ArmadilhaRandom();
+            Armadilha armaN = new Armadilha();
+            MonstroComum monstroComum = new MonstroComum();
+            Chefao chefao = new Chefao();
+            Guerreiro heroi = new Guerreiro(100,100,100,"dode");
+            Tabuleiro tabuleiro = new Tabuleiro(true);
+
+            ComecarJogo jogo = new ComecarJogo(heroi,tabuleiro,monstroComum, chefao, armaN, armaR);
+
             JFrame frame = new JFrame("Tabuleiro");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 400);
-            setLocationRelativeTo(null);
-            setResizable(false);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new Tabuleiro(true));
+            frame.add(tabuleiro);
             frame.setVisible(true);
         }
     }
