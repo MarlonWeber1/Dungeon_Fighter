@@ -12,5 +12,4 @@ public abstract class Monstro extends Entidade{
         System.out.println(this.getDefesa());
         System.out.println(this.getSaude());
     }
-
 }

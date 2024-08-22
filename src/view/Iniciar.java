@@ -1,15 +1,11 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
-import modelDominio.Armadilha;
-import modelDominio.ArmadilhaRandom;
-import modelDominio.Chefao;
 import modelDominio.ComecarJogo;
 import modelDominio.Guerreiro;
-import modelDominio.MonstroComum;
+
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 /**
  * @author marlon
@@ -80,23 +76,36 @@ public class Iniciar extends JFrame implements ActionListener {
         if (e.getSource() == btnSair) {
             this.dispose();  // Fecha a janela
         } else if (e.getSource() == btnJogar) {
-            this.dispose(); 
+            this.dispose();
             Dungeon_Fighter dungeonFighter = new Dungeon_Fighter();
             dungeonFighter.mostrarJanela(); // Abre a nova tela
-        } else if(e.getSource() == btnDebug){
-            ArmadilhaRandom armaR = new ArmadilhaRandom();
-            Armadilha armaN = new Armadilha();
-            MonstroComum monstroComum = new MonstroComum();
-            Chefao chefao = new Chefao();
-            Guerreiro heroi = new Guerreiro(100,100,100,"dode");
-            Tabuleiro tabuleiro = new Tabuleiro(true);
+        } else if (e.getSource() == btnDebug) {
+            // Fecha a tela atual
+            this.dispose();
 
-            ComecarJogo jogo = new ComecarJogo(heroi,tabuleiro,monstroComum, chefao, armaN, armaR);
+            // Configura o herói e o jogo
+            Guerreiro heroi = new Guerreiro(100, 100, 100, "jvtips");
+            ComecarJogo jogo = new ComecarJogo(heroi, true);
 
+            // Cria a janela de debug
             JFrame frame = new JFrame("Tabuleiro");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setSize(800, 400);
-            frame.add(tabuleiro);
+            frame.add(jogo.tabuleiro);
+            frame.setLocationRelativeTo(null);
+            frame.setResizable(false);
+
+            // Adiciona um WindowListener para reabrir a tela inicial quando a janela de debug for fechada
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    // Reabre a tela inicial quando a janela de debug for fechada
+                    SwingUtilities.invokeLater(() -> {
+                        Iniciar iniciar = new Iniciar();
+                        iniciar.mostrarJanela();
+                    });
+                }
+            });
             frame.setVisible(true);
         }
     }

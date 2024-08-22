@@ -1,8 +1,5 @@
 package view;
 
-import modelDominio.ComecarJogo;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import javax.swing.*;
 
@@ -152,6 +149,6 @@ public class Tabuleiro extends JPanel {
                 return i;
             }
         }
-        return 777;
+        return -1;
     }
 }

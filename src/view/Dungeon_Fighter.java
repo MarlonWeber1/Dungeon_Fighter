@@ -125,16 +125,6 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
 
-        Guerreiro heroi = new Guerreiro(100,100,100,"dode");
-
-        ComecarJogo jogo = new ComecarJogo(heroi);
-
-        JFrame frame = new JFrame("Tabuleiro");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 400);
-        frame.add(jogo.tabuleiro);
-        frame.setVisible(true);
-
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();
     }

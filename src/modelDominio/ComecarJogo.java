@@ -14,13 +14,13 @@ public class ComecarJogo {
     private ArmadilhaRandom armaR;
     private int dicas = 3;
 
-    public ComecarJogo(Heroi heroi) {
+    public ComecarJogo(Heroi heroi, boolean debug) {
         this.heroi = heroi;
         this.armaR = new ArmadilhaRandom();
         this.arma = new Armadilha();
         this.monstro = new MonstroComum();
         this.chefao = new Chefao();
-        this.tabuleiro = new Tabuleiro(false);
+        this.tabuleiro = new Tabuleiro(debug);
         posicaoInicial();
         criarBotoesTab();
         atualizarBotoesTab();
@@ -36,6 +36,52 @@ public class ComecarJogo {
     // diminui a saude do heroi baseado no tipo de armadilha
     public void danoArmadilha (double dano) {
         heroi.setSaude(heroi.getSaude() - dano);
+    }
+
+    public void acaoHeroi (int identificaAcao, Monstro monstro) {
+
+        // 0 -> atacar
+        // 1 -> tomar elixir
+        // 2 -> habilidade especial
+
+        if (identificaAcao == 0) {
+            heroi.atacar(monstro);
+        }
+        else if (identificaAcao == 1) {
+            heroi.tomarElixir();
+        }
+        else if (identificaAcao == 2) {
+            heroi.ataqueEspecial();
+        }
+    }
+
+    public void batalha (Monstro monstro) {
+        while (heroi.estaVivo() && monstro.estaVivo()) {
+
+            // acaoHeroi(identificaAcao, monstro); // adicionar event listner para que a funcao seja acionada apenas quando o usuario clicar em um dos botoes
+                                                    // indentifica acao vai depender do botao clicado
+
+
+
+            if (monstro.estaVivo()) {
+                // atualiza a vida do monstro na interface
+                monstro.atacar(heroi);
+            }
+
+            // se monstro estiver morto a funcao while nao vai rodar novamente
+            // mesma coisa para o heroi
+        }
+        if (!heroi.estaVivo()) {
+            // game over
+            // tela com 3 opcoes
+            // novo jogo, tentar novamente, sair
+        }
+        else if (!monstro.estaVivo()) {
+            // matou monstro
+            // popup matou monstro
+            // fecha a tela quando fechar o popup
+            // a funcao mover continua (o heroi vai pra celula do monstro)
+        }
     }
 
 
@@ -54,14 +100,15 @@ public class ComecarJogo {
 
             // comeca batalha
             // se ganhar batalha se move para a celula
-            JOptionPane.showMessageDialog(tabuleiro, "Voce encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
 
+            // abre uma nova janela
 
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
             this.danoArmadilha(arma.getDano());
             System.out.println("armadilha normal");
-            JOptionPane.showMessageDialog(tabuleiro, "Voce caiu em uma armadilha normal, sua vida caiu para: " + heroi.getSaude(), "Armadilha", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha normal, sua vida caiu para: " + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE);
 
 
             // popup avisando que caiu em uma armadilha
@@ -71,7 +118,7 @@ public class ComecarJogo {
             this.danoArmadilha(damage);
             System.out.println("armadilha random");
             System.out.println(heroi.getSaude());
-            JOptionPane.showMessageDialog(tabuleiro, "Voce caiu em uma armadilha, o dano foi de " + damage + ". Sua vida caiu para:" + heroi.getSaude(), "Armadilha de dano aleatorio", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha, o dano foi de " + damage + " e sua vida caiu para:" + heroi.getSaude() + ".", "Armadilha de dano aleatorio", JOptionPane.INFORMATION_MESSAGE);
 
 
             // popup avisando que caiu em uma armadilha
@@ -119,15 +166,6 @@ public class ComecarJogo {
         }
         atualizarBotoesTab();
     }
-
-    public void criarBotoesAcoes () {
-
-    }
-
-    public void atualizarBotoesAcoes (char celula) {
-
-    }
-
 
     private void criarBotoesTab() {
         for (int i = 0; i < 5; i++) {
