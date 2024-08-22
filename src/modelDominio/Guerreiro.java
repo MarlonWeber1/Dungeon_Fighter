@@ -1,6 +1,5 @@
 package modelDominio;
 
-import view.Tabuleiro;
 
 public class Guerreiro extends Heroi{
     private final double defesaAumentada = this.getDefesa()*1.5;

@@ -1,7 +1,5 @@
 package modelDominio;
 
-import view.Tabuleiro;
-
 public abstract class Heroi extends Entidade{
     private String nome;
     private int bolsaDeElixir = 0;
