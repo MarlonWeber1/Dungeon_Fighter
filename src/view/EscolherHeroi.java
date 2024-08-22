@@ -91,17 +91,17 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         
         rbHeroi1.addActionListener(e -> {
             // Se "Guerreiro" for selecionado
-            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario, 0, 0); // Exemplo de instância
+            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario); // Exemplo de instância
         });
         
         rbHeroi2.addActionListener(e ->{
             // Se "Paladino" for selecionado
-            heroiSelecionado = new Paladino(120, 60, 180, 200, nomeUsuario, 0, 0); // Exemplo de instância
+            heroiSelecionado = new Paladino(120, 60, 180, 200, nomeUsuario); // Exemplo de instância
         });
         
         rbHeroi3.addActionListener(e ->{
             // Se "Barbaro" for selecionado
-            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario, 0, 0); // Exemplo de instância
+            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario); // Exemplo de instância
         });   
 
         // Painéis principais para imagem e botões

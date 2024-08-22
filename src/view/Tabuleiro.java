@@ -51,7 +51,7 @@ public class Tabuleiro extends JPanel {
         }
 
         // determina posicao inicial do Heroi em uma coluna aleatoria da primeira linha
-        tabuleiro[0][colunaRandom()] = 'I';
+        tabuleiro[0][colunaRandom()] = 'H';
 
         // posiciona o Chefão em uma coluna aleatoria da ultima linha
         tabuleiro[4][colunaRandom()] = 'C';
@@ -88,7 +88,7 @@ public class Tabuleiro extends JPanel {
         for (int i = 0; i<5; i++) {
             int col = colunaRandom();
             // garante que o monstro nao ira sobrepor o spawn do jogador ou do chefao
-            while (tabuleiro[i][col] == 'C' || tabuleiro[i][col] == 'I') {
+            while (tabuleiro[i][col] == 'C' || tabuleiro[i][col] == 'H') {
                 col = colunaRandom();
             }
             tabuleiro[i][col] = 'M';
@@ -148,7 +148,7 @@ public class Tabuleiro extends JPanel {
 
     public int getColunaInicial() {
         for (int i = 0; i < 10; i++) {
-            if (tabuleiro[0][i] == 'I') {
+            if (tabuleiro[0][i] == 'H') {
                 return i;
             }
         }

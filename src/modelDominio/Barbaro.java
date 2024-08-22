@@ -1,7 +1,5 @@
 package modelDominio;
 
-import view.Tabuleiro;
-
 public class Barbaro extends Heroi {
     private final double danoDoAtaqueEspecial = this.getAtaque()*1.5; // dano para habilidade especial: um ataque com 50% de dano a mais
 

@@ -1,7 +1,5 @@
 package modelDominio;
 
-import view.Tabuleiro;
-
 public class Paladino extends Heroi {
     private final double saudeTotal; // guarda a vida total do paladino para seu ataque especial
 
