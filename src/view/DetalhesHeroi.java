@@ -14,16 +14,25 @@ import modelDominio.Paladino;
  * @author marlon
  **/
 
-class DetalhesHeroi extends JFrame{
+class DetalhesHeroi extends JFrame {
 
-    private JLabel lblNomeUsuario;
-    private JLabel lblClasseUsuario;
-    private JLabel lblAtaqueUsuario;
-    private JLabel lblSaudeUsuario;
-    private JLabel lblDefesaUsuario;
-    private JLabel lblImagemHeroi;
+    private final JLabel lblNomeUsuario;
+    private final JLabel lblClasseUsuario;
+    private final JLabel lblAtaqueUsuario;
+    private final JLabel lblSaudeUsuario;
+    private final JLabel lblDefesaUsuario;
+    private final JLabel lblImagemHeroi;
+    private final JButton btnContinuar;
+
+    private JLabel lblValorAtaque;
+    private JLabel lblValorSaude;
+    private JLabel lblValorDefesa;
+    private JLabel lblPontosRestantes;
+
+    private int pontosRestantes = 100; // Pontos que podem ser distribuídos 
     
     
+
     DetalhesHeroi(Heroi heroiSelecionado) {
 
         setTitle("Detalhes Herói");
@@ -32,6 +41,11 @@ class DetalhesHeroi extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Valores iniciais dos atributos
+        final double ataqueInicial = heroiSelecionado.getAtaque();
+        final double saudeInicial = heroiSelecionado.getSaude();
+        final double defesaInicial = heroiSelecionado.getDefesa();
+
         // Painel principal
         JPanel painelPrincipal = new JPanel(new BorderLayout());
 
@@ -39,8 +53,7 @@ class DetalhesHeroi extends JFrame{
         pEsquerdo.setLayout(new BoxLayout(pEsquerdo, BoxLayout.Y_AXIS));
         pEsquerdo.setPreferredSize(new Dimension(250, getHeight()));
         pEsquerdo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        pEsquerdo.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel esquerdo
-    
+        pEsquerdo.setBackground(Color.DARK_GRAY);
 
         // Adicionando padding interno ao painelEsquerdo
         pEsquerdo.setBorder(BorderFactory.createCompoundBorder(
@@ -54,8 +67,8 @@ class DetalhesHeroi extends JFrame{
         pImagemHeroi.setMaximumSize(new Dimension(200, 200));
         pImagemHeroi.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         pImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pImagemHeroi.setBackground(Color.LIGHT_GRAY); // Configura a cor de fundo do painel principal
-        
+        pImagemHeroi.setBackground(Color.LIGHT_GRAY);
+
         // Determine a imagem com base no herói selecionado
         ImageIcon iHeroi;
         if (heroiSelecionado instanceof Barbaro) {
@@ -84,7 +97,7 @@ class DetalhesHeroi extends JFrame{
         
         // Configura a fonte e cor do texto dos JLabel
         lblNomeUsuario.setForeground(Color.WHITE);
-        lblNomeUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblClasseUsuario.setForeground(Color.WHITE); 
         lblClasseUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         lblAtaqueUsuario.setForeground(Color.WHITE); 
@@ -118,18 +131,211 @@ class DetalhesHeroi extends JFrame{
         pEsquerdo.add(lblSaudeUsuario);
         pEsquerdo.add(lblDefesaUsuario);
 
-        // Painel direito para modificações futuras
-        JPanel pDireita = new JPanel();
-        painelPrincipal.add(pDireita, BorderLayout.CENTER);
+        // Painel direito para os botões e atributos
+        JPanel pDireita = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        
+        // Pontos Restantes no canto superior direito
+        lblPontosRestantes = new JLabel("Pontos Restantes: " + pontosRestantes);
+        gbc.gridx = 5;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        pDireita.add(lblPontosRestantes, gbc);
 
-        // Adicionando os painéis ao painel principal
+        // Botões e labels de Ataque
+        JLabel lblAtaque = new JLabel("Ataque");
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        pDireita.add(lblAtaque, gbc);
+
+        JButton btnAtaqueMenos = new JButton("-");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        pDireita.add(btnAtaqueMenos, gbc);
+
+        lblValorAtaque = new JLabel(String.valueOf(heroiSelecionado.getAtaque()));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        pDireita.add(lblValorAtaque, gbc);
+
+        JButton btnAtaqueMais = new JButton("+");
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        pDireita.add(btnAtaqueMais, gbc);
+
+        // Botões e labels de Saúde
+        JLabel lblSaude = new JLabel("Saúde");
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        pDireita.add(lblSaude, gbc);
+
+        JButton btnSaudeMenos = new JButton("-");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        pDireita.add(btnSaudeMenos, gbc);
+
+        lblValorSaude = new JLabel(String.valueOf(heroiSelecionado.getSaude()));
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        pDireita.add(lblValorSaude, gbc);
+
+        JButton btnSaudeMais = new JButton("+");
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        pDireita.add(btnSaudeMais, gbc);
+
+        // Botões e labels de Defesa
+        JLabel lblDefesa = new JLabel("Defesa");
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        pDireita.add(lblDefesa, gbc);
+
+        JButton btnDefesaMenos = new JButton("-");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        pDireita.add(btnDefesaMenos, gbc);
+
+        lblValorDefesa = new JLabel(String.valueOf(heroiSelecionado.getDefesa()));
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        pDireita.add(lblValorDefesa, gbc);
+
+        JButton btnDefesaMais = new JButton("+");
+        gbc.gridx = 2;
+        gbc.gridy = 6;
+        pDireita.add(btnDefesaMais, gbc);
+        
+        // Painel inferior para botões "Continuar" 
+        JPanel pInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Alinhado à esquerda
+        pInferior.setPreferredSize(new Dimension(100, 50));
+        pInferior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Botão Continuar
+        btnContinuar = new JButton("Continuar");
+        btnContinuar.setOpaque(true);
+        btnContinuar.setEnabled(false); // Inicialmente desabilitado
+        pInferior.add(btnContinuar);
+
+        // Adicionando o painel inferior ao painel direito
+        painelPrincipal.add(pInferior, BorderLayout.SOUTH);
+
+        // Adiciona o painel esquerdo e direito ao painel principal
         painelPrincipal.add(pEsquerdo, BorderLayout.WEST);
+        painelPrincipal.add(pDireita, BorderLayout.CENTER);
+        getContentPane().add(painelPrincipal);
 
-        // Adiciona o painel principal ao frame
-        add(painelPrincipal);
+        // Método para verificar se todos os pontos foram distribuídos
+        verificarPontosDistribuidos();
 
-        // Torna a janela visível
-        setVisible(true);
+        // Listeners de Botão
+        btnAtaqueMais.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (pontosRestantes > 0) {
+                    heroiSelecionado.incrementaAtaque();
+                    lblValorAtaque.setText(String.valueOf(heroiSelecionado.getAtaque()));
+                    pontosRestantes = pontosRestantes - 10;
+                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                    double ataqueDistribuido = Double.parseDouble(lblValorAtaque.getText()) 
+                        - heroiSelecionado.getAtaque();
+                    heroiSelecionado.setAtaque(heroiSelecionado.getAtaque() + ataqueDistribuido);
+                    lblAtaqueUsuario.setText("Ataque: " + heroiSelecionado.getAtaque());
+                    verificarPontosDistribuidos();
+                }
+            }
+        });
+        
+
+        btnAtaqueMenos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (heroiSelecionado.getAtaque() > ataqueInicial) {
+                    heroiSelecionado.decrementaAtaque();
+                    lblValorAtaque.setText(String.valueOf(heroiSelecionado.getAtaque()));
+                    pontosRestantes = pontosRestantes + 10;
+                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                    double ataqueDistribuido = Double.parseDouble(lblValorAtaque.getText()) 
+                        - heroiSelecionado.getAtaque();
+                    heroiSelecionado.setAtaque(heroiSelecionado.getAtaque() + ataqueDistribuido);
+                    lblAtaqueUsuario.setText("Ataque: " + heroiSelecionado.getAtaque());
+                    verificarPontosDistribuidos();
+                }
+            }
+        });
+
+        btnSaudeMais.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (pontosRestantes > 0) {
+                    heroiSelecionado.incrementaSaude();
+                    lblValorSaude.setText(String.valueOf(heroiSelecionado.getSaude()));
+                    pontosRestantes = pontosRestantes - 10;
+                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                    double saudeDistribuida = Double.parseDouble(lblValorSaude.getText()) 
+                        - heroiSelecionado.getSaude();
+                    heroiSelecionado.setSaude(heroiSelecionado.getSaude() + saudeDistribuida);
+                     lblSaudeUsuario.setText("Saúde: " + heroiSelecionado.getSaude());
+                     verificarPontosDistribuidos();
+                }
+            }
+        });
+
+        btnSaudeMenos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (heroiSelecionado.getSaude() > saudeInicial) {
+                    heroiSelecionado.decrementaSaude();
+                    lblValorSaude.setText(String.valueOf(heroiSelecionado.getSaude()));
+                    pontosRestantes = pontosRestantes + 10;
+                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                    double saudeDistribuida = Double.parseDouble(lblValorSaude.getText()) 
+                        - heroiSelecionado.getSaude();
+                    heroiSelecionado.setSaude(heroiSelecionado.getSaude() + saudeDistribuida);
+                     lblSaudeUsuario.setText("Saúde: " + heroiSelecionado.getSaude());
+                     verificarPontosDistribuidos();
+                }
+            }
+        });
+
+        btnDefesaMais.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (pontosRestantes > 0) {
+                    heroiSelecionado.incrementaDefesa();
+                    lblValorDefesa.setText(String.valueOf(heroiSelecionado.getDefesa()));
+                    pontosRestantes = pontosRestantes - 10;
+                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                    double defesaDistribuida = Double.parseDouble(lblValorDefesa.getText()) 
+                        - heroiSelecionado.getDefesa();
+                    heroiSelecionado.setDefesa(heroiSelecionado.getDefesa() + defesaDistribuida);
+                     lblDefesaUsuario.setText("Defesa: " + heroiSelecionado.getDefesa());
+                     verificarPontosDistribuidos();
+                }
+            }
+        });
+
+        btnDefesaMenos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (heroiSelecionado.getDefesa() > defesaInicial) {
+                    heroiSelecionado.decrementaDefesa();
+                    lblValorDefesa.setText(String.valueOf(heroiSelecionado.getDefesa()));
+                    pontosRestantes = pontosRestantes + 10;
+                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                    double defesaDistribuida = Double.parseDouble(lblValorDefesa.getText()) 
+                        - heroiSelecionado.getDefesa();
+                    heroiSelecionado.setDefesa(heroiSelecionado.getDefesa() + defesaDistribuida);
+                     lblDefesaUsuario.setText("Defesa: " + heroiSelecionado.getDefesa());
+                     verificarPontosDistribuidos();
+                }
+            }
+        });
+        
+         // Ação do botão "Continuar"
+        btnContinuar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+     
     }
-    
+
+    private void verificarPontosDistribuidos() {
+        btnContinuar.setEnabled(pontosRestantes == 0);
+    }
 }
