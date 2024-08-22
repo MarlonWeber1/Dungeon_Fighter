@@ -36,13 +36,13 @@ public abstract class Entidade {
         this.ataque = ataque;
     }
 
-    public void atacar(Entidade adversario, int W) {
+    public void atacar(Entidade adversario) {
 
         // W deve ser o valor de ataque do atacante
         // número aleatório de 0 a W para ataque e defesa
 
-        double ataqueFinal = this.ataque + (Math.random() * (W + 1));
-        double defesaAdversario = adversario.getDefesa() + (Math.random() * (W + 1));
+        double ataqueFinal = this.ataque + (Math.random() * (101.00));
+        double defesaAdversario = adversario.getDefesa() + (Math.random() * (101.00));
 
         // calcula o dano
         double dano = ataqueFinal - defesaAdversario;
@@ -51,7 +51,7 @@ public abstract class Entidade {
         if (dano > 0) {
             adversario.setSaude(adversario.getSaude() - dano);
         } else {
-            this.setSaude(this.getSaude() + dano); // '+ dano' porque 1dano' é negativo
+            this.setSaude(this.getSaude() + dano); // '+ dano' porque dano' é negativo
         }
     }
 
