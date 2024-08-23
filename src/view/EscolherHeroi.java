@@ -40,30 +40,25 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout()); 
 
-        // Carrega as imagens e cria JLabels para exibi-las
+        // Carrega as imagens e escala-as
         ImageIcon imagemPaladino = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
         ImageIcon imagemGuerreiro = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
         ImageIcon imagemBarbaro = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
 
+        Image paladino = imagemPaladino.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+        Image guerreiro = imagemGuerreiro.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+        Image barbaro = imagemBarbaro.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+
+        // Atualiza os ImageIcons com as imagens escaladas
+        imagemPaladino = new ImageIcon(paladino);
+        imagemGuerreiro = new ImageIcon(guerreiro);
+        imagemBarbaro = new ImageIcon(barbaro);
+        
+        // Cria JLabels com as imagens escaladas
         JLabel lblPaladino = new JLabel(imagemPaladino);
         JLabel lblGuerreiro = new JLabel(imagemGuerreiro);
         JLabel lblBarbaro = new JLabel(imagemBarbaro);
-
-        // Painéis para as imagens
-        JPanel pPaladinoImg = new JPanel();
-        JPanel pGuerreiroImg = new JPanel();
-        JPanel pBarbaroImg = new JPanel();
-
-        // Configurações visuais dos painéis
-        pPaladinoImg.setPreferredSize(new Dimension(150, 150)); 
-        pGuerreiroImg.setPreferredSize(new Dimension(150, 150)); 
-        pBarbaroImg.setPreferredSize(new Dimension(150, 150)); 
-
-        // Adiciona as imagens aos painéis correspondentes
-        pPaladinoImg.add(lblPaladino);
-        pGuerreiroImg.add(lblGuerreiro);
-        pBarbaroImg.add(lblBarbaro);
-
+        
         // Configura o layout dos botões
         JPanel pEscolherHeroi = new JPanel();
         pEscolherHeroi.setLayout(new GridBagLayout());
