@@ -50,8 +50,14 @@ public abstract class Entidade {
         // se o dano for positivo, o adversário perde vida, caso contrário, quem perde vida é o atacante
         if (dano > 0) {
             adversario.setSaude(adversario.getSaude() - dano);
+            System.out.println(this.getClass().getSimpleName() + " causou dano a: " + adversario.getClass().getSimpleName() + "(" + dano + ")");
+            System.out.println(this.getClass().getSimpleName() + " " +this.getSaude());
+            System.out.println(adversario.getClass().getSimpleName()+ " " + adversario.getSaude());
         } else {
             this.setSaude(this.getSaude() + dano); // '+ dano' porque dano' é negativo
+            System.out.println(this.getClass().getSimpleName() + " causou dano a: " + adversario.getClass().getSimpleName() + "(" + dano + ")");
+            System.out.println(this.getClass().getSimpleName()+ " " + this.getSaude());
+            System.out.println(adversario.getClass().getSimpleName() + " "+ adversario.getSaude());
         }
     }
 

@@ -5,10 +5,12 @@ public abstract class Heroi extends Entidade{
     private int bolsaDeElixir = 0;
     private int posLinha;
     private int posColuna;
+    private final double saudeTotal;
 
     public Heroi(double defesa, double ataque, double saude, String nome) {
         super(defesa,ataque,saude);
         this.nome = nome;
+        this.saudeTotal = saude;
     }
 
     public String getNome() {
@@ -72,5 +74,14 @@ public abstract class Heroi extends Entidade{
 
     public void tomarElixir () {
         setSaude(getSaude()+40);
+
+        if (getSaude() > saudeTotal) {
+            System.out.println("vida maxima alcancada");
+            setSaude(saudeTotal);
+        }
+    }
+
+    public double getSaudeTotal() {
+        return saudeTotal;
     }
 }

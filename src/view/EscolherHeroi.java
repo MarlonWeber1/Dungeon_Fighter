@@ -109,7 +109,7 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         rbHeroi2.addActionListener(e -> {
             // Se "Paladino" for selecionado
-            heroiSelecionado = new Paladino(120, 60, 180, 200, nomeUsuario); 
+            heroiSelecionado = new Paladino(120, 60, 180, nomeUsuario);
         });
 
         rbHeroi3.addActionListener(e -> {

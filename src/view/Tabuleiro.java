@@ -47,6 +47,7 @@ public class Tabuleiro extends JPanel {
             }
         }
 
+
         // determina posicao inicial do Heroi em uma coluna aleatoria da primeira linha
         tabuleiro[0][colunaRandom()] = 'H';
 

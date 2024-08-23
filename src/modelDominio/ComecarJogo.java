@@ -1,4 +1,5 @@
 package modelDominio;
+import view.Batalha;
 import view.Tabuleiro;
 import javax.swing.*;
 import java.awt.*;
@@ -38,52 +39,6 @@ public class ComecarJogo {
         heroi.setSaude(heroi.getSaude() - dano);
     }
 
-    public void acaoHeroi (int identificaAcao, Monstro monstro) {
-
-        // 0 -> atacar
-        // 1 -> tomar elixir
-        // 2 -> habilidade especial
-
-        if (identificaAcao == 0) {
-            heroi.atacar(monstro);
-        }
-        else if (identificaAcao == 1) {
-            heroi.tomarElixir();
-        }
-        else if (identificaAcao == 2) {
-            heroi.ataqueEspecial();
-        }
-    }
-
-    public void batalha (Monstro monstro) {
-        while (heroi.estaVivo() && monstro.estaVivo()) {
-
-            // acaoHeroi(identificaAcao, monstro); // adicionar event listner para que a funcao seja acionada apenas quando o usuario clicar em um dos botoes
-                                                    // indentifica acao vai depender do botao clicado
-
-
-
-            if (monstro.estaVivo()) {
-                // atualiza a vida do monstro na interface
-                monstro.atacar(heroi);
-            }
-
-            // se monstro estiver morto a funcao while nao vai rodar novamente
-            // mesma coisa para o heroi
-        }
-        if (!heroi.estaVivo()) {
-            // game over
-            // tela com 3 opcoes
-            // novo jogo, tentar novamente, sair
-        }
-        else if (!monstro.estaVivo()) {
-            // matou monstro
-            // popup matou monstro
-            // fecha a tela quando fechar o popup
-            // a funcao mover continua (o heroi vai pra celula do monstro)
-        }
-    }
-
 
     public void verificaMov(int novaLinha, int novaColuna, int linhaAtual, int colunaAtual) {
         if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'e') {
@@ -103,6 +58,7 @@ public class ComecarJogo {
             JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
 
             // abre uma nova janela
+            new Batalha(heroi , monstro);
 
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
@@ -129,10 +85,11 @@ public class ComecarJogo {
 
             JOptionPane.showMessageDialog(tabuleiro, "Voce chegou no Boss Final!", "Final BOSS", JOptionPane.INFORMATION_MESSAGE);
 
+
             // batalha comeca
             // se ganhar tela de jogo vencido
             // se perder tela de game over
-
+            new Batalha(heroi , chefao);
         }
         tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
         tabuleiro.tabuleiro[novaLinha][novaColuna] = 'H';
