@@ -285,12 +285,17 @@ public class ComecarJogo {
         if (this.dicas >= 1) {
             this.dicas--;
             int arms = tabuleiro.dica(coluna);
-            // devera aparecer uma mensagem para o usuario com o numero de armadilhas
-            System.out.println("Armadilhas na coluna " + coluna + ": " + arms);
-        } else
-        {
-            // devera aparecer uma mensagem que o usuario usou todas as dicas
-            System.out.println("Você usou todas as dicas!");
+
+            JOptionPane.showMessageDialog(null,
+                    "Armadilhas na coluna " + coluna + ": " + arms,
+                    "Dica Usada",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Você usou todas as dicas!",
+                    "Sem Dicas Restantes",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
+
 }

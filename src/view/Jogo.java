@@ -187,15 +187,15 @@ public class Jogo extends JFrame {
         botaoDica.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                desativarTodosBotoes();
                 for (int x = 0; x < 5; x++) {
                     for (int j = 0; j < 10; j++) {
                         int finalJ = j;
                         // Cria o ActionListener para cada botão na matriz
                         ActionListener listener = new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                                desativarTodosBotoes();
-                                comecarJogo.usaDica(finalJ);
                                 // Desativar todos os botões da matriz ao clicar em qualquer um deles
+                                comecarJogo.usaDica(finalJ);
                                 desativarTodosBotoes();
                                 ativarBotoes();
                             }
@@ -235,10 +235,6 @@ public class Jogo extends JFrame {
             }
 
         });
-
-
-
-
 
         botaoHabilidade.addActionListener(new ActionListener() {
             @Override
