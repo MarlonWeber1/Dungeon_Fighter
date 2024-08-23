@@ -80,7 +80,7 @@ class DetalhesHeroi extends JFrame {
         }
 
         // Ajuste na Imagem do Herói
-        Image i = iHeroi.getImage().getScaledInstance(128, 165, Image.SCALE_SMOOTH);
+        Image i = iHeroi.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
         iHeroi = new ImageIcon(i);
         lblImagemHeroi = new JLabel(iHeroi);
         lblImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
