@@ -58,12 +58,7 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         JLabel lblPaladino = new JLabel(imagemPaladino);
         JLabel lblGuerreiro = new JLabel(imagemGuerreiro);
         JLabel lblBarbaro = new JLabel(imagemBarbaro);
-
-        // Painéis para as imagens
-        JPanel pPaladinoImg = new JPanel();
-        JPanel pGuerreiroImg = new JPanel();
-        JPanel pBarbaroImg = new JPanel();
-
+        
         // Configura o layout dos botões
         JPanel pEscolherHeroi = new JPanel();
         pEscolherHeroi.setLayout(new GridBagLayout());

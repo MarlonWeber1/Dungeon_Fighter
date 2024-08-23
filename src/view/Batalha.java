@@ -4,42 +4,38 @@ import modelDominio.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import modelDominio.Barbaro;
-import modelDominio.Heroi;
-import modelDominio.Paladino;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.border.TitledBorder;
 
 public class Batalha extends JFrame {
 
-    private JButton Atacar;
-    private JButton Elixir;
-    private JButton Habilidade;
-    private JPanel BatalhaPanel;
-    private JLabel imgHeroiLabel;
-    private JLabel imgMonstroLabel;
+    private JLabel lblImagemHeroi;
+    private JLabel lblImagemMonstro;
     private Heroi heroi;
     private Monstro monstro;
+    private JButton btnAtaque;
+    private JButton btnElixir;
+    private JButton btnHabilidade;
 
     public Batalha(Heroi heroiSelecionado, Monstro monstro) {
-        setContentPane(BatalhaPanel);
+        this.heroi = heroiSelecionado;
+        this.monstro = monstro;
+
         setTitle("Batalha");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(800,600);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridBagLayout());
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                JOptionPane.showMessageDialog(Batalha.this, "Você deve abater o monstro para voltar ao tabuleiro!");
-            }
-        });
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0; 
+        gbc.weighty = 1.0; 
 
-        // seleciona a imagem de acordo com o heroi selecionado
+        // Ajuste na Imagem do Herói
         ImageIcon iHeroi;
         if (heroiSelecionado instanceof Barbaro) {
             iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
@@ -49,53 +45,103 @@ public class Batalha extends JFrame {
             iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
         }
 
-        // Redimensiona a imagem para 200x200 pixels
-        Image imagemHeroi  = iHeroi.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        Image h = iHeroi.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH);
+        iHeroi = new ImageIcon(h);
+        lblImagemHeroi = new JLabel(iHeroi);
+        lblImagemHeroi.setOpaque(true);
+        lblImagemHeroi.setBackground(new Color(173, 216, 230)); // Fundo azul claro para o herói
 
-        imgHeroiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Ajuste na Imagem do Monstro
         ImageIcon iMonstro;
-
-        // seleciona o tipo de monstro para a imagem
         if (monstro instanceof MonstroComum) {
             iMonstro = new ImageIcon(getClass().getResource("/view/img/goblin.png"));
         } else {
             iMonstro = new ImageIcon(getClass().getResource("/view/img/pekka.png"));
         }
 
-        // Redimensiona a imagem para 200x200 pixels
-        Image imagemMonstro = iMonstro.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        Image m = iMonstro.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH);
+        iMonstro = new ImageIcon(m);
+        lblImagemMonstro = new JLabel(iMonstro);
+        lblImagemMonstro.setOpaque(true);
+        lblImagemMonstro.setBackground(new Color(70, 31, 36)); // Fundo vinho para o monstro
 
 
-        // Cria um novo ImageIcon com a imagem redimensionada
-        iMonstro = new ImageIcon(imagemMonstro);
-        iHeroi = new ImageIcon(imagemHeroi);
+        // Painel para as imagens do herói e monstro
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(lblImagemHeroi, gbc);
 
-        imgMonstroLabel.setIcon(iMonstro);
-        imgMonstroLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gbc.gridx = 1;
+        add(lblImagemMonstro, gbc);
 
-        imgHeroiLabel.setIcon(iHeroi);
-        imgMonstroLabel.setIcon((iMonstro));
+        // Painel de Atributos do Herói
+        JPanel pAtributosHeroi = new JPanel();
+        pAtributosHeroi.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.BLACK),
+                "Atributos Herói",
+                TitledBorder.CENTER,
+                TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 12)));
+        pAtributosHeroi.setPreferredSize(new Dimension(10, 80));
 
-        this.heroi = heroiSelecionado;
-        this.monstro = monstro;
+        // Adiciona painel de atributos do herói abaixo da imagem do herói
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(pAtributosHeroi, gbc);
 
-        Atacar.addActionListener(e -> {
-            acaoHeroi(0, monstro);
+        // Painel de Atributos do Monstro
+        JPanel pAtributosMonstro = new JPanel();
+        pAtributosMonstro.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.BLACK),
+                "Atributos Vilão",
+                TitledBorder.CENTER,
+                TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 12)));
+        pAtributosMonstro.setPreferredSize(new Dimension(10, 80));
+
+        // Adiciona painel de atributos do monstro abaixo da imagem do monstro
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        add(pAtributosMonstro, gbc);
+
+        // Painel de Botões
+        JPanel pBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+
+        // Botão Ataque
+        btnAtaque = new JButton("Atacar Mostro");
+        btnAtaque.setPreferredSize(new Dimension(140, 30));
+        btnAtaque.setFont(new Font("Arial", Font.BOLD, 12));
+        pBotoes.add(btnAtaque);
+
+        // Botão Habilidade
+        btnHabilidade = new JButton("Usar Habilidade");
+        btnHabilidade.setPreferredSize(new Dimension(140, 30));
+        btnHabilidade.setFont(new Font("Arial", Font.BOLD, 12));
+        pBotoes.add(btnHabilidade);
+
+        // Botão Elixir
+        btnElixir = new JButton("Tomar Elixir");
+        btnElixir.setPreferredSize(new Dimension(140, 30));
+        btnElixir.setFont(new Font("Arial", Font.BOLD, 12));
+        pBotoes.add(btnElixir);
+
+        // Adiciona o painel de botões na parte inferior da tela
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2; // Ocupa duas colunas
+        add(pBotoes, gbc);
+
+        // Tratamento para o fechamento da janela
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JOptionPane.showMessageDialog(Batalha.this, "Você deve abater o monstro para voltar ao tabuleiro!");
+            }
         });
 
-        Elixir.addActionListener(e -> {
-            JOptionPane.showMessageDialog(Batalha.this, "Bebendo elixir");
-            acaoHeroi(1, monstro);
-        });
-
-        Habilidade.addActionListener(e -> {
-            JOptionPane.showMessageDialog(Batalha.this, "Habilidade usada");
-            acaoHeroi(2, monstro);
-        });
-
+        setVisible(true);
     }
-
 
     public void acaoHeroi (int identificaAcao, Monstro monstro) {
 
@@ -149,13 +195,7 @@ public class Batalha extends JFrame {
         }
     }
 
-
-
-
     public static void main(String[] args) {
-        MonstroComum monstro = new MonstroComum();
-        Barbaro heroi = new Barbaro(150, 150, 150, "jvtips");
-
-        new Batalha(heroi,monstro);
+        
     }
 }
