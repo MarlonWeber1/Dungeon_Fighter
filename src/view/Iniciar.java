@@ -2,6 +2,7 @@ package view;
 
 import modelDominio.ComecarJogo;
 import modelDominio.Guerreiro;
+import modelDominio.Paladino;
 
 import java.awt.*;
 import javax.swing.*;
@@ -82,21 +83,14 @@ public class Iniciar extends JFrame implements ActionListener {
         } else if (e.getSource() == btnDebug) {
             // Fecha a tela atual
             this.dispose();
-
-            // Configura o herói e o jogo
-            Guerreiro heroi = new Guerreiro(100, 100, 100, "jvtips");
-            ComecarJogo jogo = new ComecarJogo(heroi, true);
+            // Configura o herói de forma padrao para funcao debug
+            Paladino heroi = new Paladino(150, 150, 150, "jvtips");
+            Jogo jogo = new Jogo(true, heroi);
 
             // Cria a janela de debug
-            JFrame frame = new JFrame("Tabuleiro");
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            frame.setSize(800, 400);
-            frame.add(jogo.tabuleiro);
-            frame.setLocationRelativeTo(null);
-            frame.setResizable(false);
 
             // Adiciona um WindowListener para reabrir a tela inicial quando a janela de debug for fechada
-            frame.addWindowListener(new WindowAdapter() {
+            jogo.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     // Reabre a tela inicial quando a janela de debug for fechada
@@ -106,7 +100,7 @@ public class Iniciar extends JFrame implements ActionListener {
                     });
                 }
             });
-            frame.setVisible(true);
+            jogo.setVisible(true);
         }
     }
     
