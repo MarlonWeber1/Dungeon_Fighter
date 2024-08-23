@@ -25,7 +25,7 @@ public class Jogo extends JFrame {
 
         // Configura o JFrame
         setTitle("Jogo de Tabuleiro");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(1000, 500);
         setResizable(false);
         setLocationRelativeTo(null);

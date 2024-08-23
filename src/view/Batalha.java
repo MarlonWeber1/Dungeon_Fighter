@@ -26,7 +26,7 @@ public class Batalha extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
