@@ -1,6 +1,7 @@
 package modelDominio;
 import view.Batalha;
 import view.Tabuleiro;
+import view.Jogo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,10 +75,10 @@ public class ComecarJogo {
             this.danoArmadilha(damage);
             System.out.println("armadilha random");
             System.out.println(heroi.getSaude());
+            // popup avisando que caiu em uma armadilha
             JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha, o dano foi de " + damage + " e sua vida caiu para:" + heroi.getSaude() + ".", "Armadilha de dano aleatorio", JOptionPane.INFORMATION_MESSAGE);
 
 
-            // popup avisando que caiu em uma armadilha
 
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'C') {
@@ -85,15 +86,16 @@ public class ComecarJogo {
 
             JOptionPane.showMessageDialog(tabuleiro, "Voce chegou no Boss Final!", "Final BOSS", JOptionPane.INFORMATION_MESSAGE);
 
-
             // batalha comeca
             // se ganhar tela de jogo vencido
             // se perder tela de game over
+
             new Batalha(heroi , chefao);
         }
         tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
         tabuleiro.tabuleiro[novaLinha][novaColuna] = 'H';
     }
+
 
     // movimentacao para do heroi
     public void moverHeroi(int novaLinha, int novaColuna) {
@@ -102,27 +104,28 @@ public class ComecarJogo {
         int colunaAtual = heroi.getPosColuna();
 
         if (novaColuna == colunaAtual + 1 && novaLinha == linhaAtual ||
-            novaColuna == colunaAtual - 1 && novaLinha == linhaAtual ||
-            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual ||
-            novaLinha == linhaAtual - 1 && novaColuna == colunaAtual ||
-            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual + 1 ||
-            novaLinha == linhaAtual - 1 && novaColuna == colunaAtual - 1 ||
-            novaLinha == linhaAtual - 1 && novaColuna == colunaAtual + 1 ||
-            novaLinha == linhaAtual + 1 && novaColuna == colunaAtual - 1  ){
+                novaColuna == colunaAtual - 1 && novaLinha == linhaAtual ||
+                novaLinha == linhaAtual + 1 && novaColuna == colunaAtual ||
+                novaLinha == linhaAtual - 1 && novaColuna == colunaAtual ||
+                novaLinha == linhaAtual + 1 && novaColuna == colunaAtual + 1 ||
+                novaLinha == linhaAtual - 1 && novaColuna == colunaAtual - 1 ||
+                novaLinha == linhaAtual - 1 && novaColuna == colunaAtual + 1 ||
+                novaLinha == linhaAtual + 1 && novaColuna == colunaAtual - 1) {
 
             // mostra oque tem na celula clickada
             if (!tabuleiro.isDebugging()) {
-                atualizaBotaoClicado(novaLinha,novaColuna);
+                atualizaBotaoClicado(novaLinha, novaColuna);
             }
 
             // so vai verificar oque tem na nova posicao se o movimento e valido
-            verificaMov(novaLinha,novaColuna,linhaAtual,colunaAtual);
+            verificaMov(novaLinha, novaColuna, linhaAtual, colunaAtual);
 
             heroi.setPosLinha(novaLinha);
             heroi.setPosColuna(novaColuna);
         }
         atualizarBotoesTab();
     }
+
 
     private void criarBotoesTab() {
         for (int i = 0; i < 5; i++) {
@@ -155,7 +158,7 @@ public class ComecarJogo {
                     }
                     else if (tabuleiro.tabuleiro[i][j] == 'C') {
                         tabuleiro.botoes[i][j].setBackground(Color.black);
-                        tabuleiro.botoes[i][j].setText("Chefão");
+                        tabuleiro.botoes[i][j].setText("Boss");
                         tabuleiro.botoes[i][j].setForeground(Color.white);
                     }
                 }
@@ -175,7 +178,7 @@ public class ComecarJogo {
                     }
                     else if (tabuleiro.tabuleiro[i][j] == 'C') {
                         tabuleiro.botoes[i][j].setBackground(Color.black);
-                        tabuleiro.botoes[i][j].setText("Chefão");
+                        tabuleiro.botoes[i][j].setText("Boss");
                         tabuleiro.botoes[i][j].setForeground(Color.white);
                     }
                 }
@@ -192,7 +195,7 @@ public class ComecarJogo {
     public void atualizaBotaoClicado(int novaLinha, int novaCol) {
         if (tabuleiro.tabuleiro[novaLinha][novaCol] == 'M') {
             tabuleiro.botoes[novaLinha][novaCol].setBackground(Color.red);
-            tabuleiro.botoes[novaLinha][novaCol].setText("Monstro");
+            tabuleiro.botoes[novaLinha][novaCol].setText("M");
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaCol] == '*') {
             tabuleiro.botoes[novaLinha][novaCol].setBackground(Color.white);
@@ -200,19 +203,19 @@ public class ComecarJogo {
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaCol] == 'A' || tabuleiro.tabuleiro[novaLinha][novaCol] == 'R') {
             tabuleiro.botoes[novaLinha][novaCol].setBackground(Color.gray);
-            tabuleiro.botoes[novaLinha][novaCol].setText("Armadilha");
+            tabuleiro.botoes[novaLinha][novaCol].setText("A");
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaCol] == 'e') {
             tabuleiro.botoes[novaLinha][novaCol].setBackground(Color.cyan);
-            tabuleiro.botoes[novaLinha][novaCol].setText("Elixir");
+            tabuleiro.botoes[novaLinha][novaCol].setText("E");
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaCol] == 'H') {
             tabuleiro.botoes[novaLinha][novaCol].setBackground(Color.magenta);
-            tabuleiro.botoes[novaLinha][novaCol].setText("Heroi");
+            tabuleiro.botoes[novaLinha][novaCol].setText("H");
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaCol] == 'C') {
             tabuleiro.botoes[novaLinha][novaCol].setBackground(Color.black);
-            tabuleiro.botoes[novaLinha][novaCol].setText("Chefão");
+            tabuleiro.botoes[novaLinha][novaCol].setText("Boss");
             tabuleiro.botoes[novaLinha][novaCol].setForeground(Color.white);
         }
     }
@@ -246,7 +249,7 @@ public class ComecarJogo {
                     }
                     else if (tabuleiro.tabuleiro[i][j] == 'C') {
                         tabuleiro.botoes[i][j].setBackground(Color.black);
-                        tabuleiro.botoes[i][j].setText("Chefão");
+                        tabuleiro.botoes[i][j].setText("Boss");
                         tabuleiro.botoes[i][j].setForeground(Color.white);
                     }
                 }
@@ -262,11 +265,13 @@ public class ComecarJogo {
                     }
                     else if (tabuleiro.tabuleiro[i][j] == 'H') {
                         tabuleiro.botoes[i][j].setBackground(Color.white);
+
+                        tabuleiro.botoes[i][j].setForeground(Color.black);
                         tabuleiro.botoes[i][j].setText("Você");
                     }
                     else if (tabuleiro.tabuleiro[i][j] == 'C') {
                         tabuleiro.botoes[i][j].setBackground(Color.black);
-                        tabuleiro.botoes[i][j].setText("Chefão");
+                        tabuleiro.botoes[i][j].setText("Boss");
                         tabuleiro.botoes[i][j].setForeground(Color.white);
                     }
                 }

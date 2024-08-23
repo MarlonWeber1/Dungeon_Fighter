@@ -29,7 +29,7 @@ class DetalhesHeroi extends JFrame {
     private JLabel lblValorDefesa;
     private JLabel lblPontosRestantes;
 
-    private int pontosRestantes = 100; // Pontos que podem ser distribuídos 
+    private int pontosRestantes = 0; // Pontos que podem ser distribuídos
     
     
 
@@ -329,7 +329,8 @@ class DetalhesHeroi extends JFrame {
          // Ação do botão "Continuar"
         btnContinuar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                Jogo jogo = new Jogo(false, heroiSelecionado);
+                jogo.setVisible(true);
             }
         });
      
