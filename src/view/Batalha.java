@@ -4,36 +4,19 @@ import modelDominio.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.border.TitledBorder;
 
-public class Batalha extends JFrame{
-    
-    private JLabel lblAtaqueUsuario;
-    private JLabel lblSaudeUsuario;
-    private JLabel lblDefesaUsuario;
-    private JLabel lblDefesaMonstro;
-    private JLabel lblSaudeMonstro;
-    private JLabel lblAtaqueMonstro;
-   
+public class Batalha extends JFrame {
+
     private JLabel lblImagemHeroi;
     private JLabel lblImagemMonstro;
-    
-    private JLabel lblElixir;
-    
     private Heroi heroi;
     private Monstro monstro;
     private JButton btnAtaque;
-    
     private JButton btnElixir;
     private JButton btnHabilidade;
-    
-    private int contadorTurnos = 0;
-    private boolean habilidadeEspecialAtiva = false;
-
 
     public Batalha(Heroi heroiSelecionado, Monstro monstro) {
         this.heroi = heroiSelecionado;
@@ -43,7 +26,7 @@ public class Batalha extends JFrame{
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -83,6 +66,7 @@ public class Batalha extends JFrame{
         lblImagemMonstro.setOpaque(true);
         lblImagemMonstro.setBackground(new Color(70, 31, 36)); // Fundo vinho para o monstro
 
+
         // Painel para as imagens do herói e monstro
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -90,33 +74,6 @@ public class Batalha extends JFrame{
 
         gbc.gridx = 1;
         add(lblImagemMonstro, gbc);
-        
-         // Preenchendo os labels com as informações do herói selecionado
-        lblAtaqueUsuario = new JLabel("Ataque: " + heroiSelecionado.getAtaque());
-        lblSaudeUsuario = new JLabel("Saúde: " + heroiSelecionado.getSaude());
-        lblDefesaUsuario = new JLabel("Defesa: " + heroiSelecionado.getDefesa());
-        lblAtaqueMonstro = new JLabel("Ataque: " + monstro.getAtaque());
-        lblSaudeMonstro = new JLabel("Saúde: " + monstro.getSaude());
-        lblDefesaMonstro = new JLabel("Defesa: " + monstro.getAtaque());
-        
-        lblElixir = new JLabel("Bolsa de elixir: " + heroiSelecionado.getBolsaDeElixir());
-        
-        // Configura a fonte e cor do texto dos JLabel
-        lblAtaqueUsuario.setForeground(Color.BLACK); 
-        lblAtaqueUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblSaudeUsuario.setForeground(Color.BLACK); 
-        lblSaudeUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblDefesaUsuario.setForeground(Color.BLACK); 
-        lblDefesaUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblElixir.setForeground(Color.BLACK); 
-        lblElixir.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        
-        lblAtaqueMonstro.setForeground(Color.BLACK); 
-        lblAtaqueMonstro.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblSaudeMonstro.setForeground(Color.BLACK); 
-        lblSaudeMonstro.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblDefesaMonstro.setForeground(Color.BLACK); 
-        lblDefesaMonstro.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
 
         // Painel de Atributos do Herói
         JPanel pAtributosHeroi = new JPanel();
@@ -125,16 +82,9 @@ public class Batalha extends JFrame{
                 "Atributos Herói",
                 TitledBorder.CENTER,
                 TitledBorder.TOP,
-                new Font("Palatino LinoType", Font.BOLD, 14)));
+                new Font("Arial", Font.BOLD, 12)));
         pAtributosHeroi.setPreferredSize(new Dimension(10, 80));
-        pAtributosHeroi.setLayout(new GridLayout(4, 2, 10, 10));
-        
-        // Adiciona os atributos do herói ao painel
-        pAtributosHeroi.add(lblAtaqueUsuario);
-        pAtributosHeroi.add(lblSaudeUsuario);
-        pAtributosHeroi.add(lblDefesaUsuario);
-        pAtributosHeroi.add(lblElixir);
-        
+
         // Adiciona painel de atributos do herói abaixo da imagem do herói
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -147,14 +97,8 @@ public class Batalha extends JFrame{
                 "Atributos Vilão",
                 TitledBorder.CENTER,
                 TitledBorder.TOP,
-                new Font("Palatino LinoType", Font.BOLD, 14)));
+                new Font("Arial", Font.BOLD, 12)));
         pAtributosMonstro.setPreferredSize(new Dimension(10, 80));
-        pAtributosMonstro.setLayout(new GridLayout(3, 2, 10, 10)); // Configura o layout
-
-        // Adiciona os atributos do monstro ao painel
-        pAtributosMonstro.add(lblAtaqueMonstro);
-        pAtributosMonstro.add(lblSaudeMonstro);
-        pAtributosMonstro.add(lblDefesaMonstro);
 
         // Adiciona painel de atributos do monstro abaixo da imagem do monstro
         gbc.gridx = 1;
@@ -167,19 +111,19 @@ public class Batalha extends JFrame{
         // Botão Ataque
         btnAtaque = new JButton("Atacar Mostro");
         btnAtaque.setPreferredSize(new Dimension(140, 30));
-        btnAtaque.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
+        btnAtaque.setFont(new Font("Arial", Font.BOLD, 12));
         pBotoes.add(btnAtaque);
 
         // Botão Habilidade
         btnHabilidade = new JButton("Usar Habilidade");
         btnHabilidade.setPreferredSize(new Dimension(140, 30));
-        btnHabilidade.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
+        btnHabilidade.setFont(new Font("Arial", Font.BOLD, 12));
         pBotoes.add(btnHabilidade);
 
         // Botão Elixir
         btnElixir = new JButton("Tomar Elixir");
         btnElixir.setPreferredSize(new Dimension(140, 30));
-        btnElixir.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
+        btnElixir.setFont(new Font("Arial", Font.BOLD, 12));
         pBotoes.add(btnElixir);
 
         // Adiciona o painel de botões na parte inferior da tela
@@ -187,28 +131,6 @@ public class Batalha extends JFrame{
         gbc.gridy = 2;
         gbc.gridwidth = 2; // Ocupa duas colunas
         add(pBotoes, gbc);
-        
-         // Listeners de Botão
-        btnAtaque.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                acaoHeroi(0, monstro);
-                atualizarAtributos();
-            }
-        });
-
-        btnElixir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                acaoHeroi(1, monstro);
-                atualizarAtributos();
-            }
-        });
-        
-        btnHabilidade.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                acaoHeroi(2, monstro);
-                atualizarAtributos();
-            }
-        });
 
         // Tratamento para o fechamento da janela
         addWindowListener(new WindowAdapter() {
@@ -221,90 +143,56 @@ public class Batalha extends JFrame{
         setVisible(true);
     }
 
-    private void atualizarAtributos() {
-        lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
-        lblSaudeUsuario.setText("Saúde: " + heroi.getSaude());
-        lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
-        lblElixir.setText("Bolsa Elixir: " + heroi.getBolsaDeElixir());
-
-        lblAtaqueMonstro.setText("Ataque: " + monstro.getAtaque());
-        lblSaudeMonstro.setText("Saúde: " + monstro.getSaude());
-        lblDefesaMonstro.setText("Defesa: " + monstro.getDefesa());
-    }
-    
     public void acaoHeroi (int identificaAcao, Monstro monstro) {
 
-        atualizarAtributos();
-        
-        // Força a atualização da interface gráfica
-        SwingUtilities.invokeLater(() -> Batalha.this.repaint());
-        
         // 0 -> atacar
         // 1 -> tomar elixir
         // 2 -> habilidade especial
 
-        switch (identificaAcao) {
-            case 0: // Ataque básico
-                heroi.atacar(monstro);
-                break;
-            case 1: // Usar elixir
-                if (heroi.getBolsaDeElixir() > 0) {
-                    heroi.tomarElixir();
-                    JOptionPane.showMessageDialog(this, "Você tomou um elixir!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Você não possui mais elixires!");
-                }
-                break;
-            case 2: // Habilidade especial
-                heroi.ataqueEspecial();
-                break;
+        if (identificaAcao == 0) {
+            heroi.atacar(monstro);
+        }
+        else if (identificaAcao == 1) {
+            heroi.tomarElixir();
+        }
+        else if (identificaAcao == 2) {
+            heroi.ataqueEspecial();
         }
 
-        contadorTurnos++;
-        
-        // Desativa a habilidade especial após 2 turnos
-        if (habilidadeEspecialAtiva && contadorTurnos >= 2) {
-        desativarHabilidadeEspecial();
-        habilidadeEspecialAtiva = false;
-        }
-        
-        // Se o monstro ainda estiver vivo, ele ataca de volta
+
         if (monstro.estaVivo()) {
             monstro.atacar(heroi);
         }
+        else if (!monstro.estaVivo()) {
+            // MONSTRO DERROTADO
 
-        // Verifica se o monstro ainda está vivo após a ação do herói
-        if (!monstro.estaVivo()) {
-        // MONSTRO DERROTADO
+            // popup -> voce matou monstro
 
-        // popup -> voce matou monstro
-        JOptionPane.showMessageDialog(this, "Você derrotou o monstro!");
-
-        // Fecha a tela de batalha
-        this.dispose();
-
-        // a funcao mover continua (o heroi vai pra celula do monstro)
-        return;
+            // fecha a tela quando fechar o popup
+            // a funcao mover continua (o heroi vai pra celula do monstro)
+            this.dispose();
+            return;
         }
 
-        // Verifica se o herói ainda está vivo após o ataque do monstro
         if (!heroi.estaVivo()) {
-        // GAME OVER
+            // GAME OVER
 
-        // popup -> o monstro abateu voce
-        JOptionPane.showMessageDialog(this, "O monstro derrotou você! Game Over.");
+            // popup o mostro abateu voce
+            // tela de batalha fecha junto com o popup
 
-        // Fecha a tela de batalha
-        this.dispose();
+            // new gameOver (tela)
+                // tela com 3 opcoes
+                // novo jogo, tentar novamente, sair
 
-        // Abre a tela de Game Over com as opções
-        return;
         }
-    }
-    
-    private void desativarHabilidadeEspecial() {
-        heroi.ataqueEspecial();
-        JOptionPane.showMessageDialog(this, "Habilidade especial desativada.");
+        else if (!monstro.estaVivo()) {
+            // MONSTRO DERROTADO
+
+            // popup -> voce matou monstro
+
+            // fecha a tela quando fechar o popup
+            // a funcao mover continua (o heroi vai pra celula do monstro)
+        }
     }
 
     public static void main(String[] args) {
