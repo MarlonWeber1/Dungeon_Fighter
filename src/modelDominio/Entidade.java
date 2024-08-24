@@ -1,5 +1,7 @@
 package modelDominio;
 
+import javax.swing.*;
+
 public abstract class Entidade {
     private double ataque;
     private double defesa;
@@ -37,29 +39,42 @@ public abstract class Entidade {
     }
 
     public void atacar(Entidade adversario) {
+        // Gera valores aleatórios para ataque e defesa
+        double ataqueFinal = this.ataque + (Math.random() * 50);
+        double defesaAdversario = adversario.getDefesa() + (Math.random() * 30);
 
-        // W deve ser o valor de ataque do atacante
-        // número aleatório de 0 a W para ataque e defesa
-
-        double ataqueFinal = this.ataque + (Math.random() * (50));
-        double defesaAdversario = adversario.getDefesa() + (Math.random() * (30));
-
-        // calcula o dano
+        // Calcula o dano
         double dano = ataqueFinal - defesaAdversario;
 
-        // se o dano for positivo, o adversário perde vida, caso contrário, quem perde vida é o atacante
+        String mensagem;
+
         if (dano > 0) {
             adversario.setSaude(adversario.getSaude() - dano);
-            System.out.println(this.getClass().getSimpleName() + " causou dano a: " + adversario.getClass().getSimpleName() + "(" + dano + ")");
-            System.out.println(this.getClass().getSimpleName() + " " +this.getSaude());
-            System.out.println(adversario.getClass().getSimpleName()+ " " + adversario.getSaude());
+            mensagem = String.format(
+                    "%s atacou %s e causou %.2f de dano!\n%s tem agora %.2f de saúde restante.",
+                    this.getClass().getSimpleName(),
+                    adversario.getClass().getSimpleName(),
+                    dano,
+                    adversario.getClass().getSimpleName(),
+                    adversario.getSaude()
+            );
         } else {
-            this.setSaude(this.getSaude() + dano); // '+ dano' porque dano' é negativo
-            System.out.println(this.getClass().getSimpleName() + " causou dano a: " + adversario.getClass().getSimpleName() + "(" + dano + ")");
-            System.out.println(this.getClass().getSimpleName()+ " " + this.getSaude());
-            System.out.println(adversario.getClass().getSimpleName() + " "+ adversario.getSaude());
+            this.setSaude(this.getSaude() + dano); // '+ dano' porque 'dano' é negativo
+            mensagem = String.format(
+                    "%s tentou atacar %s, mas o ataque foi ineficaz!\n%s contra-atacou e causou %.2f de dano.\n%s tem agora %.2f de saúde restante.",
+                    this.getClass().getSimpleName(),
+                    adversario.getClass().getSimpleName(),
+                    adversario.getClass().getSimpleName(),
+                    -dano, // dano é negativo, então invertemos o sinal para mostrar o valor positivo
+                    this.getClass().getSimpleName(),
+                    this.getSaude()
+            );
         }
+
+        // Exibe a mensagem em um JOptionPane
+        JOptionPane.showMessageDialog(null, mensagem, "Resultado do Ataque", JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     public boolean estaVivo() {
         return this.saude >= 0;

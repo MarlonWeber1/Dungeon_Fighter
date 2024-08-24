@@ -127,7 +127,6 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-
         Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
         mainFrameApp.mostrarJanela();
     }

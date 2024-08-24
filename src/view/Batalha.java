@@ -220,12 +220,12 @@ public class Batalha extends JFrame {
 
     private void atualizarAtributos() {
         lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
-        lblSaudeUsuario.setText("Saúde: " + heroi.getSaude());
+        lblSaudeUsuario.setText("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
         lblElixir.setText("Bolsa de elixir: " + heroi.getBolsaDeElixir());
 
         lblAtaqueMonstro.setText("Ataque: " + monstro.getAtaque());
-        lblSaudeMonstro.setText("Saúde: " + monstro.getSaude());
+        lblSaudeMonstro.setText("Saúde: " + Math.ceil(monstro.getSaude()));
         lblDefesaMonstro.setText("Defesa: " + monstro.getDefesa());
     }
 
@@ -337,9 +337,5 @@ public class Batalha extends JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao carregar imagens: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }

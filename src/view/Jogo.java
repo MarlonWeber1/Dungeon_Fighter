@@ -172,11 +172,19 @@ public class Jogo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (heroi.getBolsaDeElixir() > 0) {
-                    heroi.tomarElixir();
-                    heroi.setBolsaDeElixir(heroi.getBolsaDeElixir() - 1);
-                    JOptionPane.showMessageDialog(Jogo.this, "Você tomou um elixir!");
-                    atualizaStatus();
-                } else {
+
+                    if (heroi.getSaude() == heroi.getSaudeTotal()) {
+                        JOptionPane.showMessageDialog(Jogo.this, "Sua vida esta completa!");
+                        atualizaStatus();
+                    }
+                    else {
+                        heroi.tomarElixir();
+                        heroi.setBolsaDeElixir(heroi.getBolsaDeElixir() - 1);
+                        JOptionPane.showMessageDialog(Jogo.this, "Você tomou um elixir!");
+                        atualizaStatus();
+                    }
+                }
+                else {
                     JOptionPane.showMessageDialog(Jogo.this, "Você não possui mais elixires!");
                     atualizaStatus();
                 }
@@ -304,7 +312,7 @@ public class Jogo extends JFrame {
         lblNomeUsuario.setText("Nome: " + heroi.getNome());
         lblClasseUsuario.setText("Classe: " + heroi.getClass().getSimpleName());
         lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
-        lblSaudeUsuario.setText("Saúde: " + heroi.getSaude());
+        lblSaudeUsuario.setText("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
         lblBolsaElixir.setText("Bolsa de elixir: " + heroi.getBolsaDeElixir());
     }
@@ -313,10 +321,5 @@ public class Jogo extends JFrame {
         for (ActionListener al : button.getActionListeners()) {
             button.removeActionListener(al);
         }
-    }
-
-    public static void main(String[] args) {
-        Paladino heroi = new Paladino(150, 150, 150, "jvtips");
-        new Jogo(false, heroi, null);
     }
 }
