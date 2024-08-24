@@ -251,12 +251,12 @@ public class Batalha extends JFrame {
 
     private void atualizarAtributos() {
         lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
-        lblSaudeUsuario.setText("Saúde: " + heroi.getSaude());
+        lblSaudeUsuario.setText("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
         lblElixir.setText("Bolsa de Elixir: " + heroi.getBolsaDeElixir());
 
         lblAtaqueMonstro.setText("Ataque: " + monstro.getAtaque());
-        lblSaudeMonstro.setText("Saúde: " + monstro.getSaude());
+        lblSaudeMonstro.setText("Saúde: " + Math.ceil(monstro.getSaude()));
         lblDefesaMonstro.setText("Defesa: " + monstro.getDefesa());
     }
     
@@ -288,22 +288,8 @@ public class Batalha extends JFrame {
                 break;
         }
 
-
         if (monstro.estaVivo()) {
             monstro.atacar(heroi);
-        }
-        else if (!monstro.estaVivo()) {
-            // MONSTRO DERROTADO
-            // popup -> voce matou monstro
-            JOptionPane.showMessageDialog(this, "Você derrotou o monstro!", "Monstro Derrotado", JOptionPane.INFORMATION_MESSAGE);
-            // fecha a tela quando fechar o popup
-            this.dispose();
-            jogo.setVisible(true);
-            // a funcao mover continua (o heroi vai pra celula do monstro)
-            monstro.setAtaque(75);
-            monstro.setDefesa(75);
-            monstro.setSaude(150);
-            return;
         }
 
         if (!heroi.estaVivo() && monstro instanceof MonstroComum) {
@@ -326,6 +312,10 @@ public class Batalha extends JFrame {
         }
         else if (!monstro.estaVivo() && monstro instanceof Chefao) {
             JOptionPane.showMessageDialog(this, "Voce venceu!! O chefao foi derrotado.", "Winner!", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            jogo.dispose();
+            // opcoes de game over
+            new Opcoes(heroi);
         }
         else if (!monstro.estaVivo()) {
             // MONSTRO DERROTADO
@@ -336,10 +326,9 @@ public class Batalha extends JFrame {
             jogo.setVisible(true);
             // fecha a tela quando fechar o popup
             // a funcao mover continua (o heroi vai pra celula do monstro)
+            monstro.setAtaque(75);
+            monstro.setDefesa(75);
+            monstro.setSaude(150);
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }

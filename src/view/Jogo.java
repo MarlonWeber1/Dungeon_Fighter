@@ -293,7 +293,7 @@ public class Jogo extends JFrame {
         lblNomeUsuario.setText("Nome: " + heroi.getNome());
         lblClasseUsuario.setText("Classe: " + heroi.getClass().getSimpleName());
         lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
-        lblSaudeUsuario.setText("Saúde: " + heroi.getSaude());
+        lblSaudeUsuario.setText("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
         lblBolsaElixir.setText("Bolsa de elixir: " + heroi.getBolsaDeElixir());
     }
@@ -302,10 +302,5 @@ public class Jogo extends JFrame {
         for (ActionListener al : button.getActionListeners()) {
             button.removeActionListener(al);
         }
-    }
-
-    public static void main(String[] args) {
-        Paladino heroi = new Paladino(150, 150, 150, "jvtips");
-        new Jogo(false, heroi, null);
     }
 }
