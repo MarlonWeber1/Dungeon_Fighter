@@ -190,11 +190,19 @@ public class Jogo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (heroi.getBolsaDeElixir() > 0) {
-                    heroi.tomarElixir();
-                    heroi.setBolsaDeElixir(heroi.getBolsaDeElixir() - 1);
-                    JOptionPane.showMessageDialog(Jogo.this, "Você tomou um elixir!");
-                    atualizaStatus();
-                } else {
+
+                    if (heroi.getSaude() == heroi.getSaudeTotal()) {
+                        JOptionPane.showMessageDialog(Jogo.this, "Sua vida esta completa!");
+                        atualizaStatus();
+                    }
+                    else {
+                        heroi.tomarElixir();
+                        heroi.setBolsaDeElixir(heroi.getBolsaDeElixir() - 1);
+                        JOptionPane.showMessageDialog(Jogo.this, "Você tomou um elixir!");
+                        atualizaStatus();
+                    }
+                }
+                else {
                     JOptionPane.showMessageDialog(Jogo.this, "Você não possui mais elixires!");
                     atualizaStatus();
                 }
