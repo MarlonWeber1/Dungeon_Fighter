@@ -10,16 +10,17 @@ public class Paladino extends Heroi {
 
     @Override
     public void ataqueEspecial() {
-        double vidaRecuperada = this.getSaudeTotal() / 2.0;
+        double saudeAnterior = this.getSaude();
 
-        this.setSaude(this.getSaude() + vidaRecuperada);
+        this.setSaude(saudeAnterior + (this.getSaudeTotal() / 2));
 
         if (this.getSaude() > this.getSaudeTotal()) {
-            vidaRecuperada -= (this.getSaude() - this.getSaudeTotal());
             this.setSaude(this.getSaudeTotal());
         }
 
-        JOptionPane.showMessageDialog(null, "Habilidade especial usada! Você recuperou " + vidaRecuperada + " pontos de vida.");
+        double saudeRecuperada = this.getSaude() - saudeAnterior;
+
+        JOptionPane.showMessageDialog(null, "Habilidade especial usada! Você recuperou " + saudeRecuperada + " pontos de vida.");
         this.setHabilidadeUsada(true);
     }
 
