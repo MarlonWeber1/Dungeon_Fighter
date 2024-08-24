@@ -84,26 +84,24 @@ public class Iniciar extends JFrame implements ActionListener {
             // Fecha a tela atual
             this.dispose();
             // Configura o herói de forma padrao para funcao debug
-            Paladino heroi = new Paladino(150, 150, 150, "jvtips");
-            Jogo jogo = new Jogo(true, heroi);
+            Paladino heroi = new Paladino(150, 150, 150, "debugging");
+            Jogo jogo = new Jogo(true, heroi, null);
 
             // Cria a janela de debug
-
             // Adiciona um WindowListener para reabrir a tela inicial quando a janela de debug for fechada
             jogo.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
+                    jogo.setDefaultCloseOperation(HIDE_ON_CLOSE);
                     // Reabre a tela inicial quando a janela de debug for fechada
-                    SwingUtilities.invokeLater(() -> {
-                        Iniciar iniciar = new Iniciar();
-                        iniciar.mostrarJanela();
-                    });
+                    Iniciar iniciar = new Iniciar();
+                    iniciar.mostrarJanela();
                 }
             });
             jogo.setVisible(true);
         }
     }
-    
+
     public static void main(String[] args) {
         Iniciar iniciar = new Iniciar();
         iniciar.mostrarJanela();

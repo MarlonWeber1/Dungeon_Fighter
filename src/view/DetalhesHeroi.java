@@ -329,8 +329,9 @@ class DetalhesHeroi extends JFrame {
          // Ação do botão "Continuar"
         btnContinuar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Jogo jogo = new Jogo(false, heroiSelecionado);
+                Jogo jogo = new Jogo(false, heroiSelecionado, null);
                 jogo.setVisible(true);
+                dispose();
             }
         });
      

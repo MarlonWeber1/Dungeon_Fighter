@@ -1,7 +1,7 @@
 package modelDominio;
 import view.Batalha;
-import view.Tabuleiro;
 import view.Jogo;
+import view.Tabuleiro;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,14 +15,23 @@ public class ComecarJogo {
     private Armadilha arma;
     private ArmadilhaRandom armaR;
     private int dicas = 3;
+    private Jogo jogo;
 
-    public ComecarJogo(Heroi heroi, boolean debug) {
+    public ComecarJogo(Heroi heroi, boolean debug, Jogo jogo, Tabuleiro tabuleiro) {
         this.heroi = heroi;
         this.armaR = new ArmadilhaRandom();
         this.arma = new Armadilha();
         this.monstro = new MonstroComum();
         this.chefao = new Chefao();
-        this.tabuleiro = new Tabuleiro(debug);
+        if (tabuleiro == null) {
+            this.tabuleiro = new Tabuleiro(debug);
+        }
+        else {
+            this.tabuleiro = tabuleiro;
+        }
+
+        this.jogo = jogo;
+
         posicaoInicial();
         criarBotoesTab();
         atualizarBotoesTab();
@@ -34,6 +43,7 @@ public class ComecarJogo {
         heroi.setPosColuna(tabuleiro.getColunaInicial());
         heroi.setPosLinha(0);
     }
+
 
     // diminui a saude do heroi baseado no tipo de armadilha
     public void danoArmadilha (double dano) {
@@ -48,38 +58,50 @@ public class ComecarJogo {
 
             // popup para avisar que achou um elixir
             JOptionPane.showMessageDialog(tabuleiro, "Elixir adicionado a sua bolsa.", "Voce encontrou um Elixir", JOptionPane.INFORMATION_MESSAGE);
-
-
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'M') {
             System.out.println("monstro!!!");
 
             // comeca batalha
-            // se ganhar batalha se move para a celula
             JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
 
             // abre uma nova janela
-            Batalha batalha = new Batalha(heroi, monstro);
-            batalha.setVisible(true);
+            Batalha batalha = new Batalha(heroi, monstro, jogo);
+
+            // se ganhar batalha se move para a celula
 
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
             this.danoArmadilha(arma.getDano());
-            System.out.println("armadilha normal");
-            JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha normal, sua vida caiu para: " + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE);
 
+            // se heroi esta vivo -> popup avisando que caiu em uma armadilha
+            if (heroi.estaVivo()) {
+                JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha normal, sua vida caiu para: " + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (!heroi.estaVivo()) {
+                // se nao -> popup avisando que caiu em uma armadilha e morreu
+                JOptionPane.showMessageDialog(null,
+                        "Você caiu em uma armadilha e morreu!",
+                        "Game Over",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
-            // popup avisando que caiu em uma armadilha
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'R') {
             double damage = armaR.gerarDanoAleatorio();
             this.danoArmadilha(damage);
-            System.out.println("armadilha random");
-            System.out.println(heroi.getSaude());
-            // popup avisando que caiu em uma armadilha
-            JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha, o dano foi de " + damage + " e sua vida caiu para:" + heroi.getSaude() + ".", "Armadilha de dano aleatorio", JOptionPane.INFORMATION_MESSAGE);
 
-
+            // se heroi esta vivo -> popup avisando que caiu em uma armadilha
+            if (heroi.estaVivo()) {
+                JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha de dano aleatório, o dano foi de " + damage + " e sua vida caiu para:" + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (!heroi.estaVivo()) {
+                // se nao -> popup avisando que caiu em uma armadilha e morreu
+                JOptionPane.showMessageDialog(null,
+                        "Você caiu em uma armadilha e morreu!",
+                        "Game Over",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'C') {
@@ -88,11 +110,7 @@ public class ComecarJogo {
             JOptionPane.showMessageDialog(tabuleiro, "Voce chegou no Boss Final!", "Final BOSS", JOptionPane.INFORMATION_MESSAGE);
 
             // batalha comeca
-            // se ganhar tela de jogo vencido
-            // se perder tela de game over
-
-            Batalha batalha = new Batalha(heroi, monstro);
-            batalha.setVisible(true);
+            new Batalha(heroi, chefao, jogo);
         }
         tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
         tabuleiro.tabuleiro[novaLinha][novaColuna] = 'H';
@@ -129,7 +147,7 @@ public class ComecarJogo {
     }
 
 
-    private void criarBotoesTab() {
+    public void criarBotoesTab() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
                 tabuleiro.botoes[i][j] = new JButton(); // cria um novo botão
