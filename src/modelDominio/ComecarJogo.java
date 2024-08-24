@@ -59,8 +59,7 @@ public class ComecarJogo {
             JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
 
             // abre uma nova janela
-            Batalha batalha = new Batalha(heroi, monstro);
-            batalha.setVisible(true);
+            new Batalha(heroi , monstro);
 
         }
         else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
@@ -91,8 +90,7 @@ public class ComecarJogo {
             // se ganhar tela de jogo vencido
             // se perder tela de game over
 
-            Batalha batalha = new Batalha(heroi, monstro);
-            batalha.setVisible(true);
+            new Batalha(heroi , chefao);
         }
         tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
         tabuleiro.tabuleiro[novaLinha][novaColuna] = 'H';
