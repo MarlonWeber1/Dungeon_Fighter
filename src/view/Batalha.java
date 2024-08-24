@@ -11,24 +11,24 @@ import javax.swing.border.TitledBorder;
 
 public class Batalha extends JFrame {
 
-    private JLabel lblAtaqueUsuario;
-    private JLabel lblSaudeUsuario;
-    private JLabel lblDefesaUsuario;
-    private JLabel lblElixir;
-    
-    private JLabel lblDefesaMonstro;
-    private JLabel lblSaudeMonstro;
-    private JLabel lblAtaqueMonstro;
-    
+    private final JLabel lblAtaqueUsuario;
+    private final JLabel lblSaudeUsuario;
+    private final JLabel lblDefesaUsuario;
+    private final JLabel lblElixir;
+
+    private final JLabel lblDefesaMonstro;
+    private final JLabel lblSaudeMonstro;
+    private final JLabel lblAtaqueMonstro;
+
     private JLabel lblImagemHeroi;
     private JLabel lblImagemMonstro;
-    private Heroi heroi;
-    private Monstro monstro;
-    private JButton btnAtaque;
-    private JButton btnElixir;
-    private JButton btnHabilidade;
-    private JButton btnSair; // Novo botão de sair
-    private Jogo jogo;
+    private final Heroi heroi;
+    private final Monstro monstro;
+    private final JButton btnAtaque;
+    private final JButton btnElixir;
+    private final JButton btnHabilidade;
+    private final JButton btnSair; // Novo botão de sair
+    private final Jogo jogo;
 
     public Batalha(Heroi heroiSelecionado, Monstro monstro, Jogo jogo) {
         this.heroi = heroiSelecionado;
@@ -50,37 +50,7 @@ public class Batalha extends JFrame {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
 
-        // Ajuste na Imagem do Herói
-        ImageIcon iHeroi;
-        if (heroiSelecionado instanceof Barbaro) {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
-        } else if (heroiSelecionado instanceof Paladino) {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
-        } else {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
-        }
-
-        Image h = iHeroi.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH);
-        iHeroi = new ImageIcon(h);
-        lblImagemHeroi = new JLabel(iHeroi);
-        lblImagemHeroi.setOpaque(true);
-        lblImagemHeroi.setBackground(new Color(173, 216, 230)); // Fundo azul claro para o herói
-
-
-        // Ajuste na Imagem do Monstro
-        ImageIcon iMonstro;
-        if (monstro instanceof Chefao) {
-            iMonstro = new ImageIcon(getClass().getResource("/view/img/pekka.png"));
-        } else {
-            iMonstro = new ImageIcon(getClass().getResource("/view/img/goblin.png"));
-        }
-
-        Image m = iMonstro.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH);
-        iMonstro = new ImageIcon(m);
-        lblImagemMonstro = new JLabel(iMonstro);
-        lblImagemMonstro.setOpaque(true);
-        lblImagemMonstro.setBackground(new Color(70, 31, 36)); // Fundo vinho para o monstro
-
+        configuraImagem(heroiSelecionado, monstro);
 
         // Painel para as imagens do herói e monstro
         gbc.gridx = 0;
@@ -89,22 +59,22 @@ public class Batalha extends JFrame {
 
         gbc.gridx = 1;
         add(lblImagemMonstro, gbc);
-        
+
         lblAtaqueUsuario = new JLabel("Ataque: " + heroiSelecionado.getAtaque());
         lblSaudeUsuario = new JLabel("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario = new JLabel("Defesa: " + heroiSelecionado.getDefesa());
         lblElixir = new JLabel("Bolsa de elixir: " + heroiSelecionado.getBolsaDeElixir());
-        
+
         // Configura a fonte e cor do texto dos JLabel
-        lblAtaqueUsuario.setForeground(Color.BLACK); 
+        lblAtaqueUsuario.setForeground(Color.BLACK);
         lblAtaqueUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblSaudeUsuario.setForeground(Color.BLACK); 
+        lblSaudeUsuario.setForeground(Color.BLACK);
         lblSaudeUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblDefesaUsuario.setForeground(Color.BLACK); 
+        lblDefesaUsuario.setForeground(Color.BLACK);
         lblDefesaUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblElixir.setForeground(Color.BLACK); 
+        lblElixir.setForeground(Color.BLACK);
         lblElixir.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-           
+
         // Painel de Atributos do Herói
         JPanel pAtributosHeroi = new JPanel();
         pAtributosHeroi.setBorder(BorderFactory.createTitledBorder(
@@ -115,7 +85,7 @@ public class Batalha extends JFrame {
                 new Font("Palatino LinoType", Font.BOLD, 14)));
         pAtributosHeroi.setPreferredSize(new Dimension(10, 80));
         pAtributosHeroi.setLayout(new GridLayout(4, 2, 10, 10));
-        
+
         // Adiciona os atributos do herói ao painel
         pAtributosHeroi.add(lblAtaqueUsuario);
         pAtributosHeroi.add(lblSaudeUsuario);
@@ -126,18 +96,18 @@ public class Batalha extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 1;
         add(pAtributosHeroi, gbc);
-        
+
         lblAtaqueMonstro = new JLabel("Ataque: " + monstro.getAtaque());
         lblSaudeMonstro = new JLabel("Saúde: " + Math.ceil(monstro.getSaude()));
         lblDefesaMonstro = new JLabel("Defesa: " + monstro.getAtaque());
-        
-        lblAtaqueMonstro.setForeground(Color.BLACK); 
+
+        lblAtaqueMonstro.setForeground(Color.BLACK);
         lblAtaqueMonstro.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblSaudeMonstro.setForeground(Color.BLACK); 
+        lblSaudeMonstro.setForeground(Color.BLACK);
         lblSaudeMonstro.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        lblDefesaMonstro.setForeground(Color.BLACK); 
+        lblDefesaMonstro.setForeground(Color.BLACK);
         lblDefesaMonstro.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
-        
+
         // Painel de Atributos do Monstro
         JPanel pAtributosMonstro = new JPanel();
         pAtributosMonstro.setBorder(BorderFactory.createTitledBorder(
@@ -153,7 +123,6 @@ public class Batalha extends JFrame {
         pAtributosMonstro.add(lblAtaqueMonstro);
         pAtributosMonstro.add(lblSaudeMonstro);
         pAtributosMonstro.add(lblDefesaMonstro);
-        
 
         // Adiciona painel de atributos do monstro abaixo da imagem do monstro
         gbc.gridx = 1;
@@ -219,7 +188,7 @@ public class Batalha extends JFrame {
         gbc.gridy = 2;
         gbc.gridwidth = 2; // Ocupa duas colunas
         add(pBotoes, gbc);
-        
+
         // Tratamento para o fechamento da janela
         addWindowListener(new WindowAdapter() {
             @Override
@@ -227,7 +196,7 @@ public class Batalha extends JFrame {
                 JOptionPane.showMessageDialog(Batalha.this, "Você deve abater o monstro para voltar ao tabuleiro!");
             }
         });
-        
+
         // Listeners de Botão
         btnAtaque.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -242,7 +211,7 @@ public class Batalha extends JFrame {
                 atualizarAtributos();
             }
         });
-        
+
         btnHabilidade.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 acaoHeroi(2, monstro);
@@ -256,7 +225,7 @@ public class Batalha extends JFrame {
         lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
         lblSaudeUsuario.setText("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
-        lblElixir.setText("Bolsa de Elixir: " + heroi.getBolsaDeElixir());
+        lblElixir.setText("Bolsa de elixir: " + heroi.getBolsaDeElixir());
 
         lblAtaqueMonstro.setText("Ataque: " + monstro.getAtaque());
         lblSaudeMonstro.setText("Saúde: " + Math.ceil(monstro.getSaude()));
@@ -266,7 +235,7 @@ public class Batalha extends JFrame {
             btnHabilidade.setEnabled(false);
         }
     }
-    
+
     public void acaoHeroi (int identificaAcao, Monstro monstro) {
 
         // 0 -> atacar
@@ -349,6 +318,44 @@ public class Batalha extends JFrame {
             monstro.setAtaque(75);
             monstro.setDefesa(75);
             monstro.setSaude(150);
+        }
+    }
+
+    public void configuraImagem(Heroi heroiSelecionado, Monstro monstro) {
+
+        try {
+            // Ajuste na Imagem do Herói
+            ImageIcon iHeroi;
+            if (heroiSelecionado instanceof Barbaro) {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
+            } else if (heroiSelecionado instanceof Paladino) {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
+            } else {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
+            }
+
+            Image h = iHeroi.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH);
+            iHeroi = new ImageIcon(h);
+            lblImagemHeroi = new JLabel(iHeroi);
+            lblImagemHeroi.setOpaque(true);
+            lblImagemHeroi.setBackground(new Color(173, 216, 230)); // Fundo azul claro para o herói
+
+            // Ajuste na Imagem do Monstro
+            ImageIcon iMonstro;
+            if (monstro instanceof Chefao) {
+                iMonstro = new ImageIcon(getClass().getResource("/view/img/pekka.png"));
+            } else {
+                iMonstro = new ImageIcon(getClass().getResource("/view/img/goblin.png"));
+            }
+
+            Image m = iMonstro.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH);
+            iMonstro = new ImageIcon(m);
+            lblImagemMonstro = new JLabel(iMonstro);
+            lblImagemMonstro.setOpaque(true);
+            lblImagemMonstro.setBackground(new Color(70, 31, 36)); // Fundo vinho para o monstro
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagens: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 }

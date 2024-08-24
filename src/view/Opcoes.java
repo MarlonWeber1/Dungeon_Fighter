@@ -11,8 +11,8 @@ import java.awt.event.*;
 
 /**
  * @author marlon
- **/
-
+ *
+ */
 public class Opcoes extends JFrame implements ActionListener {
 
     private JButton btnNovoJogo;
@@ -20,7 +20,7 @@ public class Opcoes extends JFrame implements ActionListener {
     private JButton btnSair;
     private Heroi heroi;
 
-    public Opcoes (Heroi heroi) {
+    public Opcoes(Heroi heroi) {
         // Características da Janela Principal
         setTitle("Opções");
         setSize(400, 200);
@@ -76,16 +76,22 @@ public class Opcoes extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnSair) {
-            this.dispose();  // Fecha a janela
-        } else if (e.getSource() == btnNovoJogo) {
-            this.dispose();
-            Iniciar dungeonFighter = new Iniciar();
-            dungeonFighter.mostrarJanela(); // Abre a nova tela para iniciar um novo jogo
-        } else if (e.getSource() == btnReiniciarJogo) {
-            // Lógica para reiniciar o jogo
-            new EscolherHeroi(heroi.getNome());
-            dispose();
+        try {
+            if (e.getSource() == btnSair) {
+                this.dispose();  // Fecha a janela
+            } else if (e.getSource() == btnNovoJogo) {
+                this.dispose();
+                Iniciar dungeonFighter = new Iniciar();
+                dungeonFighter.mostrarJanela(); // Abre a nova tela para iniciar um novo jogo
+            } else if (e.getSource() == btnReiniciarJogo) {
+                // Lógica para reiniciar o jogo
+                new EscolherHeroi(heroi.getNome());
+                dispose();
+            }
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao processar a ação: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
+
     }
 }
