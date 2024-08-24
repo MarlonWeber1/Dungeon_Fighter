@@ -18,15 +18,26 @@ public class Jogo extends JFrame {
     private JLabel lblImagemHeroi;
     private JLabel lblBolsaElixir;
 
-    public Jogo(boolean debug, Heroi heroiSelecionado) {
+    public Heroi getHeroi() {
+        return heroi;
+    }
+
+    public Jogo(boolean debug, Heroi heroiSelecionado, Tabuleiro tabuleiroInicial) {
         // Inicializa o herói e o jogo
         this.heroi = heroiSelecionado;
-        this.comecarJogo = new ComecarJogo(heroi, debug); // false se não quiser modo de depuração
+
+        if (tabuleiroInicial != null) {
+            // Remove todos os botões do painel do tabuleiro
+            // Repaint e revalidate para garantir que a interface gráfica seja atualizada corretamente
+            tabuleiroInicial.revalidate();
+            tabuleiroInicial.repaint();
+        }
+        this.comecarJogo = new ComecarJogo(heroiSelecionado,debug,this,tabuleiroInicial);
 
         // Configura o JFrame
-        setTitle("Jogo de Tabuleiro");
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(1000, 500);
+        setTitle("Jogo");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(900, 500);
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout()); // Usando GridBagLayout para controle fino
@@ -244,6 +255,27 @@ public class Jogo extends JFrame {
             }
         });
 
+        botaoSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Mostra um diálogo de confirmação
+                int resposta = JOptionPane.showConfirmDialog(
+                        Jogo.this,
+                        "Tem certeza de que deseja sair?",
+                        "Confirmar saída",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE
+                );
+
+                // Verifica a resposta do usuário
+                if (resposta == JOptionPane.YES_OPTION) {
+                    new Opcoes(Jogo.this.getHeroi());
+                    Jogo.this.dispose();  // Fecha a janela atual
+                }
+            }
+        });
+
+
         // Exibir a janela
         pack();
         setVisible(true);
@@ -267,6 +299,6 @@ public class Jogo extends JFrame {
 
     public static void main(String[] args) {
         Paladino heroi = new Paladino(150, 150, 150, "jvtips");
-        new Jogo(false, heroi);
+        new Jogo(false, heroi, null);
     }
 }

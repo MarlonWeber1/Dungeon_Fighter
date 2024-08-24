@@ -73,6 +73,8 @@ public abstract class Heroi extends Entidade{
     }
 
     public void tomarElixir () {
+        if (this.getBolsaDeElixir()<1)
+            return;
         setSaude(getSaude()+40);
 
         if (getSaude() > saudeTotal) {
