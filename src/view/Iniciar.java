@@ -7,6 +7,7 @@ import modelDominio.Paladino;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import view.Dungeon_Fighter;
 
 /**
  * @author marlon
@@ -74,33 +75,38 @@ public class Iniciar extends JFrame implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnSair) {
-            this.dispose();  // Fecha a janela
-        } else if (e.getSource() == btnJogar) {
-            this.dispose();
-            Dungeon_Fighter dungeonFighter = new Dungeon_Fighter();
-            dungeonFighter.mostrarJanela(); // Abre a nova tela
-        } else if (e.getSource() == btnDebug) {
-            // Fecha a tela atual
-            this.dispose();
-            // Configura o herói de forma padrao para funcao debug
-            Paladino heroi = new Paladino(150, 150, 150, "debugging");
-            Jogo jogo = new Jogo(true, heroi, null);
+        try{
+            if (e.getSource() == btnSair) {
+                this.dispose();  // Fecha a janela
+            } else if (e.getSource() == btnJogar) {
+                this.dispose();
+                Dungeon_Fighter dungeonFighter = new Dungeon_Fighter();
+                dungeonFighter.mostrarJanela(); // Abre a nova tela
+            } else if (e.getSource() == btnDebug) {
+                // Fecha a tela atual
+                this.dispose();
+                
+                // Configura o herói de forma padrao para funcao debug
+                Paladino heroi = new Paladino(150, 150, 150, "debugging");
+                Jogo jogo = new Jogo(true, heroi, null);
 
-            // Cria a janela de debug
-            // Adiciona um WindowListener para reabrir a tela inicial quando a janela de debug for fechada
-            jogo.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    jogo.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                    // Reabre a tela inicial quando a janela de debug for fechada
-                    Iniciar iniciar = new Iniciar();
-                    iniciar.mostrarJanela();
-                }
-            });
-            jogo.setVisible(true);
+                // Cria a janela de debug
+                jogo.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        // Reabre a tela inicial quando a janela de debug for fechada
+                        Iniciar iniciar = new Iniciar();
+                        iniciar.mostrarJanela();
+                    }
+                });
+                jogo.setVisible(true);
+            }
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao processar a ação: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         Iniciar iniciar = new Iniciar();

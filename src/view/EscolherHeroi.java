@@ -11,18 +11,29 @@ import modelDominio.Paladino;
 
 /**
  * @author marlon
- **/
-
+ *
+ */
 public class EscolherHeroi extends JFrame implements ActionListener {
 
-    private JRadioButton rbHeroi1;
-    private JRadioButton rbHeroi2;
-    private JRadioButton rbHeroi3;
-    private JButton btnContinuar;
-    private JLabel lblNomeUsuario;
+    private final JRadioButton rbHeroi1;
+    private final JRadioButton rbHeroi2;
+    private final JRadioButton rbHeroi3;
+    private final JButton btnContinuar;
+    private final JLabel lblNomeUsuario;
     private Heroi heroiSelecionado;
+    private JLabel lblGuerreiro;
+    private JLabel lblPaladino;
+    private JLabel lblBarbaro;
 
     public EscolherHeroi(String nomeUsuario) {
+        // Configuração da janela
+        setTitle("Escolher Herói");
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
         // Construtor que recebe o nome do usuário
         lblNomeUsuario = new JLabel("Bem-vindo, " + nomeUsuario);
         lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 32));
@@ -32,38 +43,13 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         lblNomeUsuario.setOpaque(true); // Necessário para que a cor de fundo funcione
         lblNomeUsuario.setBackground(Color.DARK_GRAY);
 
-        // Configuração da janela
-        setTitle("Escolher Herói");
-        setSize(800, 600);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout()); 
+        configuraImagem();
 
-        // Carrega as imagens e escala-as
-        ImageIcon imagemPaladino = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
-        ImageIcon imagemGuerreiro = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
-        ImageIcon imagemBarbaro = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
-
-        Image paladino = imagemPaladino.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
-        Image guerreiro = imagemGuerreiro.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
-        Image barbaro = imagemBarbaro.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
-
-        // Atualiza os ImageIcons com as imagens escaladas
-        imagemPaladino = new ImageIcon(paladino);
-        imagemGuerreiro = new ImageIcon(guerreiro);
-        imagemBarbaro = new ImageIcon(barbaro);
-        
-        // Cria JLabels com as imagens escaladas
-        JLabel lblPaladino = new JLabel(imagemPaladino);
-        JLabel lblGuerreiro = new JLabel(imagemGuerreiro);
-        JLabel lblBarbaro = new JLabel(imagemBarbaro);
-        
         // Configura o layout dos botões
         JPanel pEscolherHeroi = new JPanel();
         pEscolherHeroi.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(110, 110, 110, 110);         
+        c.insets = new Insets(110, 110, 110, 110);
         pEscolherHeroi.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel
 
         // Declaração dos componentes
@@ -99,7 +85,7 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         // Configuração das ações dos radio buttons
         rbHeroi1.addActionListener(e -> {
             // Se "Guerreiro" for selecionado
-            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario); 
+            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario);
         });
 
         rbHeroi2.addActionListener(e -> {
@@ -109,16 +95,16 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         rbHeroi3.addActionListener(e -> {
             // Se "Barbaro" for selecionado
-            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario); 
-        });   
+            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario);
+        });
 
         // Painéis principais para imagem e botões
         JPanel pPrincipal = new JPanel();
         pPrincipal.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(30, 30, 30, 30); 
+        gbc.insets = new Insets(30, 30, 30, 30);
         pPrincipal.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel principal
-    
+
         // Adiciona as imagens e os botões ao painel principal
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -152,8 +138,8 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         // Painel para o botão Continuar
         JPanel pBotao = new JPanel();
-        pBotao.setLayout(new FlowLayout(FlowLayout.RIGHT)); 
-        pBotao.add(btnContinuar);        
+        pBotao.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        pBotao.add(btnContinuar);
         pBotao.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel do botão
 
         // Adiciona o painel com o botão ao frame
@@ -165,19 +151,50 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    public void configuraImagem() {
+        try {
+            // Carrega as imagens e escala-as
+            ImageIcon imagemPaladino = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
+            ImageIcon imagemGuerreiro = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
+            ImageIcon imagemBarbaro = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
+
+            Image paladino = imagemPaladino.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+            Image guerreiro = imagemGuerreiro.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+            Image barbaro = imagemBarbaro.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+
+            // Atualiza os ImageIcons com as imagens escaladas
+            imagemPaladino = new ImageIcon(paladino);
+            imagemGuerreiro = new ImageIcon(guerreiro);
+            imagemBarbaro = new ImageIcon(barbaro);
+
+            // Inicialize os JLabels com as imagens escaladas
+            lblPaladino = new JLabel(imagemPaladino);
+            lblGuerreiro = new JLabel(imagemGuerreiro);
+            lblBarbaro = new JLabel(imagemBarbaro);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagens: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnContinuar) {
-            if (rbHeroi1.isSelected() || rbHeroi2.isSelected() || rbHeroi3.isSelected()) {
-                // Se algum radio button estiver selecionado, abre a nova tela
-                DetalhesHeroi detalhesHeroi = new DetalhesHeroi(heroiSelecionado);
-                detalhesHeroi.setVisible(true);
-                
-                System.out.println("" + heroiSelecionado/*.imprimir()*/);
-                this.dispose(); // Fecha a janela atual
-            } else {
-                JOptionPane.showMessageDialog(this, "Por favor, selecione um herói.");
+        try {
+            if (e.getSource() == btnContinuar) {
+                if (rbHeroi1.isSelected() || rbHeroi2.isSelected() || rbHeroi3.isSelected()) {
+                    // Se algum radio button estiver selecionado, abre a nova tela
+                    DetalhesHeroi detalhesHeroi = new DetalhesHeroi(heroiSelecionado);
+                    detalhesHeroi.setVisible(true);
+
+                    System.out.println("" + heroiSelecionado);
+                    this.dispose(); // Fecha a janela atual
+                } else {
+                    JOptionPane.showMessageDialog(this, "Por favor, selecione um herói.");
+                }
             }
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao processar a ação: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 }

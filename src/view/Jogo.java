@@ -10,13 +10,14 @@ import java.awt.event.ActionListener;
 public class Jogo extends JFrame {
     private Heroi heroi;
     private ComecarJogo comecarJogo;
-    private JLabel lblNomeUsuario;
-    private JLabel lblClasseUsuario;
-    private JLabel lblAtaqueUsuario;
-    private JLabel lblSaudeUsuario;
-    private JLabel lblDefesaUsuario;
+    private final JLabel lblNomeUsuario;
+    private final JLabel lblClasseUsuario;
+    private final JLabel lblAtaqueUsuario;
+    private final JLabel lblSaudeUsuario;
+    private final JLabel lblDefesaUsuario;
     private JLabel lblImagemHeroi;
-    private JLabel lblBolsaElixir;
+    private final JLabel lblBolsaElixir;
+    private final JPanel pImagemHeroi;    // Declarar pImagemHeroi
 
     public Heroi getHeroi() {
         return heroi;
@@ -90,28 +91,9 @@ public class Jogo extends JFrame {
         ));
 
         // Painel para a imagem do herói com borda
-        JPanel pImagemHeroi = new JPanel();
-        pImagemHeroi.setPreferredSize(new Dimension(200, 200));
-        pImagemHeroi.setMaximumSize(new Dimension(200, 200));
-        pImagemHeroi.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        pImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pImagemHeroi.setBackground(Color.LIGHT_GRAY);
+        pImagemHeroi = new JPanel();
 
-        // Determine a imagem com base no herói selecionado
-        ImageIcon iHeroi;
-        if (this.heroi instanceof Barbaro) {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
-        } else if (this.heroi instanceof Paladino) {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
-        } else {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
-        }
-
-        // Ajuste na Imagem do Herói
-        Image i = iHeroi.getImage().getScaledInstance(128, 165, Image.SCALE_SMOOTH);
-        iHeroi = new ImageIcon(i);
-        lblImagemHeroi = new JLabel(iHeroi);
-        lblImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
+        configuraImagem(heroiSelecionado);
 
         // Adiciona a imagem do herói ao painel da imagem
         pImagemHeroi.add(lblImagemHeroi);
@@ -287,6 +269,35 @@ public class Jogo extends JFrame {
         pack();
         setVisible(true);
 
+    }
+    
+    public void configuraImagem(Heroi heroiSelecionado){
+        try {
+            pImagemHeroi.setPreferredSize(new Dimension(200, 200));
+            pImagemHeroi.setMaximumSize(new Dimension(200, 200));
+            pImagemHeroi.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            pImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
+            pImagemHeroi.setBackground(Color.LIGHT_GRAY);
+
+            // Determine a imagem com base no herói selecionado
+            ImageIcon iHeroi;
+            if (heroiSelecionado instanceof Barbaro) {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
+            } else if (heroiSelecionado instanceof Paladino) {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
+            } else {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
+            }
+
+            // Ajuste na Imagem do Herói
+            Image i = iHeroi.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+            iHeroi = new ImageIcon(i);
+            lblImagemHeroi = new JLabel(iHeroi);
+            lblImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagens: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }
 
     public void atualizaStatus() {

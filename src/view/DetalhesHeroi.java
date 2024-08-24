@@ -9,11 +9,10 @@ import modelDominio.Guerreiro;
 import modelDominio.Heroi;
 import modelDominio.Paladino;
 
-
 /**
  * @author marlon
- **/
-
+ *
+ */
 class DetalhesHeroi extends JFrame {
 
     private final JLabel lblNomeUsuario;
@@ -21,8 +20,10 @@ class DetalhesHeroi extends JFrame {
     private final JLabel lblAtaqueUsuario;
     private final JLabel lblSaudeUsuario;
     private final JLabel lblDefesaUsuario;
-    private final JLabel lblImagemHeroi;
     private final JButton btnContinuar;
+
+    private JLabel lblImagemHeroi;  
+    private final JPanel pImagemHeroi;    
 
     private JLabel lblValorAtaque;
     private JLabel lblValorSaude;
@@ -30,8 +31,6 @@ class DetalhesHeroi extends JFrame {
     private JLabel lblPontosRestantes;
 
     private int pontosRestantes = 100; // Pontos que podem ser distribuídos
-    
-    
 
     DetalhesHeroi(Heroi heroiSelecionado) {
 
@@ -62,28 +61,9 @@ class DetalhesHeroi extends JFrame {
         ));
 
         // Painel para a imagem do herói com borda
-        JPanel pImagemHeroi = new JPanel();
-        pImagemHeroi.setPreferredSize(new Dimension(200, 200));
-        pImagemHeroi.setMaximumSize(new Dimension(200, 200));
-        pImagemHeroi.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        pImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pImagemHeroi.setBackground(Color.LIGHT_GRAY);
+        pImagemHeroi = new JPanel();
 
-        // Determine a imagem com base no herói selecionado
-        ImageIcon iHeroi;
-        if (heroiSelecionado instanceof Barbaro) {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
-        } else if (heroiSelecionado instanceof Paladino) {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
-        } else {
-            iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
-        }
-
-        // Ajuste na Imagem do Herói
-        Image i = iHeroi.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
-        iHeroi = new ImageIcon(i);
-        lblImagemHeroi = new JLabel(iHeroi);
-        lblImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
+        configuraImagem(heroiSelecionado);
 
         // Adiciona a imagem do herói ao painel da imagem
         pImagemHeroi.add(lblImagemHeroi);
@@ -94,17 +74,17 @@ class DetalhesHeroi extends JFrame {
         lblAtaqueUsuario = new JLabel("Ataque: " + heroiSelecionado.getAtaque());
         lblSaudeUsuario = new JLabel("Saúde: " + heroiSelecionado.getSaude());
         lblDefesaUsuario = new JLabel("Defesa: " + heroiSelecionado.getDefesa());
-        
+
         // Configura a fonte e cor do texto dos JLabel
         lblNomeUsuario.setForeground(Color.WHITE);
         lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblClasseUsuario.setForeground(Color.WHITE); 
+        lblClasseUsuario.setForeground(Color.WHITE);
         lblClasseUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        lblAtaqueUsuario.setForeground(Color.WHITE); 
+        lblAtaqueUsuario.setForeground(Color.WHITE);
         lblAtaqueUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        lblSaudeUsuario.setForeground(Color.WHITE); 
+        lblSaudeUsuario.setForeground(Color.WHITE);
         lblSaudeUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        lblDefesaUsuario.setForeground(Color.WHITE); 
+        lblDefesaUsuario.setForeground(Color.WHITE);
         lblDefesaUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 
         // Centralizar os textos
@@ -135,7 +115,7 @@ class DetalhesHeroi extends JFrame {
         JPanel pDireita = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
-        
+
         // Pontos Restantes no canto superior direito
         lblPontosRestantes = new JLabel("Pontos Restantes: " + pontosRestantes);
         gbc.gridx = 5;
@@ -205,7 +185,7 @@ class DetalhesHeroi extends JFrame {
         gbc.gridx = 2;
         gbc.gridy = 6;
         pDireita.add(btnDefesaMais, gbc);
-        
+
         // Painel inferior para botões "Continuar" 
         JPanel pInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Alinhado à esquerda
         pInferior.setPreferredSize(new Dimension(100, 50));
@@ -231,110 +211,167 @@ class DetalhesHeroi extends JFrame {
         // Listeners de Botão
         btnAtaqueMais.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (pontosRestantes > 0) {
-                    heroiSelecionado.incrementaAtaque();
-                    lblValorAtaque.setText(String.valueOf(heroiSelecionado.getAtaque()));
-                    pontosRestantes = pontosRestantes - 10;
-                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
-                    double ataqueDistribuido = Double.parseDouble(lblValorAtaque.getText()) 
-                        - heroiSelecionado.getAtaque();
-                    heroiSelecionado.setAtaque(heroiSelecionado.getAtaque() + ataqueDistribuido);
-                    lblAtaqueUsuario.setText("Ataque: " + heroiSelecionado.getAtaque());
-                    verificarPontosDistribuidos();
-                }
+                try {
+                    if (pontosRestantes > 0) {
+                        heroiSelecionado.incrementaAtaque();
+                        lblValorAtaque.setText(String.valueOf(heroiSelecionado.getAtaque()));
+                        pontosRestantes = pontosRestantes - 10;
+                        lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                        double ataqueDistribuido = Double.parseDouble(lblValorAtaque.getText())
+                                - heroiSelecionado.getAtaque();
+                        heroiSelecionado.setAtaque(heroiSelecionado.getAtaque() + ataqueDistribuido);
+                        lblAtaqueUsuario.setText("Ataque: " + heroiSelecionado.getAtaque());
+                        verificarPontosDistribuidos();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } 
             }
         });
-        
 
         btnAtaqueMenos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (heroiSelecionado.getAtaque() > ataqueInicial) {
-                    heroiSelecionado.decrementaAtaque();
-                    lblValorAtaque.setText(String.valueOf(heroiSelecionado.getAtaque()));
-                    pontosRestantes = pontosRestantes + 10;
-                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
-                    double ataqueDistribuido = Double.parseDouble(lblValorAtaque.getText()) 
-                        - heroiSelecionado.getAtaque();
-                    heroiSelecionado.setAtaque(heroiSelecionado.getAtaque() + ataqueDistribuido);
-                    lblAtaqueUsuario.setText("Ataque: " + heroiSelecionado.getAtaque());
-                    verificarPontosDistribuidos();
-                }
+                try {
+                    if (heroiSelecionado.getAtaque() > ataqueInicial) {
+                        heroiSelecionado.decrementaAtaque();
+                        lblValorAtaque.setText(String.valueOf(heroiSelecionado.getAtaque()));
+                        pontosRestantes = pontosRestantes + 10;
+                        lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                        double ataqueDistribuido = Double.parseDouble(lblValorAtaque.getText())
+                                - heroiSelecionado.getAtaque();
+                        heroiSelecionado.setAtaque(heroiSelecionado.getAtaque() + ataqueDistribuido);
+                        lblAtaqueUsuario.setText("Ataque: " + heroiSelecionado.getAtaque());
+                        verificarPontosDistribuidos();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } 
             }
         });
 
         btnSaudeMais.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (pontosRestantes > 0) {
-                    heroiSelecionado.incrementaSaude();
-                    lblValorSaude.setText(String.valueOf(heroiSelecionado.getSaude()));
-                    pontosRestantes = pontosRestantes - 10;
-                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
-                    double saudeDistribuida = Double.parseDouble(lblValorSaude.getText()) 
-                        - heroiSelecionado.getSaude();
-                    heroiSelecionado.setSaude(heroiSelecionado.getSaude() + saudeDistribuida);
-                     lblSaudeUsuario.setText("Saúde: " + heroiSelecionado.getSaude());
-                     verificarPontosDistribuidos();
+                try {
+                    if (pontosRestantes > 0) {
+                        heroiSelecionado.incrementaSaude();
+                        lblValorSaude.setText(String.valueOf(heroiSelecionado.getSaude()));
+                        pontosRestantes = pontosRestantes - 10;
+                        lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                        double saudeDistribuida = Double.parseDouble(lblValorSaude.getText())
+                                - heroiSelecionado.getSaude();
+                        heroiSelecionado.setSaude(heroiSelecionado.getSaude() + saudeDistribuida);
+                        lblSaudeUsuario.setText("Saúde: " + heroiSelecionado.getSaude());
+                        verificarPontosDistribuidos();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
         btnSaudeMenos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (heroiSelecionado.getSaude() > saudeInicial) {
-                    heroiSelecionado.decrementaSaude();
-                    lblValorSaude.setText(String.valueOf(heroiSelecionado.getSaude()));
-                    pontosRestantes = pontosRestantes + 10;
-                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
-                    double saudeDistribuida = Double.parseDouble(lblValorSaude.getText()) 
-                        - heroiSelecionado.getSaude();
-                    heroiSelecionado.setSaude(heroiSelecionado.getSaude() + saudeDistribuida);
-                     lblSaudeUsuario.setText("Saúde: " + heroiSelecionado.getSaude());
-                     verificarPontosDistribuidos();
-                }
+                try {
+                    if (heroiSelecionado.getSaude() > saudeInicial) {
+                        heroiSelecionado.decrementaSaude();
+                        lblValorSaude.setText(String.valueOf(heroiSelecionado.getSaude()));
+                        pontosRestantes = pontosRestantes + 10;
+                        lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                        double saudeDistribuida = Double.parseDouble(lblValorSaude.getText())
+                                - heroiSelecionado.getSaude();
+                        heroiSelecionado.setSaude(heroiSelecionado.getSaude() + saudeDistribuida);
+                        lblSaudeUsuario.setText("Saúde: " + heroiSelecionado.getSaude());
+                        verificarPontosDistribuidos();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } 
             }
         });
 
         btnDefesaMais.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (pontosRestantes > 0) {
-                    heroiSelecionado.incrementaDefesa();
-                    lblValorDefesa.setText(String.valueOf(heroiSelecionado.getDefesa()));
-                    pontosRestantes = pontosRestantes - 10;
-                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
-                    double defesaDistribuida = Double.parseDouble(lblValorDefesa.getText()) 
-                        - heroiSelecionado.getDefesa();
-                    heroiSelecionado.setDefesa(heroiSelecionado.getDefesa() + defesaDistribuida);
-                     lblDefesaUsuario.setText("Defesa: " + heroiSelecionado.getDefesa());
-                     verificarPontosDistribuidos();
+                try {
+                    if (pontosRestantes > 0) {
+                        heroiSelecionado.incrementaDefesa();
+                        lblValorDefesa.setText(String.valueOf(heroiSelecionado.getDefesa()));
+                        pontosRestantes = pontosRestantes - 10;
+                        lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                        double defesaDistribuida = Double.parseDouble(lblValorDefesa.getText())
+                                - heroiSelecionado.getDefesa();
+                        heroiSelecionado.setDefesa(heroiSelecionado.getDefesa() + defesaDistribuida);
+                        lblDefesaUsuario.setText("Defesa: " + heroiSelecionado.getDefesa());
+                        verificarPontosDistribuidos();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
         btnDefesaMenos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (heroiSelecionado.getDefesa() > defesaInicial) {
-                    heroiSelecionado.decrementaDefesa();
-                    lblValorDefesa.setText(String.valueOf(heroiSelecionado.getDefesa()));
-                    pontosRestantes = pontosRestantes + 10;
-                    lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
-                    double defesaDistribuida = Double.parseDouble(lblValorDefesa.getText()) 
-                        - heroiSelecionado.getDefesa();
-                    heroiSelecionado.setDefesa(heroiSelecionado.getDefesa() + defesaDistribuida);
-                     lblDefesaUsuario.setText("Defesa: " + heroiSelecionado.getDefesa());
-                     verificarPontosDistribuidos();
+                try {
+                    if (heroiSelecionado.getDefesa() > defesaInicial) {
+                        heroiSelecionado.decrementaDefesa();
+                        lblValorDefesa.setText(String.valueOf(heroiSelecionado.getDefesa()));
+                        pontosRestantes = pontosRestantes + 10;
+                        lblPontosRestantes.setText("Pontos Restantes: " + pontosRestantes);
+                        double defesaDistribuida = Double.parseDouble(lblValorDefesa.getText())
+                                - heroiSelecionado.getDefesa();
+                        heroiSelecionado.setDefesa(heroiSelecionado.getDefesa() + defesaDistribuida);
+                        lblDefesaUsuario.setText("Defesa: " + heroiSelecionado.getDefesa());
+                        verificarPontosDistribuidos();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } 
+            }
+        });
+
+        // Ação do botão "Continuar"
+        btnContinuar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Jogo jogo = new Jogo(false, heroiSelecionado, null);
+                    jogo.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(DetalhesHeroi.this, "Ocorreu um erro ao processar a ação: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 }
             }
         });
-        
-         // Ação do botão "Continuar"
-        btnContinuar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Jogo jogo = new Jogo(false, heroiSelecionado, null);
-                jogo.setVisible(true);
-                dispose();
+
+    }
+
+    private void configuraImagem(Heroi heroiSelecionado) {
+        try {
+            pImagemHeroi.setPreferredSize(new Dimension(200, 200));
+            pImagemHeroi.setMaximumSize(new Dimension(200, 200));
+            pImagemHeroi.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            pImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
+            pImagemHeroi.setBackground(Color.LIGHT_GRAY);
+
+            // Determine a imagem com base no herói selecionado
+            ImageIcon iHeroi;
+            if (heroiSelecionado instanceof Barbaro) {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
+            } else if (heroiSelecionado instanceof Paladino) {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/paladino.png"));
+            } else {
+                iHeroi = new ImageIcon(getClass().getResource("/view/img/guerreiro.png"));
             }
-        });
-     
+
+            // Ajuste na Imagem do Herói
+            Image i = iHeroi.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+            iHeroi = new ImageIcon(i);
+            lblImagemHeroi = new JLabel(iHeroi);
+            lblImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar imagens: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }
 
     private void verificarPontosDistribuidos() {
