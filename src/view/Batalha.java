@@ -253,7 +253,7 @@ public class Batalha extends JFrame {
         lblAtaqueUsuario.setText("Ataque: " + heroi.getAtaque());
         lblSaudeUsuario.setText("Saúde: " + heroi.getSaude());
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
-        lblElixir.setText("Bolsa Elixir: " + heroi.getBolsaDeElixir());
+        lblElixir.setText("Bolsa de Elixir: " + heroi.getBolsaDeElixir());
 
         lblAtaqueMonstro.setText("Ataque: " + monstro.getAtaque());
         lblSaudeMonstro.setText("Saúde: " + monstro.getSaude());
@@ -300,6 +300,9 @@ public class Batalha extends JFrame {
             this.dispose();
             jogo.setVisible(true);
             // a funcao mover continua (o heroi vai pra celula do monstro)
+            monstro.setAtaque(75);
+            monstro.setDefesa(75);
+            monstro.setSaude(150);
             return;
         }
 

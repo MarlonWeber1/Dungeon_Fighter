@@ -189,8 +189,15 @@ public class Jogo extends JFrame {
         botaoTomarElixir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                heroi.tomarElixir();
-                atualizaStatus();
+                if (heroi.getBolsaDeElixir() > 0) {
+                    heroi.tomarElixir();
+                    heroi.setBolsaDeElixir(heroi.getBolsaDeElixir() - 1);
+                    JOptionPane.showMessageDialog(Jogo.this, "Você tomou um elixir!");
+                    atualizaStatus();
+                } else {
+                    JOptionPane.showMessageDialog(Jogo.this, "Você não possui mais elixires!");
+                    atualizaStatus();
+                }
             }
         });
 

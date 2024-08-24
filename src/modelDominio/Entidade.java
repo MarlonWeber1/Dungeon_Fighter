@@ -41,8 +41,8 @@ public abstract class Entidade {
         // W deve ser o valor de ataque do atacante
         // número aleatório de 0 a W para ataque e defesa
 
-        double ataqueFinal = this.ataque + (Math.random() * (101.00));
-        double defesaAdversario = adversario.getDefesa() + (Math.random() * (101.00));
+        double ataqueFinal = this.ataque + (Math.random() * (50));
+        double defesaAdversario = adversario.getDefesa() + (Math.random() * (30));
 
         // calcula o dano
         double dano = ataqueFinal - defesaAdversario;

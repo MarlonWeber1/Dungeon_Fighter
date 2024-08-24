@@ -29,7 +29,7 @@ class DetalhesHeroi extends JFrame {
     private JLabel lblValorDefesa;
     private JLabel lblPontosRestantes;
 
-    private int pontosRestantes = 0; // Pontos que podem ser distribuídos
+    private int pontosRestantes = 100; // Pontos que podem ser distribuídos
     
     
 
