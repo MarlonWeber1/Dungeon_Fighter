@@ -6,11 +6,21 @@ public abstract class Heroi extends Entidade{
     private int posLinha;
     private int posColuna;
     private final double saudeTotal;
+    private boolean habilidadeUsada;
 
     public Heroi(double defesa, double ataque, double saude, String nome) {
         super(defesa,ataque,saude);
         this.nome = nome;
         this.saudeTotal = saude;
+        this.habilidadeUsada = false;
+    }
+
+    public boolean isHabilidadeUsada() {
+        return habilidadeUsada;
+    }
+
+    public void setHabilidadeUsada(boolean habilidadeUsada) {
+        this.habilidadeUsada = habilidadeUsada;
     }
 
     public String getNome() {

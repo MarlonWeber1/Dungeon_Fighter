@@ -21,7 +21,7 @@ public class Iniciar extends JFrame implements ActionListener {
     public void mostrarJanela(){
     
         // Características da Janela Principal
-        setTitle("Tela iniciar");
+        setTitle("Inicio");
         setSize(400, 200);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -92,7 +92,6 @@ public class Iniciar extends JFrame implements ActionListener {
             jogo.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    jogo.setDefaultCloseOperation(HIDE_ON_CLOSE);
                     // Reabre a tela inicial quando a janela de debug for fechada
                     Iniciar iniciar = new Iniciar();
                     iniciar.mostrarJanela();

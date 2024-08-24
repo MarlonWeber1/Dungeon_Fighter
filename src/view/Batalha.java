@@ -91,7 +91,7 @@ public class Batalha extends JFrame {
         add(lblImagemMonstro, gbc);
         
         lblAtaqueUsuario = new JLabel("Ataque: " + heroiSelecionado.getAtaque());
-        lblSaudeUsuario = new JLabel("Saúde: " + heroiSelecionado.getSaude());
+        lblSaudeUsuario = new JLabel("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario = new JLabel("Defesa: " + heroiSelecionado.getDefesa());
         lblElixir = new JLabel("Bolsa de elixir: " + heroiSelecionado.getBolsaDeElixir());
         
@@ -128,7 +128,7 @@ public class Batalha extends JFrame {
         add(pAtributosHeroi, gbc);
         
         lblAtaqueMonstro = new JLabel("Ataque: " + monstro.getAtaque());
-        lblSaudeMonstro = new JLabel("Saúde: " + monstro.getSaude());
+        lblSaudeMonstro = new JLabel("Saúde: " + Math.ceil(monstro.getSaude()));
         lblDefesaMonstro = new JLabel("Defesa: " + monstro.getAtaque());
         
         lblAtaqueMonstro.setForeground(Color.BLACK); 
@@ -176,6 +176,9 @@ public class Batalha extends JFrame {
         btnHabilidade.setFont(new Font("Palatino LinoType", Font.BOLD, 12));
         btnHabilidade.setFont(new Font("Arial", Font.BOLD, 12));
         pBotoes.add(btnHabilidade);
+        if (heroi.isHabilidadeUsada()) {
+            btnHabilidade.setEnabled(false);
+        }
 
         // Botão Elixir
         btnElixir = new JButton("Tomar Elixir");
@@ -258,6 +261,10 @@ public class Batalha extends JFrame {
         lblAtaqueMonstro.setText("Ataque: " + monstro.getAtaque());
         lblSaudeMonstro.setText("Saúde: " + Math.ceil(monstro.getSaude()));
         lblDefesaMonstro.setText("Defesa: " + monstro.getDefesa());
+
+        if (heroi.isHabilidadeUsada()) {
+            btnHabilidade.setEnabled(false);
+        }
     }
     
     public void acaoHeroi (int identificaAcao, Monstro monstro) {
@@ -284,8 +291,18 @@ public class Batalha extends JFrame {
                 }
                 break;
             case 2: // Habilidade especial
-                heroi.ataqueEspecial();
+                if (heroi instanceof Barbaro) {
+                    heroi.ataqueEspecial();
+                    JOptionPane.showMessageDialog(this, "Com um rugido feroz, o Bárbaro desencadeia seu Golpe Furioso, causando um ataque devastador com 50% mais dano!");
+                    heroi.atacar(monstro);
+                    heroi.setAtaque(heroi.getAtaque()/1.5);
+                }
+                else heroi.ataqueEspecial();
                 break;
+        }
+
+        if (heroi instanceof Guerreiro) {
+            ((Guerreiro) heroi).reduzirRodadasHabilidadeEspecial();
         }
 
         if (monstro.estaVivo()) {
@@ -295,6 +312,7 @@ public class Batalha extends JFrame {
         if (!heroi.estaVivo() && monstro instanceof MonstroComum) {
             // GAME OVER
             // popup o mostro abateu voce
+            heroi.setHabilidadeUsada(false);
             JOptionPane.showMessageDialog(this, "O monstro abateu você!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             // tela de batalha fecha junto com o popup
             this.dispose();
@@ -303,6 +321,7 @@ public class Batalha extends JFrame {
             new Opcoes(heroi);
         }
         else if (!heroi.estaVivo() && monstro instanceof Chefao) {
+            heroi.setHabilidadeUsada(false);
             JOptionPane.showMessageDialog(this, "Chefao abateu voce.", "Loser!", JOptionPane.INFORMATION_MESSAGE);
             // tela de batalha fecha junto com o popup
             this.dispose();
@@ -326,6 +345,7 @@ public class Batalha extends JFrame {
             jogo.setVisible(true);
             // fecha a tela quando fechar o popup
             // a funcao mover continua (o heroi vai pra celula do monstro)
+            jogo.atualizaStatus();
             monstro.setAtaque(75);
             monstro.setDefesa(75);
             monstro.setSaude(150);

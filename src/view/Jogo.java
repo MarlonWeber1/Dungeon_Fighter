@@ -17,6 +17,7 @@ public class Jogo extends JFrame {
     private JLabel lblDefesaUsuario;
     private JLabel lblImagemHeroi;
     private JLabel lblBolsaElixir;
+    public JButton botaoHabilidade;
 
     public Heroi getHeroi() {
         return heroi;
@@ -27,8 +28,6 @@ public class Jogo extends JFrame {
         this.heroi = heroiSelecionado;
 
         if (tabuleiroInicial != null) {
-            // Remove todos os botões do painel do tabuleiro
-            // Repaint e revalidate para garantir que a interface gráfica seja atualizada corretamente
             tabuleiroInicial.revalidate();
             tabuleiroInicial.repaint();
         }
@@ -61,7 +60,7 @@ public class Jogo extends JFrame {
         // Cria os botões e adiciona-os ao painel
         JButton botaoTomarElixir = new JButton("Tomar Elixir");
         JButton botaoDica = new JButton("Dica");
-        JButton botaoHabilidade = new JButton("Habilidade");
+        botaoHabilidade = new JButton("Habilidade");
         JButton botaoSair = new JButton("Sair");
 
         painelBotoes.add(botaoTomarElixir);
@@ -209,6 +208,10 @@ public class Jogo extends JFrame {
             }
         });
 
+        if (heroi instanceof Barbaro) {
+            botaoHabilidade.setEnabled(false);
+        }
+
         // Adiciona o ActionListener ao botaoDica
         botaoDica.addActionListener(new ActionListener() {
             @Override
@@ -266,6 +269,7 @@ public class Jogo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 heroi.ataqueEspecial();
+                botaoHabilidade.setEnabled(false);
                 atualizaStatus();
             }
         });
@@ -289,8 +293,6 @@ public class Jogo extends JFrame {
                 }
             }
         });
-
-
         // Exibir a janela
         pack();
         setVisible(true);
@@ -304,6 +306,9 @@ public class Jogo extends JFrame {
         lblSaudeUsuario.setText("Saúde: " + Math.ceil(heroi.getSaude()));
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
         lblBolsaElixir.setText("Bolsa de elixir: " + heroi.getBolsaDeElixir());
+        if (heroi.isHabilidadeUsada()) {
+            botaoHabilidade.setEnabled(false);
+        }
     }
 
     private void removeAllActionListeners(JButton button) {

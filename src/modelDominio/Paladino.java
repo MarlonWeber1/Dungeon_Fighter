@@ -1,5 +1,7 @@
 package modelDominio;
 
+import javax.swing.*;
+
 public class Paladino extends Heroi {
 
     public Paladino(double defesa, double ataque, double saude, String nome) {
@@ -7,12 +9,19 @@ public class Paladino extends Heroi {
     }
 
     @Override
-    public void ataqueEspecial() { // Recuperação: recupera metade dos pontos de vida totais
-        this.setSaude(this.getSaude() + (this.getSaudeTotal()/2.0));
+    public void ataqueEspecial() {
+        double vidaRecuperada = this.getSaudeTotal() / 2.0;
 
-        if (this.getSaude() > this.getSaudeTotal()){
+        this.setSaude(this.getSaude() + vidaRecuperada);
+
+        if (this.getSaude() > this.getSaudeTotal()) {
+            vidaRecuperada -= (this.getSaude() - this.getSaudeTotal());
             this.setSaude(this.getSaudeTotal());
         }
+
+        JOptionPane.showMessageDialog(null, "Habilidade especial usada! Você recuperou " + vidaRecuperada + " pontos de vida.");
+        this.setHabilidadeUsada(true);
     }
+
 
 }
