@@ -52,68 +52,48 @@ public class ComecarJogo {
 
 
     public void verificaMov(int novaLinha, int novaColuna, int linhaAtual, int colunaAtual) {
-        if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'e') {
-            heroi.achouElixir();
-            System.out.println("elixir adicionado a bolsa");
-
-            // popup para avisar que achou um elixir
-            JOptionPane.showMessageDialog(tabuleiro, "Elixir adicionado a sua bolsa.", "Voce encontrou um Elixir", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'M') {
-            System.out.println("monstro!!!");
-
-            // comeca batalha
-            JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
-
-            // abre uma nova janela
-            Batalha batalha = new Batalha(heroi, monstro, jogo);
-
-            // se ganhar batalha se move para a celula
-
-        }
-        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
-            this.danoArmadilha(arma.getDano());
-
-            // se heroi esta vivo -> popup avisando que caiu em uma armadilha
-            if (heroi.estaVivo()) {
-                JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha normal, sua vida caiu para: " + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (!heroi.estaVivo()) {
-                // se nao -> popup avisando que caiu em uma armadilha e morreu
-                JOptionPane.showMessageDialog(null,
-                        "Você caiu em uma armadilha e morreu!",
-                        "Game Over",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-
-        }
-        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'R') {
-            double damage = armaR.gerarDanoAleatorio();
-            this.danoArmadilha(damage);
-
-            // se heroi esta vivo -> popup avisando que caiu em uma armadilha
-            if (heroi.estaVivo()) {
-                JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha de dano aleatório, o dano foi de " + damage + " e sua vida caiu para:" + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (!heroi.estaVivo()) {
-                // se nao -> popup avisando que caiu em uma armadilha e morreu
-                JOptionPane.showMessageDialog(null,
-                        "Você caiu em uma armadilha e morreu!",
-                        "Game Over",
-                        JOptionPane.ERROR_MESSAGE);
+        // Aqui vamos processar a verificação de movimentação em um SwingWorker
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() {
+                if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'e') {
+                    heroi.achouElixir();
+                    System.out.println("Elixir adicionado a bolsa");
+                    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(tabuleiro, "Elixir adicionado a sua bolsa.", "Você encontrou um Elixir", JOptionPane.INFORMATION_MESSAGE));
+                } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'M') {
+                    System.out.println("Monstro!!!");
+                    JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
+                    SwingUtilities.invokeLater(() -> new Batalha(heroi, monstro, jogo));
+                } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
+                    danoArmadilha(arma.getDano());
+                    if (heroi.estaVivo()) {
+                        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha normal, sua vida caiu para: " + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE));
+                    } else {
+                        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Você caiu em uma armadilha e morreu!", "Game Over", JOptionPane.ERROR_MESSAGE));
+                    }
+                } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'R') {
+                    double damage = armaR.gerarDanoAleatorio();
+                    danoArmadilha(damage);
+                    if (heroi.estaVivo()) {
+                        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(tabuleiro, "Você caiu em uma armadilha de dano aleatório, o dano foi de " + damage + " e sua vida caiu para:" + heroi.getSaude() + ".", "Armadilha", JOptionPane.INFORMATION_MESSAGE));
+                    } else {
+                        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Você caiu em uma armadilha e morreu!", "Game Over", JOptionPane.ERROR_MESSAGE));
+                    }
+                } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'C') {
+                    System.out.println("Boss battle!!!");
+                    JOptionPane.showMessageDialog(tabuleiro, "Você chegou no Boss Final!", "Final BOSS", JOptionPane.INFORMATION_MESSAGE);
+                    SwingUtilities.invokeLater(() -> new Batalha(heroi, chefao, jogo));
+                }
+                return null;
             }
 
-        }
-        else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'C') {
-            System.out.println("Boss battle!!!");
-
-            JOptionPane.showMessageDialog(tabuleiro, "Voce chegou no Boss Final!", "Final BOSS", JOptionPane.INFORMATION_MESSAGE);
-
-            // batalha comeca
-            new Batalha(heroi, chefao, jogo);
-        }
-        tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
-        tabuleiro.tabuleiro[novaLinha][novaColuna] = 'H';
+            @Override
+            protected void done() {
+                tabuleiro.tabuleiro[linhaAtual][colunaAtual] = '*';
+                tabuleiro.tabuleiro[novaLinha][novaColuna] = 'H';
+                atualizarBotoesTab();
+            }
+        }.execute();
     }
 
 
