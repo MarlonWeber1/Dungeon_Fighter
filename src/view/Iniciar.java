@@ -87,7 +87,7 @@ public class Iniciar extends JFrame implements ActionListener {
                 this.dispose();
 
                 // Configura o herói de forma padrao para funcao debug
-                Paladino heroi = new Paladino(150, 150, 150, "debugging");
+                Paladino heroi = new Paladino(150, 150, 150, "Debug");
                 Jogo jogo = new Jogo(true, heroi, null);
 
                 // Cria a janela de debug

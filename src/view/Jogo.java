@@ -9,20 +9,16 @@ import java.awt.event.ActionListener;
 
 public class Jogo extends JFrame {
     private Heroi heroi;
-    private ComecarJogo comecarJogo;
+    private final ComecarJogo comecarJogo;
     private final JLabel lblNomeUsuario;
     private final JLabel lblClasseUsuario;
     private final JLabel lblAtaqueUsuario;
     private final JLabel lblSaudeUsuario;
     private final JLabel lblDefesaUsuario;
     private final JPanel pImagemHeroi;
+    private final JLabel lblBolsaElixir;
     private JLabel lblImagemHeroi;
-    private JLabel lblBolsaElixir;
     public JButton botaoHabilidade;
-
-    public Heroi getHeroi() {
-        return heroi;
-    }
 
     public Jogo(boolean debug, Heroi heroiSelecionado, Tabuleiro tabuleiroInicial) {
         // Inicializa o herói e o jogo
@@ -190,34 +186,35 @@ public class Jogo extends JFrame {
             }
         });
 
+        // desativa a habilidade do barbaro no tabuleiro, pois ele so pode usa-la ao atacar
         if (heroi instanceof Barbaro) {
             botaoHabilidade.setEnabled(false);
         }
 
-        // Adiciona o ActionListener ao botaoDica
+        // adiciona o ActionListener ao botaoDica
         botaoDica.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                desativarTodosBotoes();
+                desativarTodosBotoes(); // desativa todos ActionListeners dos botoes do tabuleiro
                 for (int x = 0; x < 5; x++) {
                     for (int j = 0; j < 10; j++) {
                         int finalJ = j;
-                        // Cria o ActionListener para cada botão na matriz
+                        // cria o ActionListener uso da dica para cada botao da matriz
                         ActionListener listener = new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                                // Desativar todos os botões da matriz ao clicar em qualquer um deles
                                 comecarJogo.usaDica(finalJ);
-                                desativarTodosBotoes();
-                                ativarBotoes();
+                                desativarTodosBotoes(); // desativa todos ActionListener para a funcao dica
+                                ativarBotoes(); // ativa novamente os ActionListener para a funcao mover heroi
                             }
                         };
 
-                        // Adiciona o ActionListener ao botão
+                        // adiciona o ActionListener ao botao
                         comecarJogo.tabuleiro.botoes[x][j].addActionListener(listener);
                     }
                 }
             }
 
+            // funcoes para que o botao de dica funcione corretamente
             private void desativarTodosBotoes() {
                 for (int x = 0; x < 5; x++) {
                     for (int j = 0; j < 10; j++) {
@@ -247,6 +244,7 @@ public class Jogo extends JFrame {
 
         });
 
+        // utiliza a habilidade, e desativa o botao
         botaoHabilidade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -256,6 +254,7 @@ public class Jogo extends JFrame {
             }
         });
 
+        // botao que leva a tela com opcoes de novo jogo, reniciar e fechar o jogo
         botaoSair.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -277,9 +276,9 @@ public class Jogo extends JFrame {
         });
         pack();
         setVisible(true);
-
     }
 
+    // funcao que usa try/catch e configurar imagem do heroi selecionado e monstros
     public void configuraImagem(Heroi heroiSelecionado){
         try {
             pImagemHeroi.setPreferredSize(new Dimension(200, 200));
@@ -288,7 +287,7 @@ public class Jogo extends JFrame {
             pImagemHeroi.setAlignmentX(Component.CENTER_ALIGNMENT);
             pImagemHeroi.setBackground(Color.LIGHT_GRAY);
 
-            // Determine a imagem com base no herói selecionado
+            // determine a imagem com base no herói selecionado
             ImageIcon iHeroi;
             if (heroiSelecionado instanceof Barbaro) {
                 iHeroi = new ImageIcon(getClass().getResource("/view/img/barbaro.png"));
@@ -309,6 +308,11 @@ public class Jogo extends JFrame {
         }
     }
 
+    public Heroi getHeroi() {
+        return heroi;
+    }
+
+    // funcao para atualizar status do heroi, tambem verifica se a habilidade foi usada e desativa o botao se necessario
     public void atualizaStatus() {
         lblNomeUsuario.setText("Nome: " + heroi.getNome());
         lblClasseUsuario.setText("Classe: " + heroi.getClass().getSimpleName());
@@ -321,9 +325,4 @@ public class Jogo extends JFrame {
         }
     }
 
-    private void removeAllActionListeners(JButton button) {
-        for (ActionListener al : button.getActionListeners()) {
-            button.removeActionListener(al);
-        }
-    }
 }

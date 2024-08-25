@@ -1,6 +1,8 @@
 package modelDominio;
 
-public abstract class Heroi extends Entidade{
+import javax.swing.*;
+
+public abstract class Heroi extends Entidade implements Atacar{
     private String nome;
     private int bolsaDeElixir = 0;
     private int posLinha;
@@ -96,4 +98,42 @@ public abstract class Heroi extends Entidade{
     public double getSaudeTotal() {
         return saudeTotal;
     }
+
+    public void atacar(Entidade adversario) {
+        // Gera valores aleatórios para ataque e defesa
+        double ataqueFinal = this.getAtaque() + (Math.random() * 50);
+        double defesaAdversario = adversario.getDefesa() + (Math.random() * 30);
+
+        // Calcula o dano
+        double dano = ataqueFinal - defesaAdversario;
+
+        String mensagem;
+
+        if (dano > 0) {
+            adversario.setSaude(adversario.getSaude() - dano);
+            mensagem = String.format(
+                    "%s atacou %s e causou %.2f de dano!\n%s tem agora %.2f de saúde restante.",
+                    this.getClass().getSimpleName(),
+                    adversario.getClass().getSimpleName(),
+                    dano,
+                    adversario.getClass().getSimpleName(),
+                    adversario.getSaude()
+            );
+        } else {
+            this.setSaude(this.getSaude() + dano); // '+ dano' porque 'dano' é negativo
+            mensagem = String.format(
+                    "%s tentou atacar %s, mas o ataque foi ineficaz!\n%s contra-atacou e causou %.2f de dano.\n%s tem agora %.2f de saúde restante.",
+                    this.getClass().getSimpleName(),
+                    adversario.getClass().getSimpleName(),
+                    adversario.getClass().getSimpleName(),
+                    -dano, // dano é negativo, então invertemos o sinal para mostrar o valor positivo
+                    this.getClass().getSimpleName(),
+                    this.getSaude()
+            );
+        }
+
+        // Exibe a mensagem em um JOptionPane
+        JOptionPane.showMessageDialog(null, mensagem, "Resultado do Ataque", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

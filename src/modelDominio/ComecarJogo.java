@@ -58,10 +58,8 @@ public class ComecarJogo {
             protected Void doInBackground() {
                 if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'e') {
                     heroi.achouElixir();
-                    System.out.println("Elixir adicionado a bolsa");
                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(tabuleiro, "Elixir adicionado a sua bolsa.", "Você encontrou um Elixir", JOptionPane.INFORMATION_MESSAGE));
                 } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'M') {
-                    System.out.println("Monstro!!!");
                     JOptionPane.showMessageDialog(tabuleiro, "Você encontrou um monstro", "Monstro!!", JOptionPane.INFORMATION_MESSAGE);
                     SwingUtilities.invokeLater(() -> new Batalha(heroi, monstro, jogo));
                 } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'A') {
@@ -80,7 +78,6 @@ public class ComecarJogo {
                         SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Você caiu em uma armadilha e morreu!", "Game Over", JOptionPane.ERROR_MESSAGE));
                     }
                 } else if (tabuleiro.tabuleiro[novaLinha][novaColuna] == 'C') {
-                    System.out.println("Boss battle!!!");
                     JOptionPane.showMessageDialog(tabuleiro, "Você chegou no Boss Final!", "Final BOSS", JOptionPane.INFORMATION_MESSAGE);
                     SwingUtilities.invokeLater(() -> new Batalha(heroi, chefao, jogo));
                 }
@@ -112,7 +109,7 @@ public class ComecarJogo {
                 novaLinha == linhaAtual - 1 && novaColuna == colunaAtual + 1 ||
                 novaLinha == linhaAtual + 1 && novaColuna == colunaAtual - 1) {
 
-            // mostra oque tem na celula clickada
+            // mostra oque tem na celula clickada antes do popup
             if (!tabuleiro.isDebugging()) {
                 atualizaBotaoClicado(novaLinha, novaColuna);
             }
@@ -120,13 +117,15 @@ public class ComecarJogo {
             // so vai verificar oque tem na nova posicao se o movimento e valido
             verificaMov(novaLinha, novaColuna, linhaAtual, colunaAtual);
 
+            // atuliza posicao na instancia do heroi
             heroi.setPosLinha(novaLinha);
             heroi.setPosColuna(novaColuna);
         }
         atualizarBotoesTab();
     }
 
-
+    // cria os botoes
+    // usando a variavel de debug para determinar se as celulas serao mostradas
     public void criarBotoesTab() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
@@ -254,7 +253,6 @@ public class ComecarJogo {
                     }
                 }
                 else {
-                    // esconde todos os elementos fora a posicao do heroi e do chefão
                     if (tabuleiro.tabuleiro[i][j] == '*' ||
                         tabuleiro.tabuleiro[i][j] == 'M' ||
                         tabuleiro.tabuleiro[i][j] == 'A' ||

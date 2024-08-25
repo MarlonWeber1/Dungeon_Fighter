@@ -8,6 +8,7 @@ public class Paladino extends Heroi {
         super(defesa, ataque, saude, nome);
     }
 
+    // implementa metodo abstrato da classe heroi
     @Override
     public void ataqueEspecial() {
         double saudeAnterior = this.getSaude();
