@@ -85,17 +85,17 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         // Configuração das ações dos radio buttons
         rbHeroi1.addActionListener(e -> {
             // Se "Guerreiro" for selecionado
-            heroiSelecionado = new Guerreiro(100, 50, 200, nomeUsuario);
+            heroiSelecionado = new Guerreiro(90, 70, 140, nomeUsuario);
         });
 
         rbHeroi2.addActionListener(e -> {
             // Se "Paladino" for selecionado
-            heroiSelecionado = new Paladino(120, 60, 180, nomeUsuario);
+            heroiSelecionado = new Paladino(60, 60, 180, nomeUsuario);
         });
 
         rbHeroi3.addActionListener(e -> {
             // Se "Barbaro" for selecionado
-            heroiSelecionado = new Barbaro(150, 70, 150, nomeUsuario);
+            heroiSelecionado = new Barbaro(50, 100, 150, nomeUsuario);
         });
 
         // Painéis principais para imagem e botões

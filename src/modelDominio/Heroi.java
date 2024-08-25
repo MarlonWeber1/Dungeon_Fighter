@@ -112,7 +112,7 @@ public abstract class Heroi extends Entidade implements Atacar{
         if (dano > 0) {
             adversario.setSaude(adversario.getSaude() - dano);
             mensagem = String.format(
-                    "%s atacou %s e causou %.2f de dano!\n%s tem agora %.2f de saúde restante.",
+                    "%s atacou %s e causou %.2f de dano!\n\n%s tem agora %.2f de saúde restante.",
                     this.getClass().getSimpleName(),
                     adversario.getClass().getSimpleName(),
                     dano,
@@ -122,7 +122,7 @@ public abstract class Heroi extends Entidade implements Atacar{
         } else {
             this.setSaude(this.getSaude() + dano); // '+ dano' porque 'dano' é negativo
             mensagem = String.format(
-                    "%s tentou atacar %s, mas o ataque foi ineficaz!\n%s contra-atacou e causou %.2f de dano.\n%s tem agora %.2f de saúde restante.",
+                    "%s tentou atacar %s, mas o ataque foi ineficaz!\n\n%s contra-atacou e causou %.2f de dano.\n\n%s tem agora %.2f de saúde restante.",
                     this.getClass().getSimpleName(),
                     adversario.getClass().getSimpleName(),
                     adversario.getClass().getSimpleName(),
@@ -133,7 +133,7 @@ public abstract class Heroi extends Entidade implements Atacar{
         }
 
         // Exibe a mensagem em um JOptionPane
-        JOptionPane.showMessageDialog(null, mensagem, "Resultado do Ataque", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensagem, "Ataque do Heroi", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

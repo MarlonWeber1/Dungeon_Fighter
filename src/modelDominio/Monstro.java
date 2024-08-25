@@ -17,8 +17,8 @@ public abstract class Monstro extends Entidade implements Atacar{
 
     public void atacar(Entidade adversario) {
         // Gera valores aleatórios para ataque e defesa
-        double ataqueFinal = this.getAtaque() + (Math.random() * 50);
-        double defesaAdversario = adversario.getDefesa() + (Math.random() * 30);
+        double ataqueFinal = this.getAtaque() + (Math.random() * 70);
+        double defesaAdversario = adversario.getDefesa() + (Math.random() * 60);
 
         // Calcula o dano
         double dano = ataqueFinal - defesaAdversario;
@@ -28,7 +28,7 @@ public abstract class Monstro extends Entidade implements Atacar{
         if (dano > 0) {
             adversario.setSaude(adversario.getSaude() - dano);
             mensagem = String.format(
-                    "%s atacou %s e causou %.2f de dano!\n%s tem agora %.2f de saúde restante.",
+                    "%s atacou %s e causou %.2f de dano!\n\n%s tem agora %.2f de saúde restante.",
                     this.getClass().getSimpleName(),
                     adversario.getClass().getSimpleName(),
                     dano,
@@ -38,7 +38,7 @@ public abstract class Monstro extends Entidade implements Atacar{
         } else {
             this.setSaude(this.getSaude() + dano); // '+ dano' porque 'dano' é negativo
             mensagem = String.format(
-                    "%s tentou atacar %s, mas o ataque foi ineficaz!\n%s contra-atacou e causou %.2f de dano.\n%s tem agora %.2f de saúde restante.",
+                    "%s tentou atacar %s, mas o ataque foi ineficaz!\n\n%s contra-atacou e causou %.2f de dano.\n\n%s tem agora %.2f de saúde restante.",
                     this.getClass().getSimpleName(),
                     adversario.getClass().getSimpleName(),
                     adversario.getClass().getSimpleName(),
@@ -49,6 +49,6 @@ public abstract class Monstro extends Entidade implements Atacar{
         }
 
         // Exibe a mensagem em um JOptionPane
-        JOptionPane.showMessageDialog(null, mensagem, "Resultado do Ataque", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensagem, "Ataque do Monstro", JOptionPane.INFORMATION_MESSAGE);
     }
 }
