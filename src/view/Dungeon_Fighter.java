@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
 import modelDominio.*;
 
@@ -104,6 +106,14 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
 
         // Adiciona o ActionListener ao botão
         btnLogin.addActionListener(this);
+
+        textoNomeUsuario.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnLogin.doClick(); // Simula o clique do botão de login
+                }
+            }
+        });
 
         setVisible(true);
     }
