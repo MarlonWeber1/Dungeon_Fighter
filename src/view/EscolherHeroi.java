@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import modelDominio.Barbaro;
 import modelDominio.Guerreiro;
@@ -11,8 +13,8 @@ import modelDominio.Paladino;
 
 /**
  * @author marlon
- *
- */
+ **/
+
 public class EscolherHeroi extends JFrame implements ActionListener {
 
     private final JRadioButton rbHeroi1;
@@ -36,11 +38,11 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         // Construtor que recebe o nome do usuário
         lblNomeUsuario = new JLabel("Bem-vindo, " + nomeUsuario);
-        lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        lblNomeUsuario.setFont(new Font("Palatino Linotype", Font.BOLD, 32));
         lblNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         lblNomeUsuario.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
-        lblNomeUsuario.setForeground(Color.WHITE); // Configura a cor do texto do JLabel
-        lblNomeUsuario.setOpaque(true); // Necessário para que a cor de fundo funcione
+        lblNomeUsuario.setForeground(Color.WHITE); 
+        lblNomeUsuario.setOpaque(true); 
         lblNomeUsuario.setBackground(Color.DARK_GRAY);
 
         configuraImagem();
@@ -50,20 +52,23 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         pEscolherHeroi.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(110, 110, 110, 110);
-        pEscolherHeroi.setBackground(Color.DARK_GRAY); // Configura a cor de fundo do painel
+        pEscolherHeroi.setBackground(Color.DARK_GRAY); 
 
         // Declaração dos componentes
         rbHeroi1 = new JRadioButton("Guerreiro");
         rbHeroi2 = new JRadioButton("Paladino");
         rbHeroi3 = new JRadioButton("Barbaro");
 
-        // Configura a cor dos textos e do fundo dos JRadioButtons
+        // Configura desing JRadioButtons
         rbHeroi1.setForeground(Color.WHITE);
         rbHeroi2.setForeground(Color.WHITE);
         rbHeroi3.setForeground(Color.WHITE);
         rbHeroi1.setBackground(Color.DARK_GRAY);
         rbHeroi2.setBackground(Color.DARK_GRAY);
         rbHeroi3.setBackground(Color.DARK_GRAY);
+        rbHeroi1.setFont(new Font("Palatino Linotype", Font.BOLD, 16));
+        rbHeroi2.setFont(new Font("Palatino Linotype", Font.BOLD, 16));
+        rbHeroi3.setFont(new Font("Palatino Linotype", Font.BOLD, 16));
 
         // Agrupamento dos radio buttons em um ButtonGroup
         ButtonGroup grupo = new ButtonGroup();
@@ -96,6 +101,31 @@ public class EscolherHeroi extends JFrame implements ActionListener {
         rbHeroi3.addActionListener(e -> {
             // Se "Barbaro" for selecionado
             heroiSelecionado = new Barbaro(50, 100, 150, nomeUsuario);
+        });
+
+        // Adiciona os MouseListeners às imagens
+        lblGuerreiro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rbHeroi1.setSelected(true);
+                heroiSelecionado = new Guerreiro(90, 70, 140, nomeUsuario);
+            }
+        });
+
+        lblPaladino.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rbHeroi2.setSelected(true);
+                heroiSelecionado = new Paladino(60, 60, 180, nomeUsuario);
+            }
+        });
+
+        lblBarbaro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                rbHeroi3.setSelected(true);
+                heroiSelecionado = new Barbaro(50, 100, 150, nomeUsuario);
+            }
         });
 
         // Painéis principais para imagem e botões
@@ -132,8 +162,9 @@ public class EscolherHeroi extends JFrame implements ActionListener {
 
         // Botão Continuar
         btnContinuar = new JButton("Continuar");
-        btnContinuar.setForeground(Color.black); // Configura a cor do texto do botão
-        btnContinuar.setBackground(Color.white); // Configura a cor de fundo do botão
+        btnContinuar.setForeground(Color.black); 
+        btnContinuar.setBackground(Color.white); 
+        btnContinuar.setFont(new Font("Palatino Linotype", Font.BOLD, 16));
         btnContinuar.addActionListener(this);
 
         // Painel para o botão Continuar
@@ -185,9 +216,8 @@ public class EscolherHeroi extends JFrame implements ActionListener {
                     // Se algum radio button estiver selecionado, abre a nova tela
                     DetalhesHeroi detalhesHeroi = new DetalhesHeroi(heroiSelecionado);
                     detalhesHeroi.setVisible(true);
-
-                    System.out.println("" + heroiSelecionado);
-                    this.dispose(); // Fecha a janela atual
+                    //System.out.println("" + heroiSelecionado);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Por favor, selecione um herói.");
                 }

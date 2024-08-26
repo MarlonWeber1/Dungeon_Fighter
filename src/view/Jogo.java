@@ -18,8 +18,12 @@ public class Jogo extends JFrame {
     private final JPanel pImagemHeroi;
     private final JLabel lblBolsaElixir;
     private JLabel lblImagemHeroi;
-    public JButton botaoHabilidade;
-
+    private JButton btnHabilidade;
+    private JButton btnTomarElixir;
+    private JButton btnDica;
+    private JButton btnSair;
+    
+   
     public Jogo(boolean debug, Heroi heroiSelecionado, Tabuleiro tabuleiroInicial) {
         // Inicializa o herói e o jogo
         this.heroi = heroiSelecionado;
@@ -55,15 +59,19 @@ public class Jogo extends JFrame {
         painelBotoes.setLayout(new GridLayout(1, 3, 10, 10)); // 1 linha, 3 colunas, com espaçamento
 
         // Cria os botões e adiciona-os ao painel
-        JButton botaoTomarElixir = new JButton("Tomar Elixir");
-        JButton botaoDica = new JButton("Dica");
-        botaoHabilidade = new JButton("Habilidade");
-        JButton botaoSair = new JButton("Sair");
+        btnTomarElixir = new JButton("Tomar Elixir");
+        btnTomarElixir.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
+        btnDica = new JButton("Dica");
+        btnDica.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
+        btnHabilidade = new JButton("Habilidade");
+        btnHabilidade.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
+        btnSair = new JButton("Sair");
+        btnSair.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 
-        painelBotoes.add(botaoTomarElixir);
-        painelBotoes.add(botaoDica);
-        painelBotoes.add(botaoHabilidade);
-        painelBotoes.add(botaoSair);
+        painelBotoes.add(btnTomarElixir);
+        painelBotoes.add(btnDica);
+        painelBotoes.add(btnHabilidade);
+        painelBotoes.add(btnSair);
 
         // Adiciona o painel de botões logo abaixo do tabuleiro (mesma coluna)
         gbc.gridx = 0; // mesma coluna que o tabuleiro
@@ -103,17 +111,17 @@ public class Jogo extends JFrame {
 
         // Configura a fonte e cor do texto dos JLabel
         lblNomeUsuario.setForeground(Color.WHITE);
-        lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblNomeUsuario.setFont(new Font("Palatino Linotype", Font.BOLD, 16));
         lblClasseUsuario.setForeground(Color.WHITE);
-        lblClasseUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblClasseUsuario.setFont(new Font("Palatino Linotype", Font.PLAIN, 16));
         lblAtaqueUsuario.setForeground(Color.WHITE);
-        lblAtaqueUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblAtaqueUsuario.setFont(new Font("Palatino Linotype", Font.PLAIN, 16));
         lblSaudeUsuario.setForeground(Color.WHITE);
-        lblSaudeUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblSaudeUsuario.setFont(new Font("Palatino Linotype", Font.PLAIN, 16));
         lblDefesaUsuario.setForeground(Color.WHITE);
-        lblDefesaUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblDefesaUsuario.setFont(new Font("Palatino Linotype", Font.PLAIN, 16));
         lblBolsaElixir.setForeground(Color.WHITE);
-        lblBolsaElixir.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblBolsaElixir.setFont(new Font("Palatino Linotype", Font.PLAIN, 16));
 
         // Centralizar os textos
         lblNomeUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -163,7 +171,7 @@ public class Jogo extends JFrame {
             }
         }
 
-        botaoTomarElixir.addActionListener(new ActionListener() {
+        btnTomarElixir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (heroi.getBolsaDeElixir() > 0) {
@@ -188,11 +196,11 @@ public class Jogo extends JFrame {
 
         // desativa a habilidade do barbaro no tabuleiro, pois ele so pode usa-la ao atacar
         if (heroi instanceof Barbaro) {
-            botaoHabilidade.setEnabled(false);
+            btnTomarElixir.setEnabled(false);
         }
 
         // adiciona o ActionListener ao botaoDica
-        botaoDica.addActionListener(new ActionListener() {
+        btnDica.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 desativarTodosBotoes(); // desativa todos ActionListeners dos botoes do tabuleiro
@@ -245,17 +253,17 @@ public class Jogo extends JFrame {
         });
 
         // utiliza a habilidade, e desativa o botao
-        botaoHabilidade.addActionListener(new ActionListener() {
+        btnHabilidade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 heroi.ataqueEspecial();
-                botaoHabilidade.setEnabled(false);
+                btnHabilidade.setEnabled(false);
                 atualizaStatus();
             }
         });
 
         // botao que leva a tela com opcoes de novo jogo, reniciar e fechar o jogo
-        botaoSair.addActionListener(new ActionListener() {
+        btnSair.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Mostra um diálogo de confirmação
@@ -321,7 +329,7 @@ public class Jogo extends JFrame {
         lblDefesaUsuario.setText("Defesa: " + heroi.getDefesa());
         lblBolsaElixir.setText("Bolsa de elixir: " + heroi.getBolsaDeElixir());
         if (heroi.isHabilidadeUsada()) {
-            botaoHabilidade.setEnabled(false);
+            btnHabilidade.setEnabled(false);
         }
     }
 

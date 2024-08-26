@@ -40,9 +40,9 @@ public class Iniciar extends JFrame implements ActionListener {
         btnDebug = new JButton("Debug");
         btnSair = new JButton("Sair");
         
-        btnJogar.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnDebug.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnSair.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnJogar.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+        btnDebug.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
+        btnSair.setFont(new Font("Palatino Linotype", Font.BOLD, 12));
 
         // Configura as restrições dos botões no GridBagLayout
         c.insets = new Insets(20, 15, 20, 15); // Espaçamento entre os botões

@@ -22,8 +22,8 @@ class DetalhesHeroi extends JFrame {
     private final JLabel lblDefesaUsuario;
     private final JButton btnContinuar;
 
-    private JLabel lblImagemHeroi;  
-    private final JPanel pImagemHeroi;    
+    private JLabel lblImagemHeroi;
+    private final JPanel pImagemHeroi;
 
     private JLabel lblValorAtaque;
     private JLabel lblValorSaude;
@@ -50,14 +50,14 @@ class DetalhesHeroi extends JFrame {
 
         JPanel pEsquerdo = new JPanel();
         pEsquerdo.setLayout(new BoxLayout(pEsquerdo, BoxLayout.Y_AXIS));
-        pEsquerdo.setPreferredSize(new Dimension(250, getHeight()));
+        pEsquerdo.setPreferredSize(new Dimension(250, 100));
         pEsquerdo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         pEsquerdo.setBackground(Color.DARK_GRAY);
 
         // Adicionando padding interno ao painelEsquerdo
         pEsquerdo.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.BLACK, 2),
-                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
         // Painel para a imagem do herói com borda
@@ -77,15 +77,15 @@ class DetalhesHeroi extends JFrame {
 
         // Configura a fonte e cor do texto dos JLabel
         lblNomeUsuario.setForeground(Color.WHITE);
-        lblNomeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblNomeUsuario.setFont(new Font("Palatino LinoType", Font.BOLD, 14));
         lblClasseUsuario.setForeground(Color.WHITE);
-        lblClasseUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblClasseUsuario.setFont(new Font("Palatino LinoType", Font.PLAIN, 14));
         lblAtaqueUsuario.setForeground(Color.WHITE);
-        lblAtaqueUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblAtaqueUsuario.setFont(new Font("Palatino LinoType", Font.PLAIN, 14));
         lblSaudeUsuario.setForeground(Color.WHITE);
-        lblSaudeUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblSaudeUsuario.setFont(new Font("Palatino LinoType", Font.PLAIN, 14));
         lblDefesaUsuario.setForeground(Color.WHITE);
-        lblDefesaUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblDefesaUsuario.setFont(new Font("Palatino LinoType", Font.PLAIN, 14));
 
         // Centralizar os textos
         lblNomeUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -95,16 +95,16 @@ class DetalhesHeroi extends JFrame {
         lblDefesaUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Adicionar espaçamento entre os labels
-        lblNomeUsuario.setBorder(BorderFactory.createEmptyBorder(7, 0, 0, 0));
-        lblClasseUsuario.setBorder(BorderFactory.createEmptyBorder(7, 0, 0, 0));
-        lblAtaqueUsuario.setBorder(BorderFactory.createEmptyBorder(7, 0, 0, 0));
-        lblSaudeUsuario.setBorder(BorderFactory.createEmptyBorder(7, 0, 0, 0));
-        lblDefesaUsuario.setBorder(BorderFactory.createEmptyBorder(7, 0, 0, 0));
+        lblNomeUsuario.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        lblClasseUsuario.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        lblAtaqueUsuario.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        lblSaudeUsuario.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        lblDefesaUsuario.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 
         // Adiciona o painel da imagem e os labels ao painel esquerdo
         pEsquerdo.add(Box.createVerticalStrut(10)); // Espaço superior
         pEsquerdo.add(pImagemHeroi);
-        pEsquerdo.add(Box.createVerticalStrut(20)); // Espaço entre a imagem e o texto
+        pEsquerdo.add(Box.createVerticalStrut(10)); // Espaço entre a imagem e o texto
         pEsquerdo.add(lblNomeUsuario);
         pEsquerdo.add(lblClasseUsuario);
         pEsquerdo.add(lblAtaqueUsuario);
@@ -116,20 +116,24 @@ class DetalhesHeroi extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Pontos Restantes no canto superior direito
+        // Painel adicional para "Pontos Restantes" no topo superior direito
+        JPanel painelPontosRestantes = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Alinha à direita
         lblPontosRestantes = new JLabel("Pontos Restantes: " + pontosRestantes);
-        gbc.gridx = 5;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        pDireita.add(lblPontosRestantes, gbc);
+        lblPontosRestantes.setFont(new Font("Palatino LinoType", Font.BOLD, 20));
+        painelPontosRestantes.add(lblPontosRestantes);
+
+        // Adiciona o painel ao topo (NORTH) do painel principal
+        painelPrincipal.add(painelPontosRestantes, BorderLayout.NORTH);
 
         // Botões e labels de Ataque
         JLabel lblAtaque = new JLabel("Ataque");
+        lblAtaque.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 1;
         gbc.gridy = 1;
         pDireita.add(lblAtaque, gbc);
 
         JButton btnAtaqueMenos = new JButton("-");
+        btnAtaqueMenos.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 0;
         gbc.gridy = 2;
         pDireita.add(btnAtaqueMenos, gbc);
@@ -140,17 +144,20 @@ class DetalhesHeroi extends JFrame {
         pDireita.add(lblValorAtaque, gbc);
 
         JButton btnAtaqueMais = new JButton("+");
+        btnAtaqueMais.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 2;
         gbc.gridy = 2;
         pDireita.add(btnAtaqueMais, gbc);
 
         // Botões e labels de Saúde
         JLabel lblSaude = new JLabel("Saúde");
+        lblSaude.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 1;
         gbc.gridy = 3;
         pDireita.add(lblSaude, gbc);
 
         JButton btnSaudeMenos = new JButton("-");
+        btnSaudeMenos.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 0;
         gbc.gridy = 4;
         pDireita.add(btnSaudeMenos, gbc);
@@ -161,17 +168,20 @@ class DetalhesHeroi extends JFrame {
         pDireita.add(lblValorSaude, gbc);
 
         JButton btnSaudeMais = new JButton("+");
+        btnSaudeMais.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 2;
         gbc.gridy = 4;
         pDireita.add(btnSaudeMais, gbc);
 
         // Botões e labels de Defesa
         JLabel lblDefesa = new JLabel("Defesa");
+        lblDefesa.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 1;
         gbc.gridy = 5;
         pDireita.add(lblDefesa, gbc);
 
         JButton btnDefesaMenos = new JButton("-");
+        btnDefesaMenos.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 0;
         gbc.gridy = 6;
         pDireita.add(btnDefesaMenos, gbc);
@@ -182,6 +192,7 @@ class DetalhesHeroi extends JFrame {
         pDireita.add(lblValorDefesa, gbc);
 
         JButton btnDefesaMais = new JButton("+");
+        btnDefesaMais.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         gbc.gridx = 2;
         gbc.gridy = 6;
         pDireita.add(btnDefesaMais, gbc);
@@ -193,6 +204,7 @@ class DetalhesHeroi extends JFrame {
 
         // Botão Continuar
         btnContinuar = new JButton("Continuar");
+        btnContinuar.setFont(new Font("Palatino LinoType", Font.PLAIN, 16));
         btnContinuar.setOpaque(true);
         btnContinuar.setEnabled(false); // Inicialmente desabilitado
         pInferior.add(btnContinuar);
@@ -225,7 +237,7 @@ class DetalhesHeroi extends JFrame {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
-                } 
+                }
             }
         });
 
@@ -245,7 +257,7 @@ class DetalhesHeroi extends JFrame {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
-                } 
+                }
             }
         });
 
@@ -285,7 +297,7 @@ class DetalhesHeroi extends JFrame {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
-                } 
+                }
             }
         });
 
@@ -325,7 +337,7 @@ class DetalhesHeroi extends JFrame {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao converter valores numéricos. Verifique os dados de entrada.", "Erro", JOptionPane.ERROR_MESSAGE);
-                } 
+                }
             }
         });
 

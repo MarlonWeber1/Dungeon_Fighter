@@ -41,9 +41,9 @@ public class Opcoes extends JFrame implements ActionListener {
         btnReiniciarJogo = new JButton("Reiniciar Jogo");
         btnSair = new JButton("Sair");
 
-        btnNovoJogo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnReiniciarJogo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnSair.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnNovoJogo.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
+        btnReiniciarJogo.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
+        btnSair.setFont(new Font("Palatino Linotype", Font.BOLD, 14));
 
         // Configura as restrições dos botões no GridBagLayout
         c.insets = new Insets(20, 15, 20, 15); // Espaçamento entre os botões
