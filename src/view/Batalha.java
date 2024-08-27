@@ -264,8 +264,12 @@ public class Batalha extends JFrame {
                     JOptionPane.showMessageDialog(this, "Com um rugido feroz, o Bárbaro desencadeia seu Golpe Furioso, causando um ataque devastador com 50% mais dano!");
                     heroi.atacar(monstro);
                     heroi.setAtaque(heroi.getAtaque()/1.5);
+                    Batalha.this.btnHabilidade.setEnabled(false);
                 }
-                else heroi.ataqueEspecial();
+                else  {
+                    heroi.ataqueEspecial();
+                    Batalha.this.btnHabilidade.setEnabled(false);
+                }
                 break;
         }
 
