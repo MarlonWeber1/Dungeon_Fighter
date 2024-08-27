@@ -32,6 +32,7 @@ public class Opcoes extends JFrame implements ActionListener {
         this.heroi = heroi;
         this.mesmoTabuleiro = tabuleiroAnterior;
         this.heroi.setSaude(heroi.getSaudeTotal());
+        this.heroi.setHabilidadeUsada(false);
 
 
         // Definição das restrições do GridBagLayout
