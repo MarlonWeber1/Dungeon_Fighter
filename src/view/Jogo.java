@@ -18,15 +18,12 @@ public class Jogo extends JFrame {
     private final JPanel pImagemHeroi;
     private final JLabel lblBolsaElixir;
     private JLabel lblImagemHeroi;
-
     private JButton btnHabilidade;
     private JButton btnTomarElixir;
     private JButton btnDica;
     private JButton btnSair;
     
-    public JButton botaoHabilidade;
-    public Tabuleiro mesmoTabuleiro;
-    
+   
     public Jogo(boolean debug, Heroi heroiSelecionado, Tabuleiro tabuleiroInicial) {
         // Inicializa o herói e o jogo
         this.heroi = heroiSelecionado;
@@ -37,19 +34,10 @@ public class Jogo extends JFrame {
         }
         this.comecarJogo = new ComecarJogo(heroiSelecionado,debug,this,tabuleiroInicial);
 
-        this.mesmoTabuleiro = new Tabuleiro(false);
-        for (int i = 0; i<5; i++) {
-            for (int x = 0; x<10; x++)
-            {
-                this.mesmoTabuleiro.tabuleiro[i][x] = this.comecarJogo.tabuleiro.tabuleiro[i][x];
-            }
-        }
-        this.mesmoTabuleiro.setDebugging(this.comecarJogo.tabuleiro.isDebugging()); // seta o modo de debug igual ao tabuleiro atual
-
         // Configura o JFrame
         setTitle("Jogo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 550);
+        setSize(900, 500);
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout()); // Usando GridBagLayout para controle fino
@@ -289,11 +277,12 @@ public class Jogo extends JFrame {
 
                 // Verifica a resposta do usuário
                 if (resposta == JOptionPane.YES_OPTION) {
-                    new Opcoes(Jogo.this.getHeroi(), Jogo.this.mesmoTabuleiro);
+                    new Opcoes(Jogo.this.getHeroi());
                     Jogo.this.dispose();  // Fecha a janela atual
                 }
             }
         });
+        pack();
         setVisible(true);
     }
 

@@ -130,7 +130,6 @@ public class ComecarJogo {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
                 tabuleiro.botoes[i][j] = new JButton(); // cria um novo botão
-                tabuleiro.botoes[i][j].setPreferredSize(new Dimension(90, 80));  // Define o tamanho de cada botão
                 final int lin = i;
                 final int col = j;
                 if (tabuleiro.isDebugging())

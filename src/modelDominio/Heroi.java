@@ -7,7 +7,7 @@ public abstract class Heroi extends Entidade implements Atacar{
     private int bolsaDeElixir = 0;
     private int posLinha;
     private int posColuna;
-    private double saudeTotal;
+    private final double saudeTotal;
     private boolean habilidadeUsada;
 
     public Heroi(double defesa, double ataque, double saude, String nome) {
@@ -45,11 +45,9 @@ public abstract class Heroi extends Entidade implements Atacar{
 
     public void incrementaSaude() {
         this.setSaude(this.getSaude()+10);
-        this.setSaudeTotal(this.getSaude());
     }
     public void decrementaSaude() {
         this.setSaude(this.getSaude()-10);
-        this.setSaudeTotal(this.getSaude());
     }
 
     public void incrementaDefesa() {
@@ -99,10 +97,6 @@ public abstract class Heroi extends Entidade implements Atacar{
 
     public double getSaudeTotal() {
         return saudeTotal;
-    }
-
-    public void setSaudeTotal(double saudeTotal) {
-        this.saudeTotal = saudeTotal;
     }
 
     public void atacar(Entidade adversario) {

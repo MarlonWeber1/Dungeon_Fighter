@@ -19,9 +19,8 @@ public class Opcoes extends JFrame implements ActionListener {
     private JButton btnReiniciarJogo;
     private JButton btnSair;
     private Heroi heroi;
-    private Tabuleiro mesmoTabuleiro;
 
-    public Opcoes(Heroi heroi, Tabuleiro tabuleiroAnterior) {
+    public Opcoes(Heroi heroi) {
         // Características da Janela Principal
         setTitle("Opções");
         setSize(400, 200);
@@ -30,9 +29,6 @@ public class Opcoes extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
         this.heroi = heroi;
-        this.mesmoTabuleiro = tabuleiroAnterior;
-        this.heroi.setSaude(heroi.getSaudeTotal());
-
 
         // Definição das restrições do GridBagLayout
         GridBagConstraints c = new GridBagConstraints();
@@ -89,7 +85,7 @@ public class Opcoes extends JFrame implements ActionListener {
                 dungeonFighter.mostrarJanela(); // Abre a nova tela para iniciar um novo jogo
             } else if (e.getSource() == btnReiniciarJogo) {
                 // Lógica para reiniciar o jogo
-                new Jogo(false, heroi, mesmoTabuleiro);
+                new EscolherHeroi(heroi.getNome());
                 dispose();
             }
         } catch (HeadlessException ex) {
