@@ -2,12 +2,15 @@ package modelDominio;
 import javax.swing.JOptionPane;
 
 public class Guerreiro extends Heroi {
-    private final double defesaAumentada = this.getDefesa() * 1.5;
     private int rodadasHabilidadeEspecial; // Contador de rodadas
 
     public Guerreiro(double defesa, double ataque, double saude, String nome) {
         super(defesa, ataque, saude, nome);
         this.rodadasHabilidadeEspecial = 0; // Inicializa o contador
+    }
+
+    public int getRodadasHabilidadeEspecial() {
+        return rodadasHabilidadeEspecial;
     }
 
     // implementa metodo abstrato da classe heroi
@@ -20,7 +23,7 @@ public class Guerreiro extends Heroi {
         }
 
         // aumenta a defesa em 50% e marca como usada
-        this.setDefesa(defesaAumentada);
+        this.setDefesa(this.getDefesa() * 1.5);
         setHabilidadeUsada(true);
         rodadasHabilidadeEspecial = 2; // duração de duas rodadas
 

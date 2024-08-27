@@ -174,11 +174,10 @@ public class Batalha extends JFrame {
 
                 // Verifica a resposta do usuário
                 if (resposta == JOptionPane.YES_OPTION) {
-                    // Se o usuário clicar em "Sim", fecha a janela atual e abre a tela de opções
-                    dispose();  // Fecha a janela atual
-                    Iniciar iniciar = new Iniciar();  // Supõe que "Iniciar" é a tela de opções
-                    iniciar.mostrarJanela();
-                } // Se "Não", não faz nada (o popup fecha automaticamente)
+                    new Opcoes(Batalha.this.jogo.getHeroi(), Batalha.this.jogo.mesmoTabuleiro);
+                    Batalha.this.dispose();  // Fecha a janela atual
+                    Batalha.this.jogo.dispose(); // Fecha a janela do jogos
+                }
             }
         });
         pBotoes.add(btnSair);
@@ -283,27 +282,36 @@ public class Batalha extends JFrame {
             // popup o mostro abateu voce
             heroi.setHabilidadeUsada(false);
             JOptionPane.showMessageDialog(this, "O monstro abateu você!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+            if (heroi instanceof Guerreiro && ((Guerreiro) heroi).getRodadasHabilidadeEspecial() != 0) {
+                while (((Guerreiro) heroi).getRodadasHabilidadeEspecial() != 0) {
+                    ((Guerreiro) heroi).reduzirRodadasHabilidadeEspecial();
+                }
+            }
+            heroi.setDefesa(heroi.getDefesa());
+
             // tela de batalha fecha junto com o popup
             this.dispose();
             jogo.dispose();
+
             // opcoes de game over
-            new Opcoes(heroi);
+            new Opcoes(heroi, jogo.mesmoTabuleiro);
         }
         else if (!heroi.estaVivo() && monstro instanceof Chefao) {
             heroi.setHabilidadeUsada(false);
             JOptionPane.showMessageDialog(this, "Chefao abateu voce.", "Loser!", JOptionPane.INFORMATION_MESSAGE);
+
             // tela de batalha fecha junto com o popup
             this.dispose();
             jogo.dispose();
             // opcoes de game over
-            new Opcoes(heroi);
+            new Opcoes(heroi, jogo.mesmoTabuleiro);
         }
         else if (!monstro.estaVivo() && monstro instanceof Chefao) {
             JOptionPane.showMessageDialog(this, "Voce venceu!! O chefao foi derrotado.", "Winner!", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             jogo.dispose();
             // opcoes de game over
-            new Opcoes(heroi);
+            new Opcoes(heroi, jogo.mesmoTabuleiro);
         }
         else if (!monstro.estaVivo()) {
             // MONSTRO DERROTADO

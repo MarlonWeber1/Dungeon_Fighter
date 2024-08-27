@@ -19,6 +19,7 @@ public class Jogo extends JFrame {
     private final JLabel lblBolsaElixir;
     private JLabel lblImagemHeroi;
     public JButton botaoHabilidade;
+    public Tabuleiro mesmoTabuleiro;
 
     public Jogo(boolean debug, Heroi heroiSelecionado, Tabuleiro tabuleiroInicial) {
         // Inicializa o herói e o jogo
@@ -29,6 +30,15 @@ public class Jogo extends JFrame {
             tabuleiroInicial.repaint();
         }
         this.comecarJogo = new ComecarJogo(heroiSelecionado,debug,this,tabuleiroInicial);
+
+        this.mesmoTabuleiro = new Tabuleiro(false);
+        for (int i = 0; i<5; i++) {
+            for (int x = 0; x<10; x++)
+            {
+                this.mesmoTabuleiro.tabuleiro[i][x] = this.comecarJogo.tabuleiro.tabuleiro[i][x];
+            }
+        }
+        this.mesmoTabuleiro.setDebugging(this.comecarJogo.tabuleiro.isDebugging()); // seta o modo de debug igual ao tabuleiro atual
 
         // Configura o JFrame
         setTitle("Jogo");
@@ -269,7 +279,7 @@ public class Jogo extends JFrame {
 
                 // Verifica a resposta do usuário
                 if (resposta == JOptionPane.YES_OPTION) {
-                    new Opcoes(Jogo.this.getHeroi());
+                    new Opcoes(Jogo.this.getHeroi(), Jogo.this.mesmoTabuleiro);
                     Jogo.this.dispose();  // Fecha a janela atual
                 }
             }
