@@ -208,7 +208,7 @@ public class Jogo extends JFrame {
 
         // desativa a habilidade do barbaro no tabuleiro, pois ele so pode usa-la ao atacar
         if (heroi instanceof Barbaro) {
-            btnTomarElixir.setEnabled(false);
+            btnHabilidade.setEnabled(false);
         }
 
         // adiciona o ActionListener ao botaoDica
@@ -295,6 +295,7 @@ public class Jogo extends JFrame {
             }
         });
         setVisible(true);
+        pack();
     }
 
     // funcao que usa try/catch e configurar imagem do heroi selecionado e monstros
@@ -343,5 +344,4 @@ public class Jogo extends JFrame {
             btnHabilidade.setEnabled(false);
         }
     }
-
 }
