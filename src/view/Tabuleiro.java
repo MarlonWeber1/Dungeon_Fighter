@@ -37,6 +37,10 @@ public class Tabuleiro extends JPanel {
         return debugging;
     }
 
+    public void setDebugging(boolean debugging) {
+        this.debugging = debugging;
+    }
+
     private void criarTabuleiro() {
 
         // preeche a matriz do tabuleiro com espaços "vazios"
