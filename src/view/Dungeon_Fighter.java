@@ -64,6 +64,14 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
         // Adiciona o ActionListener ao botão
         btnLogin.addActionListener(this);
 
+        textoNomeUsuario.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnLogin.doClick();
+                }
+            }
+        });
+
         setVisible(true);
     }
 
@@ -114,10 +122,5 @@ public final class Dungeon_Fighter extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Ocorreu um erro ao processar a ação: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Dungeon_Fighter mainFrameApp = new Dungeon_Fighter();
-        mainFrameApp.mostrarJanela();
     }
 }
